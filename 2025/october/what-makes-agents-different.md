@@ -123,6 +123,6 @@ From which, we can begin to work our way backwards toward recognizing deviations
   - Set "behavioral slos" using guardrails for detection.
   - Don't just monitor latency and uptime, also drifts in semantic output and tool use success.
 
-## Interested in helping me figure this out?
+## Postscript
 
-I work on the [Kagenti](https://kagenti.github.io/.github/) project, trying to build first class support for managing Agentic workloads on Kubernetes. We're trying to make it easy to run Agents in a robust, scalable and secure way. Please check out our project and consider contributing, or giving it a try as a user.
+I'm exploring these ideas as part of the [Kagenti](https://kagenti.github.io/.github/) project, where we're trying to solve these operational challenges for agents on Kubernetes. If you're working on similar problems, I'd love to hear how you're approaching them-contributions and feedback welcome!
