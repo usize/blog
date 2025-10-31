@@ -57,7 +57,7 @@ Configuration describes potential behavior; context determines actual behavior.
 
 ### The implications 
 
-1. Agent deployments need metadata systems that record model version, quantization, prompt template, tool list, and runtime context hashes. 
+1. Agent deployments need metadata systems that record model version, prompt template, tool list, and runtime context hashes (e.g. for locating log records with chat history). 
 Without that, you can’t reproduce or audit behavior. We could use schema migrations in databases as a template for how this should be managed.
 
 2. The operational identity of an agent should _never_ be obfuscated. For example, agents should take advantage of [delegated auth](https://www.keycloak.org/securing-apps/token-exchange) in lieu of
