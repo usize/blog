@@ -29,7 +29,7 @@ _however_
 
 ## Agents as a Gestalt
 
-To lay the groundwork, an agent is not whatever code has been written to glue the components of an agent together: langgraph, crewai, etc.... 
+An agent is not whatever code has been written to glue the components of an agent together: langgraph, crewai, etc.... 
 We should package this code, version it and manage it. But we should never mistake this code for the agent.
 
 An agent should be identified and versioned according to the components that impact its behavior.
@@ -49,7 +49,7 @@ The smell test here is, if we changed _any_ of these ingredients would the behav
 
 Meanwhile, if you switch from langgraph to crewai you shouldn't expect a big change in behavior so long as you maintain an equivalent graph of possible state transitions.
 
-In short, our container image alone gives us very minimal information about how that agent will actually behave in production.
+In short, *our container image alone gives us very minimal information about how that agent will actually behave in production*.
 
 Configuration describes potential behavior; context determines actual behavior.
 
