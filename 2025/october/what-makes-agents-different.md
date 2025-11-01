@@ -126,3 +126,7 @@ From which, we can begin to work our way backwards toward recognizing deviations
 ## Postscript
 
 I'm exploring these ideas as part of the [Kagenti](https://kagenti.github.io/.github/) project, where we're trying to solve these operational challenges for agents on Kubernetes. If you're working on similar problems, I'd love to hear how you're approaching them-contributions and feedback welcome!
+
+#### Disclaimer
+
+Opinions are my own and don't reflect those of my employer. 
