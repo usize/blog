@@ -20,5 +20,7 @@ I wrote a "Smart Crawler" for my own niche deep research platform. Because of th
 are impressively low. Source code is available under an MIT license.
 
 ----
+Disclaimer: This is my *personal* blog. The opinions here do not represent my employer. 
+
 [main profile](https://github.com/usize)
 
