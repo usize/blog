@@ -22,7 +22,7 @@ So here I'd like to try to elaborate on those points and try to draw out some co
 
 1. Agentic systems do not require new platform primitives e.g. the way that running databases on Kubernetes necessitates a [Stateful Set](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).
 
-_however_
+**_however_**
 
 2. Runtime identity is more critical in Agentic systems than in traditional software systems.
 3. Agentic systems require observability geared toward answering _why_ and not just _what_. 
@@ -30,7 +30,7 @@ _however_
 ## Agents as a Gestalt
 
 An agent is not whatever code has been written to glue the components of an agent together: langgraph, crewai, etc.... 
-We should package this code, version it and manage it. But we should never mistake this code for the agent.
+We should package this code, version it and manage it. But **we should never mistake this code for the agent**.
 
 An agent should be identified and versioned according to the components that impact its behavior.
 
@@ -49,7 +49,7 @@ The smell test here is, if we changed _any_ of these ingredients would the behav
 
 Meanwhile, if you switch from langgraph to crewai you shouldn't expect a big change in behavior so long as you maintain an equivalent graph of possible state transitions.
 
-In short, *our container image alone gives us very minimal information about how that agent will actually behave in production*.
+In short, **our container image alone gives us very minimal information about how that agent will actually behave in production**.
 
 Configuration describes potential behavior; context determines actual behavior.
 
@@ -57,11 +57,15 @@ Configuration describes potential behavior; context determines actual behavior.
 
 ### The implications 
 
-1. Agent deployments need metadata systems that record model version, prompt template, tool list, and runtime context hashes (e.g. for locating log records with chat history). 
-Without that, you can’t reproduce or audit behavior. We could use schema migrations in databases as a template for how this should be managed.
+1. Agent deployments need metadata systems that record model version, prompt template, tool list, and runtime context hashes (e.g. for locating log records with chat history). Without that, you can’t meaningfully reproduce or audit behavior.
 
-2. The operational identity of an agent should _never_ be obfuscated. For example, agents should take advantage of [delegated auth](https://www.keycloak.org/securing-apps/token-exchange) in lieu of
-using a shared service token.
+This is a subtle but important difference given the way that you can e.g. still meaningfully audit the runtime behavior of a webserver whether it connects to a Postgres or MySQL server. 
+
+This is simply not the case with Agents and so we must be careful to not apply previous assumptions around operational discipline.
+
+2. The operational identity of an agent should _never_ be obfuscated. For example, agents **should always use their own identity in authorization flows** and leverage [https://www.keycloak.org/securing-apps/token-exchange](token exchange) if necessary in order to access external resources.
+
+This prevents us maintain provenence *across network boundaries*.
 
 ## Why Observing Agents is Different
 
@@ -113,6 +117,8 @@ And we must ensure that our workload identity is:
 
 From which, we can begin to work our way backwards toward recognizing deviations from normal operations. Likely by tuning [guardrails](https://arxiv.org/html/2402.01822v1).
 
+The observability story is something that I see Agent Frameworks e.g. CrewAI trying to leverage as a selling point, however, I would argue that this is something that can **and should** mostly be solved at a platform level.
+
 ## Key Points
 
 - Agents are not code, they are context.
@@ -125,8 +131,8 @@ From which, we can begin to work our way backwards toward recognizing deviations
 
 ## Postscript
 
-I'm exploring these ideas as part of the [Kagenti](https://kagenti.github.io/.github/) project, where we're trying to solve these operational challenges for agents on Kubernetes. If you're working on similar problems, I'd love to hear how you're approaching them-contributions and feedback welcome!
+I'm exploring these ideas as part of the [Kagenti](https://kagenti.github.io/.github/) project, where we're building primitives on Kubernetes for solving problems around identity and delegated auth flows.
 
-#### Disclaimer
+We're also developing a good observability story that leverages our integration with [AI protocol aware gateways](https://github.com/kagenti/mcp-gateway) and service meshes to build the sort of thorough traces that I'm describing above.
 
-Opinions are my own and don't reflect those of my employer. 
+If you're building multi-agent systems and want to work with us on it, please file an issue, leave a comment, or reach out to me.
