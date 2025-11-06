@@ -8,7 +8,7 @@ Below I have a hypothetical architecture for an Egress Gateway which allows for 
 The proposal reuses existing Gateway API primitives (Gateway, HTTPRoute, GRPCRoute) and introduces a Backend resource derived from [this proposal](https://docs.google.com/document/d/1QLJ_X99VfTgRCzwAaoBzsBq_u4anxT2N5kjlCSJNROc/edit?tab=t.0#heading=h.luxzkmb8apq4)
 for representing external destinations and cross-cluster endpoints.
 
-The diff for my proposal is [here](https://github.com/kubernetes-sigs/wg-ai-gateway/pull/16)
+The diff for my proposal is [here](https://github.com/kubernetes-sigs/wg-ai-gateway/pull/16).
 
 
 Two networking modes are available: **Endpoint** and **Parent**. In Endpoint mode the gateway connects directly to requested resources. In Parent mode it
