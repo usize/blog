@@ -20,7 +20,7 @@ architecting Agentic Systems.
 
 So here I'd like to try to elaborate on those points and try to draw out some conclusions.
 
-1. Agentic systems do not require new platform primitives e.g. the way that running databases on Kubernetes necessitates a [Stateful Set](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).
+1. Building secure and useful Agentic systems does not require dramatic structural changes e.g. the way that running databases on Kubernetes necessitates a [Stateful Set](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/).
 
 ***However***
 
