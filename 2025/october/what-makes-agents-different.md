@@ -1,7 +1,3 @@
-Sure. Here is your text with only the small corrections and clarity tweaks applied. No stylistic rewriting or added punctuation beyond what was necessary.
-
----
-
 # What Makes Agents "Different"?
 
 #### [usize](https://github.com/usize) Oct 2025
