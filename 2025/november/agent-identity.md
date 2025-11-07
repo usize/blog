@@ -46,7 +46,9 @@ For example, when you asked your db-helper-agent to clean up the database you pr
 
 Unfortunately, access logs show that it was your *username* who made the request. 😅
 
-What's worse, that layers of indirection in the logs makes it harder for us to trace back exactly what went wrong since the actions your agent took are jumbled together with whatever else was going on under your identity at the time. How can we pick apart what was *you* and what was the *agent*? 
+What's worse, that layer of indirection in the logs makes it harder for us to trace back exactly what went wrong since the actions your agent took are jumbled together with whatever else was going on under your identity at the time. 
+
+How can we pick apart what was *you* and what was the *agent*? 
 
 ## The Test
 
