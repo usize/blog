@@ -58,7 +58,7 @@ Using a tool is like sending an email.
 
 Delegating work to an Agent is like asking a stranger to send an email for you.
 
-If you want a stranger to write an email, that's fine. But do you also give them the username and password to your inbox so that they can send it under your name?
+If you want a stranger to write an email, that's fine. But do you unlock your phone, open gmail, and hand it over so that they can send it under your name?
 
 Maybe if you like to live dangerously.. 😎
 
