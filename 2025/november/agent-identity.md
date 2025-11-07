@@ -4,7 +4,7 @@
 
 In a lot of conversations, I see [MCP](https://modelcontextprotocol.io/docs/getting-started/intro) and [A2A](https://a2aprotocol.ai/) positioned as competitors. 
 
-I believe that this not the case, and indeed having a separate way of describing agent communication and discovery separately from tool description and invocation is very valuable.
+I believe that this is not the case, and indeed having a separate way of describing agent communication and discovery separately from tool description and invocation is very valuable.
 
 One of the big reasons for this, are questions of identity.
 
