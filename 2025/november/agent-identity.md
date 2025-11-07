@@ -16,7 +16,7 @@ In fact, I'd argue that delegating your identity to an Agent is like handing you
 
 ## Tool Use Maps Cleanly onto Intention
 
-If I use a tool, I often have a well known expected set of actions (and through that, a well known boundary butween success and failure).
+If I use a tool, I often have a well known expected set of actions (and through that, a well known boundary between success and failure).
 
 In other words, we can expect tools to be *deterministic*.
 
@@ -38,13 +38,13 @@ By comparison, when I ask an Agent to do something for me I don't have a clear m
 
 This is because at its core, an Agent is stochastic and highly context dependent.
 
-Put simply, the behavior of the agent may not reflect your expections -or- intentions.
+Put simply, the behavior of the agent may not reflect your expectations -or- intentions.
 
 The result is that **letting an Agent assume your identity as a user is a very bad idea**.
 
 For example, when you asked your db-helper-agent to clean up the database you probably didn't mean for it to drop all of the tables. 
 
-Unfortunately, access logs show that it was your *username* who made the request. 😅
+Unfortunately, access logs show that it was your *username* who made the request. 
 
 What's worse, that layer of indirection in the logs makes it harder for us to trace back exactly what went wrong since the actions your agent took are jumbled together with whatever else was going on under your identity at the time. 
 
@@ -60,7 +60,7 @@ Delegating work to an Agent is like asking a stranger to send an email for you.
 
 If you want a stranger to write an email, that's fine. But do you unlock your phone, open gmail, and hand it over so that they can send it under your name?
 
-Maybe if you like to live dangerously.. 😎
+Maybe if you like to live dangerously.. 
 
 The more reasonable approach would be to either:
  
