@@ -20,6 +20,8 @@ If I use a tool, I often have a well known expected set of actions (and through 
 
 In other words, we can expect tools to be *deterministic*.
 
+This doesn’t mean the output can’t vary, but that the contract and expected behavior are well defined.
+
 It also means that tool use effectively conveys the *intention* of the caller.
 
 Because of that **it is not unreasonable for a tool to act directly on behalf of a caller**.
@@ -78,5 +80,4 @@ Then your Agent can then use some sort of [token exchange](https://www.keycloak.
 
 If the agent wants to use a GitHub MCP server, it will pass this token on to it so that the **tool** it calls can act on **its** behalf.
 
-Where this gets tricky is cases where such flows only support OAuth2.0 via a web flow, but there are ways around it and protocol level improvements that I'll save for another time. 
-
+Where this gets tricky is when such flows only support OAuth 2.0 via an interactive web flow. Still, there are ways around this--such as service accounts, device code flows, or protocol-level extensions that I'll cover another time.
