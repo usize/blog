@@ -2,7 +2,7 @@
 
 #### [usize](https://github.com/usize) Oct 2025
 
-In a lot of conversations, I see MCP and A2A positioned as competitors. 
+In a lot of conversations, I see [MCP](https://modelcontextprotocol.io/docs/getting-started/intro) and [A2A](https://a2aprotocol.ai/) positioned as competitors. 
 
 I believe that this not the case, and indeed having a separate way of describing agent communication and discovery separately from tool description and invocation is very valuable.
 
@@ -80,4 +80,4 @@ Then your Agent can then use some sort of [token exchange](https://www.keycloak.
 
 If the agent wants to use a GitHub MCP server, it will pass this token on to it so that the **tool** it calls can act on **its** behalf.
 
-Where this gets tricky is when such flows only support OAuth 2.0 via an interactive web flow. Still, there are ways around this--such as service accounts, device code flows, or protocol-level extensions that I'll cover another time.
+Where this gets tricky is when such flows only support OAuth 2.0 via an interactive web flow. Still, there are ways around this--such as service accounts, device code flows, or protocol-level extensions.
