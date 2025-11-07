@@ -4,7 +4,7 @@
 
 In a lot of conversations, I see MCP and A2A positioned as competitors. 
 
-I believe that this not the case, and indeed having a separate way of describing agent communication and discovery and tool description and invocation is very valuable.
+I believe that this not the case, and indeed having a separate way of describing agent communication and discovery separately from tool description and invocation is very valuable.
 
 One of the big reasons for this, are questions of identity.
 
