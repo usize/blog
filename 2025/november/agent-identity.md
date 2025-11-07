@@ -63,8 +63,12 @@ If you want a stranger to write an email, that's fine. But do you unlock your ph
 Maybe if you like to live dangerously.. 😎
 
 The more reasonable approach would be to either:
+ 
  - Ask them to pass the message on themselves with a note that it's on your behalf (and then verify your intentions with the recipient later)
- - Hhave them send you the text, which you can then proofread and forward on from your own account.
+
+or
+ 
+ - Have them send you the text, which you can then proofread and forward on from your own account.
 
 The first case works for full automation.
 
