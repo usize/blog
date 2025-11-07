@@ -80,7 +80,7 @@ What this means in practice is that the way we handle identity and authorization
 
 When we use a tool, we can attach our own temporary auth token to the outgoing request and it should be okay for the tool to pass it on to a third party in our name.
 
-Go ahead and make your MCP Server an OAuth client -- though beware of the [confused deputy problem](https://en.wikipedia.org/wiki/Confused_deputy_problem).
+Go ahead and make your MCP Server an OAuth client -- though beware of the [confused deputy problem](https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#confused-deputy-problem).
 
 When we use an Agent though, we need that agent to request its own temporary token minted under its own identity with some sort of footnote that says "this is on behalf of *user*".
 
