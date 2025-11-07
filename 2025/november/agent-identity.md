@@ -36,7 +36,7 @@ In other words, if a tools needs to list my private github repos, I'll argue tha
 
 By comparison, when I ask an Agent to do something for me I don't have a clear mapping of my request to its actions.
 
-This is because at its core, an Agent is a stochastic and highly context dependent.
+This is because at its core, an Agent is stochastic and highly context dependent.
 
 Put simply, the behavior of the agent may not reflect your expections -or- intentions.
 
