@@ -54,17 +54,19 @@ How can we pick apart what was *you* and what was the *agent*?
 
 Think of it this way.
 
-Using a tool is like sending a post card. You have a well structured input, and an expected result.
+Using a tool is like sending an email. You have a well structured input, and an expected result.
 
-Delegating work to an Agent is like asking a stranger for help.
+Delegating work to an Agent is like asking a stranger to send an email for you.
 
-If you want a stranger to summarize an email for you, do you give them your email account's username and password? Or do you forward the email to them.
-
-If you want that stranger to tell somebody something for you, do you hand them your cellphone and let them text from your phone number?
+If you want a stranger to write an email, that's fine. But do you also give them the username and password to your inbox so that they can send it under your name?
 
 Maybe if you like to live dangerously.. 😎
 
-But the more reasonable thing would asking them to pass the message on themselves, and then verify your intentions with the recipient later.
+But the more reasonable thing would asking them to either pass the message on themselves, and then verify your intentions with the recipient later, or to have them send you the text directly which you can then proofread and send yourself.
+
+The first case works for full automation.
+
+The second case is more like using a coding agent and accepting/rejecting diffs and other actions.
 
 ## In Practice
 
