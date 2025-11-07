@@ -54,7 +54,7 @@ How can we pick apart what was *you* and what was the *agent*?
 
 Think of it this way.
 
-Using a tool is like sending an email. You have a well structured input, and an expected result.
+Using a tool is like sending an email.
 
 Delegating work to an Agent is like asking a stranger to send an email for you.
 
