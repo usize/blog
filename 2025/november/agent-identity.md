@@ -8,6 +8,12 @@ I believe that this not the case, and indeed having a separate way of describing
 
 One of the big reasons for this, are questions of identity.
 
+In particular, it's quite different to ask a tool to do something for you versus an Agent.
+
+Because a tool has an expected behavior ahead of time it delegates your intentions cleanly. But an agent... well, it doesn't do that at all.
+
+In fact, I'd argue that delegating your identity to an Agent is like handing your phone to a stranger on the street.
+
 ## Tool Use Maps Cleanly onto Intention
 
 If I use a tool, I often have a well known expected set of actions (and through that, a well known boundary butween success and failure).
@@ -22,9 +28,11 @@ This makes MCP servers a fair candidate for [delegated auth](https://modelcontex
 
 In other words, if a tools needs to list my private github repos, I'll argue that it's okay to pass that tool a temporary access token minted under my own identity.
 
+![A diagram showing the different between stochastic and deterministic systems.](agent-vs-tool.png)
+
 ## Agent Use Obfuscates Intention
 
-By comparisson, when I ask an Agent to do something for me I don't have a clear mapping of my request to its actions.
+By comparison, when I ask an Agent to do something for me I don't have a clear mapping of my request to its actions.
 
 This is because at its core, an Agent is a stochastic and highly context dependent.
 
@@ -37,8 +45,6 @@ For example, when you asked your db-helper-agent to clean up the database you pr
 Unfortunately, access logs show that it was your *username* who made the request. 😅
 
 What's worse, that layers of indirection in the logs makes it harder for us to trace back exactly what went wrong since the actions your agent took are jumbled together with whatever else was going on under your identity at the time. How can we pick apart what was *you* and what was the *agent*? 
-
-![A diagram showing the different between stochastic and deterministic systems.](agent-vs-tool.png)
 
 ## The Test
 
@@ -62,7 +68,7 @@ What this means in practice is that the way we handle identity and authorization
 
 When we use a tool, we can attach our own temporary auth token to the outgoing request and it should be okay for the tool to pass it on to a third party in our name.
 
-Go ahead and make your MCP Server an Oauth client -- though beware of the [confused deputy problem](https://en.wikipedia.org/wiki/Confused_deputy_problem).
+Go ahead and make your MCP Server an OAuth client -- though beware of the [confused deputy problem](https://en.wikipedia.org/wiki/Confused_deputy_problem).
 
 When we use an Agent though, we need that agent to request its own temporary token minted under its own identity with some sort of footnote that says "this is on behalf of *user*".
 
@@ -72,5 +78,5 @@ Then your Agent can then use some sort of [token exchange](https://www.keycloak.
 
 If the agent wants to use a GitHub MCP server, it will pass this token on to it so that the **tool** it calls can act on **its** behalf.
 
-Where this gets tricky is cases where such flows only support Oauth2.0 via a web flow, but there are ways around it and protocol level improvements that I'll save for another time. 
+Where this gets tricky is cases where such flows only support OAuth2.0 via a web flow, but there are ways around it and protocol level improvements that I'll save for another time. 
 
