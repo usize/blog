@@ -21,10 +21,12 @@ are impressively low. Source code is available under an MIT license.
 
 ## Drafts
 
-[AI Gateway User Stories](2025/drafts/ai-gateway/draft-ai-gateway-user-stories.md)
+~~[AI Gateway User Stories](2025/drafts/ai-gateway/draft-ai-gateway-user-stories.md)~~
 
-I'm working on proposing an Egress Gateway for Kubernetes NET-SIG to allow for easy configuration
-of AI specific policies e.g. uniformly applied guardrails for both local and external inference.
+~~I'm working on proposing an Egress Gateway for Kubernetes SIG-Networking to allow for easy configuration
+of AI specific policies e.g. uniformly applied guardrails for both local and external inference.~~
+
+Abandoned approach: [PR Instead](https://github.com/kubernetes-sigs/wg-ai-gateway/pull/16)
 
 ----
 Disclaimer: This is my *personal* blog. The opinions here do not represent my employer. 
