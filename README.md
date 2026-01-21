@@ -21,6 +21,10 @@ are impressively low. Source code is available under an MIT license.
 
 ## Drafts
 
+[Unfinished: To impersonate, or not to impersonate?](2026/drafts/to-impersonate-or-not.md)
+
+Some quick heuristics to help decide if setting up the infrastructure to handle 'On Behalf Of' is overkill.
+
 ~~[AI Gateway User Stories](2025/drafts/ai-gateway/draft-ai-gateway-user-stories.md)~~
 
 ~~I'm working on proposing an Egress Gateway for Kubernetes SIG-Networking to allow for easy configuration
