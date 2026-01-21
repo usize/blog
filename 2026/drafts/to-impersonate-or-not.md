@@ -2,14 +2,10 @@
 
 #### [usize](https://github.com/usize) Jan 2026
 
-Right now, it seems we're in the pre-Alpha stage of the coming 'Agentic Web'. It's an exciting time, because in terms of implementation details:
+Right now, it seems we're in the pre-alpha stage of the coming '[internet of agents](https://arxiv.org/abs/2505.07176)'. It's an exciting time, because in terms of implementation details:
 
 1. There's enough theory and prior art to provide us with a general direction.
 2. We've yet to put enough of that theory into practice to figure out what really works.
-
-<aside>
-I can imagine that this may have some parallels to where the "World Wide Web" was in the early 90's. Nobody knew how world changing the "World Wide Web" would be, but on a technical level things were a bit less directionally uncertain.
-</aside>
 
 This creates a difficult situation for people building infrastructure in the here and now. Because on the one hand, there's a general trend they can follow but on the other hand, if they get caught up in the hype and prematurely optimize they risk wasting a lot of valuable time and energy.
 
@@ -27,19 +23,16 @@ All so that you can initiate a flow that looks like:
 
 <claude: generate some JWT claims with an act audience sub etc... capturing the token being minted for a user -> agent -> resource>
 
-When instead you could simply:
+When instead you could simply either:
 
 - Allow users to pass tokens generated from an OAuth flow directly to the agent (or via a secret broker).
-
- or
-
 - Configure access for the agent itself. 
 
-You don't need to calculate new scopes or mint tokens or configure complicated policies.
+No minting tokens. No complicated policy decisions.
 
 And actually, this can be fine.
 
-Christian Posta wrote a nice article about this. He says:
+Christian Posta wrote a nice article about just that. He says:
 
     “The most practical approach right now is to stay within a single system. Let the agent inherit the user’s credentials and work inside familiar guardrails.”
 
@@ -47,9 +40,10 @@ Christian Posta wrote a nice article about this. He says:
 
     Yes, it’s still credential sprawl. But it works. And it delivers immediate value while respecting existing auth boundaries.”
 
-    source: [https://blog.christianposta.com/cracks-in-our-identity-foundations/](https://blog.christianposta.com/cracks-in-our-identity-foundations/)
+- source: [https://blog.christianposta.com/cracks-in-our-identity-foundations/](https://blog.christianposta.com/cracks-in-our-identity-foundations/)
 
-But the obvious question is: when does this break down?
+
+But, there's a catch.
 
 ## When 'on behalf of' isn't overkill
 
