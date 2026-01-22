@@ -22,7 +22,7 @@ It's saying:
 
 They'd learned this lesson by running clubs in university and quickly becoming overwhelmed with commitments. 
 
-Which is exactly right. A leader doing hands on work insted of delegating is often a failure mode.
+Which is exactly right. A leader doing hands-on work instead of delegating is often a failure mode.
 
 But there's something even more interesting here, beyond the scope of encouraging delegation.
 
