@@ -20,7 +20,7 @@ It's saying:
 
 > "It feels good to be the person who does a thing. It makes you proud of yourself. But it doesn't scale."
 
-They'd learned this lesson by running clubs in university and quickly becoming overwhelmed by commitments. 
+They'd learned this lesson by running clubs in university and quickly becoming overwhelmed with commitments. 
 
 Which is exactly right. A leader doing hands on work insted of delegating is often a failure mode.
 
