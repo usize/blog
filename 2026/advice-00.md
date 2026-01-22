@@ -26,7 +26,11 @@ Which is exactly right. A leader doing hands on work insted of delegating is oft
 
 But there's something even more interesting here, beyond the scope of encouraging delegation.
 
-It updates the common heuristic of `do_the_thing = feels_good && has_not_beed_done_yet` with an additional predicate: `&& is_worthwhile`
+It updates the common heuristic of 
+
+`do_the_thing = feels_good && has_not_beed_done_yet` 
+
+with an additional predicate: `&& is_worthwhile`
 
 where `is_worthwhile = happy_if_it_already_exists`.
 
