@@ -56,7 +56,7 @@ It's helped me to:
 
 And is particularly useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
 
-Because, ironically, being able to build widgets faster does not actually help you find a global maxima of utility faster.
+Because, ironically, being able to build widgets faster does not actually help you find a global maximum of utility faster.
 
 Instead, it risks getting trapped in a local maxima. Where widget a begets widget b which begets widget c and so on.
 
