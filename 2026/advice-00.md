@@ -28,7 +28,7 @@ But there's something even more interesting here, beyond the scope of encouragin
 
 It updates the common heuristic of 
 
-`do_the_thing = feels_good && has_not_beed_done_yet` 
+`do_the_thing = feels_good && has_not_been_done_yet` 
 
 with an additional predicate: `&& is_worthwhile`
 
