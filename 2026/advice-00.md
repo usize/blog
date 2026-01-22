@@ -55,3 +55,9 @@ It's helped me to:
   - Recognize opportunities to hand off tasks to people with more 'skin in the game' concerning the outcome.
 
 And is particularly useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
+
+Because, ironically, being able to build widgets faster does not actually help you find a global maxima of utility faster.
+
+Instead, it risks getting trapped in a local maxima. Where widget a begets widget b which begets widget c and so on.
+
+Attention is still valuable, and novelty is still not impact.
