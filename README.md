@@ -1,3 +1,9 @@
+## January 2026
+
+[The Best Most Useful Heuristic](2026/advice-00.md)
+
+A short note about the most useful advice I've ever gotten. 
+
 ## November 2025
 
 [Handing Your Phone to a Stranger, Why Agents Need Their Own Identity](2025/november/agent-identity.md)
