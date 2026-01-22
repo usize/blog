@@ -1,4 +1,4 @@
-# A Cocktail Party Utility Function 
+# Attention is still valuable, and novelty is still not impact 
 
 #### [usize](https://github.com/usize) Jan 2026
 
