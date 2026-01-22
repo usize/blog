@@ -38,7 +38,7 @@ I've applied this heuristic in my own life many times over the past 11 years.
 
 Of course, there are cases where it fails:
 
-  - When a thing clearly needs to exist, but nobody has done it because it's difficult || scary || painful.
+  - When a thing clearly needs to exist, but nobody has done it because it's difficult `||` scary `||` painful.
   - When grinding for short term recognition necessary to build credibility and leverage.
 
 But when I've been able to follow it, it's served me well.
