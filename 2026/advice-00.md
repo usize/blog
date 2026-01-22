@@ -1,4 +1,4 @@
-# The Most Useful Heuristic 
+# A Cocktail Party Utility Function 
 
 #### [usize](https://github.com/usize) Jan 2026
 
