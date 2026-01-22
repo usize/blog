@@ -45,6 +45,13 @@ Of course, there are cases where it fails:
   - When a thing clearly needs to exist, but nobody has done it because it's difficult `||` scary `||` painful.
   - When grinding for short term recognition necessary to build credibility and leverage.
 
+Less than a year later I failed to follow this advice when I volunteered to re-write some standard library methods in JavaScript that truthfully did not impact my life directly. And I still feel happy that I did, because it was _cool_.
+
 But when I've been able to follow it, it's served me well.
 
-It might even count as the best piece of advice I've ever gotten.
+It's helped me to:
+
+  - Avoid high-complexity (nerd cred) low reward work like implementing a DSL, ha.
+  - Recognize opportunities to hand off tasks to people with more 'skin in the game' concerning the outcome.
+
+And is particularly useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
