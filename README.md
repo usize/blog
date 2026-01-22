@@ -2,7 +2,7 @@
 
 [The Most Useful Heuristic](2026/advice-00.md)
 
-During the first evening of Mozilla's [2015 all-hands](https://wiki.mozilla.org/All_Hands/2015_Whistler) I was mingling my way through a mixer when I struck up a conversation with a very fascinating and delightful individual.. 
+During the first evening of Mozilla's [2015 all-hands](https://wiki.mozilla.org/All_Hands/2015_Whistler) I was mingling my way through a mixer when I struck up a conversation with a very fascinating and delightful individual. They left me with some of the most valuable advice of my career. 
 
 ## November 2025
 
