@@ -1,8 +1,8 @@
 ## January 2026
 
-[The Best Most Useful Heuristic](2026/advice-00.md)
+[The Most Useful Heuristic](2026/advice-00.md)
 
-A short note about the most useful advice I've ever gotten. 
+During the first evening of Mozilla's [2015 all-hands](https://wiki.mozilla.org/All_Hands/2015_Whistler) I was mingling my way through a mixer when I struck up a conversation with a very fascinating and delightful individual.. 
 
 ## November 2025
 
