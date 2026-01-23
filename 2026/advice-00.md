@@ -4,7 +4,7 @@
 
 During the first evening of Mozilla's [2015 all-hands](https://wiki.mozilla.org/All_Hands/2015_Whistler) I was mingling my way through a mixer when I struck up a conversation with a very fascinating and delightful individual. 
 
-Many of their comments were so thoughtful that they had the quality of stack frames piling up until they struck a base case and collapsed into a coherent thesis. 
+They had a certain "with-it-ness", like, when they spoke about their work it had the quality of stack frames piling up until they struck a base case and collapsed into a coherent thesis. 
 
 And as our conversation wound down, when I reached for one of the stock questions that I use to avoid awkwardly abrupt dead space in social functions.
 
