@@ -14,9 +14,11 @@ I received a similarly well-structured response.
 
 > "**Never work on something unless you'd be happy to find out that somebody else already did it for you.**"
 
-It's saying something more than "don't re-invent the wheel."
+Which was a really interesting response.
 
-It's saying:
+Because it says something more than the cliché "don't re-invent the wheel."
+
+It's says:
 
 > "It feels good to be the person who does a thing. It makes you proud of yourself. But it doesn't scale."
 
