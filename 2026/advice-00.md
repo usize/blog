@@ -43,7 +43,7 @@ It's something I've thought about often over the years during times when I neede
 There are cases where it fails/doesn't apply:
 
   - When a thing clearly needs to exist, but nobody has done it because it's difficult `||` scary `||` painful.
-  - When grinding for short term recognition necessary to build credibility and leverage.
+  - When grinding on low-novelty problems is necessary to build credibility, skills or leverage.
 
 Less than a year later I failed to follow this advice when I volunteered to re-write some standard library methods in JavaScript that truthfully did not impact my life directly. And I still feel happy that I did, because it was _cool_.
 
