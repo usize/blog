@@ -1,8 +1,8 @@
 ## January 2026
 
-[Attention is still valuable, and novelty is still not impact](2026/advice-00.md)
+["Never work on something unless you'd be happy to find out that somebody else already did it for you."](2026/advice-00.md)
 
-During the first evening of Mozilla's [2015 all-hands](https://wiki.mozilla.org/All_Hands/2015_Whistler) I was mingling my way through a mixer when I struck up a conversation with a very fascinating and delightful individual. They left me with some of the most valuable advice of my career. 
+During the first evening of Mozilla's [2015 all-hands](https://wiki.mozilla.org/All_Hands/2015_Whistler) I was mingling my way through a mixer when I struck up a conversation with a very fascinating and delightful individual. They left me with a great heuristic for picking projects that I still think about often. 
 
 ## November 2025
 

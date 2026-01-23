@@ -1,4 +1,4 @@
-# Attention is still valuable, and novelty is still not impact 
+#  "Never work on something unless you'd be happy to find out that somebody else already did it for you."
 
 #### [usize](https://github.com/usize) Jan 2026
 
@@ -36,11 +36,9 @@ where `is_worthwhile = happy_if_it_already_exists`.
 
 The genius is that this reframes the decision in terms of expected real-world utility, not personal satisfaction.
 
-It's pushing us away from "[hill-climbing](https://en.wikipedia.org/wiki/Hill_climbing)" our way toward low-utility work that can come by simply chasing a first-order sense of accomplishment.
+It's something I've thought about often over the years during times when I needed to figure out what's worth doing.
 
-I've applied this heuristic in my own life many times over the past 11 years.
-
-Of course, there are cases where it fails:
+There are cases where it fails/doesn't apply:
 
   - When a thing clearly needs to exist, but nobody has done it because it's difficult `||` scary `||` painful.
   - When grinding for short term recognition necessary to build credibility and leverage.
@@ -54,10 +52,8 @@ It's helped me to:
   - Avoid high-complexity (nerd cred) low reward work like implementing a DSL, ha.
   - Recognize opportunities to hand off tasks to people with more 'skin in the game' concerning the outcome.
 
-And is particularly useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
+And this is still useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
 
-Because, ironically, being able to build widgets faster does not actually help you find a global maximum of utility faster.
+After all, it's more tempting than ever to bury yourself in a mountain of high-complexity low-utility projects that never go anywhere.
 
-Instead, it risks getting trapped in a local maxima. Where widget a begets widget b which begets widget c and so on.
-
-Attention is still valuable, and novelty is still not impact.
+Even if the journey is faster, the destination still matters.
