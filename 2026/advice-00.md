@@ -26,7 +26,7 @@ They'd learned this lesson by running clubs in university and quickly becoming o
 
 Which is exactly right. A leader doing hands-on work instead of delegating is often a failure mode.
 
-But there's something even more interesting here, beyond the scope of encouraging delegation.
+But there's also something here beyond the scope of delegation.
 
 It updates the common heuristic of 
 
