@@ -24,8 +24,6 @@ It's says:
 
 They'd learned this lesson by running clubs in university and quickly becoming overwhelmed with commitments. 
 
-Which is exactly right. A leader doing hands-on work instead of delegating is often a failure mode.
-
 But there's also something here beyond the scope of delegation.
 
 It updates the common heuristic of 
@@ -36,26 +34,31 @@ with an additional predicate: `&& is_worthwhile`
 
 where `is_worthwhile = happy_if_it_already_exists`.
 
-The genius is that this reframes the decision in terms of expected real-world utility, not personal satisfaction.
+The genius is that this reframes the decision in terms of real-world utility.
+
+That sometimes the destination matters more than the journey.
 
 It's something I've thought about often over the years during times when I needed to figure out what's worth doing.
 
 There are cases where it fails/doesn't apply:
 
-  - When a thing clearly needs to exist, but nobody has done it because it's difficult `||` scary `||` painful.
+  - When you wouldn't be happy if a thing existed already because you're looking for a competative edge.
   - When grinding on low-novelty problems is necessary to build credibility, skills or leverage.
+  - When you're optimizing for joy over utility. 
 
 Less than a year later I failed to follow this advice when I volunteered to re-write some standard library methods in JavaScript that truthfully did not impact my life directly. And I still feel happy that I did, because it was _cool_.
 
-But when I've been able to follow it, it's served me well.
+But when I've been able to follow it in work settings, it's served me well.
 
 It's helped me to:
 
-  - Avoid high-complexity (nerd cred) low reward work like implementing a DSL, ha.
-  - Recognize opportunities to hand off tasks to people with more 'skin in the game' concerning the outcome.
+  - Avoid the sort of high-complexity (nerd cred) low reward work that haunts many issue trackers.
+  - Recognize opportunities to hand off tasks to people with more 'skin in the game' concerning outcomes.
 
-And this is still useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
+And I believe that this is still useful during this era when LLMs have made it so cheap to explore that space of all possible widgets that could be built.
 
-After all, it's more tempting than ever to bury yourself in a mountain of high-complexity low-utility projects that never go anywhere.
+Because it's more tempting than ever to bury yourself in a mountain of high-complexity low-utility projects because it feels cheap, but is it?
 
-Even if the journey is faster, the destination still matters.
+You're still paying with your attention. Creating sprawl. Inviting the opportunity for scope creep to create an energy sink.
+
+Weighting the cheapness of code too highly is just another way of valuing the journey more than the destination.
