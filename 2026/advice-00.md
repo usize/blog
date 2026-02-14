@@ -14,13 +14,11 @@ Back when I encountered it--at a Mozilla all-hands party in 2015--it seemed like
 
 But today, when a coding agent can help me knock-out the sorts of scratch projects that would usually be abandoned after a barebones prototype it's taken on a new meaning.
 
-Thanks to coding assistants, the value of doodling around to learn a new framework has arguably gone down.
+Thanks to coding assistants, the payoff from doodling around to learn a new framework is lower than ever.
 
 At the same time, knowing what to work on seems like it might be more valuable than ever.
 
-For hobby projects in particular, this is not necessarily:
-- something economically productive.
-- something technically impressive.
+For hobby projects in particular, this is not necessarily something economically productive or something technically impressive.
 
 Just something that does a thing that's worth doing. To the point that you're happy that it exists, even if you didn't do it yourself.
 
