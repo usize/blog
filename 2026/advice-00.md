@@ -8,7 +8,7 @@ When I encounter a good one it gets stuck in my head and becomes a part of my li
 
 One that I think about often is:
 
-"The best projects are ones where you'd be happy if you found out that somebody had already done it."
+> "The best projects are ones where you'd be happy if you found out that somebody had already done it."
 
 Back when I encountered it--at a Mozilla all-hands party in 2015--it seemed like a more sophisticated version of "scratch your own itch."
 
