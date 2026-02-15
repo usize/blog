@@ -2,7 +2,7 @@
 
 [The best projects](2026/advice-00.md)
 
-A reflection on scratch/hobby projects, now that doodling around can result in... something complete.
+> “The best projects are ones where you’d be happy if you found out that somebody had already done it.”
 
 ## November 2025
 
