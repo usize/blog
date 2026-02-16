@@ -22,7 +22,7 @@ Long ago, I worked for a large software firm which was famous for dominating a v
 
 During a lunchtable discussion the topic of shutting down yet another popular service came up and I was gifted with a very provocative framing from one of my colleagues.
 
-"Instead of thinking of this as a software company, think of it like a magical faucet that continually sprays a stream of liquid gold. This campus and of the other infrastructure that exists is centered around that. These projects aren't being evaluated according to how loved they are, they are evaluated according to how they serve and protect the faucet."
+"Instead of thinking of this as a software company, think of it like a magical faucet that continually sprays a stream of liquid gold. This campus and all of the other infrastructure that exists is centered around that. These projects aren't being evaluated according to how loved they are, they are evaluated according to how they serve and protect the faucet."
 
 (I calculated the flow rate necessary for the gold to match the profits per second of the company, about 0.05 gallons per minute. Just a trickle at today's prices.)
 
@@ -175,7 +175,7 @@ Figuratively, an agent is all of the first order infrastructure we build around 
 
 Or, taken really figuratively, they are like building an API server around an AOL Instant Messenger chat and treating the outputs that look like valid JSON as business logic. Ha!
 
-Taken as a Star Trek fan, they're like when that machine civilization intercepted the Voyager Space Probe and turned it into an awesome space ship.
+(Taken as a Star Trek fan, they're like when that machine civilization intercepted the Voyager Space Probe and turned it into an awesome space ship.)
 
 This may seem unprecedented, but we have already had to deal with:
 
