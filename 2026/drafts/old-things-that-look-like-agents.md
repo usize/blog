@@ -73,8 +73,6 @@ Maybe now, all we need to do, is all of that.. at once.
 
 ## Case Study: Mechanical Turk
 
-![A copper engraving of the Mechanical Turk chess automaton, showing the open cabinet and clockwork interior. Public domain, circa 1783.](https://upload.wikimedia.org/wikipedia/commons/5/53/Turk-engraving5.jpg)
-
 *The original Mechanical Turk (1770): a chess-playing "automaton" that was secretly operated by a human hidden inside. Engraving from Karl Gottlieb von Windisch, 1783. Public domain.*
 
 In 2005, Amazon launched Mechanical Turk[^1]. It is an API for "Human Intelligence Tasks" which is another way of saying that your API requests are satisfied by humans interacting through a web interface, acting as the "business logic".
