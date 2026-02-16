@@ -181,9 +181,7 @@ This may seem unprecedented, but we have already had to deal with:
 - Allowing workloads in our trust domain to execute untrusted code, at scale.
 - Providing authentication and authorization for large numbers of actors and resources with many fine grained policy distinctions based on roles and relationships.
 
-In short, we are already armed with many of the tools and experiences that we need to solve the problems presented by our new agentic services.
-
-The untrusted element is no longer on the other side of a boundary. It's the workload itself. And we've been building for that longer than we think.
+In short, we are already armed with many of the tools and experiences that we need to solve the problems presented by our new agentic services: the untrusted element is no longer on the other side of a boundary. It's the workload itself. And we've been building for that longer than we think.
 
 ---
 
