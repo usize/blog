@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "What Makes Agents Different?"
+title: "Old Things That Look Like Agents"
 ---
 
-# What Makes Agents Different? (Less Than You'd Think) 
+# Old Things That Look Like Agents 
 
 #### [usize](https://github.com/usize) Feb 2026
 

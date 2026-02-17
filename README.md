@@ -1,6 +1,6 @@
 ## February 2026
 
-[What Makes Agents Different? \(Less Than You'd Think\))](2026/old-things-that-look-like-agents.md)
+[Old Things That Look Like Agents)](2026/old-things-that-look-like-agents.md)
 
 Agents aren’t entirely new: Mechanical Turk, VPS Hosts and Cloud IAM each hint at the infrastructure we need. 
 
