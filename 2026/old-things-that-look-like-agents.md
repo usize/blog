@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "Old things that look like agents"
+title: "What Makes Agents Different?"
 ---
 
-# Old things that look like agents and.. what makes agents different?
+# What Makes Agents Different? (Less Than You'd Think) 
 
 #### [usize](https://github.com/usize) Feb 2026
 
@@ -198,7 +198,11 @@ This may seem unprecedented, but we have already had to deal with:
 - Allowing workloads in our trust domain to execute untrusted code, at scale.
 - Providing authentication and authorization for large numbers of actors and resources with many fine grained policy distinctions based on roles and relationships.
 
-In short, we are already armed with many of the tools and experiences that we need to solve the problems presented by our new agentic services: the untrusted element is no longer on the other side of a boundary. It's the workload itself. And we've been building for that longer than we think.
+Our work now is to leverage the lessons we've learned from each as we merge all of these challenges within a single workload.
+
+There is tension to resolve: We can't completely lock down our agent the way we can a VPS. We can't simply mint agents user accounts and treat them as ordinary service principals.
+
+However, past solutions suggest that we have an iterative way forward that we can start building in the here and now. 
 
 ---
 
