@@ -64,6 +64,8 @@ Another way of framing this is that we've just invited an unpredictable and unac
 
 – Side note: Couldn't we turn a Ouija board into an agent? Should we invite lost spirits into our trust domains? If they can generate valid YAML I say, yes. Business is business. Call me if you'd like to fund the startup: [usize.github.io/opensouls](http://usize.github.io/opensouls) /s –
 
+[![Screenshot of the faux OpenSouls landing page.](opensouls.png)](https://usize.github.io/opensouls)
+
 Any way you frame it, this whole situation is sort of unprecedented. Right?
 
 Well, less so than you'd think.
@@ -179,6 +181,16 @@ Figuratively, an agent is all of the first order infrastructure we build around 
 Or, taken really figuratively, they are like building an API server around an AOL Instant Messenger chat and treating the outputs that look like valid JSON as business logic. Ha!
 
 (Taken as a Star Trek fan, they're like when that machine civilization intercepted the Voyager Space Probe and turned it into an awesome space ship.)
+
+<div class="video-embed">
+  <iframe
+    src="https://www.youtube.com/embed/gxAaVqdz_Vk"
+    title="Voyager Star Trek reference"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
 
 This may seem unprecedented, but we have already had to deal with:
 
