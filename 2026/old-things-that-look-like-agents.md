@@ -80,8 +80,6 @@ Maybe now, all we need to do, is all of that.. at once.
 
 ## Case Study: Mechanical Turk
 
-*The original Mechanical Turk (1770): a chess-playing "automaton" that was secretly operated by a human hidden inside. Engraving from Karl Gottlieb von Windisch, 1783. Public domain.*
-
 In 2005, Amazon launched Mechanical Turk[^1]. It is an API for "Human Intelligence Tasks" which is another way of saying that your API requests are satisfied by humans interacting through a web interface, acting as the "business logic".
 
 When I compare this setup to our situation with LLMs, it really gets my noggin' joggin'.
@@ -97,6 +95,10 @@ To add stability, MTurk users leverage redundancy and structural validation e.g.
 Users are encouraged to mix in gold-standard tasks to continuously compare the quality of the actors handling their requests against a known measure.
 
 Turkers (Amazon Turk workers) build reputation scores over time as they correctly satisfy requests[^2].
+
+## Caveat!
+
+Mechanical Turk tasks are stateless and self-contained. Agents tasks are generally stateful and often come with side-effects.
 
 **Where we are now** 
 
