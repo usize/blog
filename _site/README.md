@@ -2,7 +2,7 @@
 
 [Old things that look like agents (and what makes them different)](2026/old-things-that-look-like-agents.md)
 
-Agents aren’t entirely new: Mechanical Turk, SETI@home, AWS Lambda and IAM each hint at the infrastructure we need. This essay ties the parallels together.
+Agents aren’t entirely new: Mechanical Turk, VPS Hosts and Cloud IAM each hint at the infrastructure we need. 
 
 ## January 2026
 

@@ -7,7 +7,7 @@ title: "Old things that look like agents"
 
 #### [usize](https://github.com/usize) Feb 2026
 
-*Adapted from a talk given at a [CNCF meetup](https://community.cncf.io/), February 2026.*
+*Adapted from a talk for a [CNCF meetup](https://community.cncf.io/events/details/cncf-cloud-native-vancouver-presents-2026-februray-cloud-native-vancouver/) in Vancouver, BC in February 2026.*
 
 ---
 
