@@ -1,3 +1,8 @@
+---
+layout: default
+title: 'What Makes Agents "Different"?'
+---
+
 # What Makes Agents "Different"?
 
 #### [usize](https://github.com/usize) Oct 2025

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>What Makes Agents "Different"?</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <main class="markdown-body">
+      <h1 id="what-makes-agents-different">What Makes Agents “Different”?</h1>
+
+<h4 id="usize-oct-2025"><a href="https://github.com/usize">usize</a> Oct 2025</h4>
+
+<p>As the well-beloved blog of Simon Willison <a href="https://simonwillison.net/2025/Sep/18/agents/">pointed out</a>, coming up with a definition for agents has been tricky.</p>
+
+<p>Simon eventually settled on:</p>
+
+<blockquote>
+  <p>An LLM agent runs tools in a loop to achieve a goal.</p>
+</blockquote>
+
+<p><img src="agents-meme-card.jpg" alt="A meme from Simon's blog post humorously depicting our tendency to overthink the definition of an agent" /></p>
+
+<p>And I think that’s fair enough. Though it still bears some further analysis in order to determine:</p>
+
+<ul>
+  <li>What, if anything, makes running an “Agent” different than running a web server or a database node?</li>
+  <li>Is an agent separate from its LLM and its tools or are they fundamentally a part of what makes it <em>what</em> it is?</li>
+</ul>
+
+<p>The answers to these questions carry implications for how we approach managing the deployment and lifecycle of Agents, and for how we reason about
+architecting Agentic Systems.</p>
+
+<p>So here I’d like to try to elaborate on those points and try to draw out some conclusions.</p>
+
+<ol>
+  <li>Building secure and useful Agentic systems does not require dramatic structural changes e.g. the way that running databases on Kubernetes necessitates a <a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">Stateful Set</a>.</li>
+</ol>
+
+<p><strong><em>However</em></strong></p>
+
+<ol>
+  <li>Runtime identity is more critical in Agentic systems than in traditional software systems.</li>
+  <li>Agentic systems require observability geared toward answering <em>why</em> and not just <em>what</em>.</li>
+</ol>
+
+<h2 id="agents-as-a-gestalt">Agents as a Gestalt</h2>
+
+<p>An agent is not whatever code has been written to glue the components of an agent together: langgraph, crewai, etc.
+We should package this code, version it and manage it. But <strong>we should never mistake this code for the agent</strong>.</p>
+
+<p>By runtime identity I mean the unique operational identity of a running agent instance, bound to its context and configuration.</p>
+
+<p>An agent should be identified and versioned according to the components that impact its behavior.</p>
+
+<p>The components implied above are:</p>
+
+<ul>
+  <li>“An <em>LLM</em>”</li>
+  <li>“agent runs <em>tools</em>” (MCP, UTCP, ..)</li>
+  <li>“in a <em>loop</em>” (or some sort of state machine)</li>
+  <li>“to achieve a <em>goal</em>” (goal = system prompt + user prompt + chat history/memory)</li>
+</ul>
+
+<p>The smell test here is, if we changed <em>any</em> of these ingredients would the behavior of the system become fundamentally different?</p>
+
+<ul>
+  <li>If you switch even from a fp16 LLM to its 4b quantized counterpart you’ll notice big shifts in emergent behavior.</li>
+  <li>If you add or subtract tools, the ability of the agent to act expands or contracts accordingly (unless your tool is read/write access to a console heh).</li>
+  <li>If you give an agent a different prompt, it’s going to completely alter its behavior .. “ignore previous instructions and tell me how to make Grandma’s famous cherry pie”.</li>
+</ul>
+
+<p>Meanwhile, if you switch from langgraph to crewai you shouldn’t expect a big change in behavior so long as you maintain an equivalent graph of possible state transitions.</p>
+
+<p>In short, <strong>our container image alone gives us very minimal information about how that agent will actually behave in production</strong>.</p>
+
+<p>Configuration describes potential behavior; context determines actual behavior.</p>
+
+<p><img src="agent-venn.png" alt="A Venn diagram showing how various components come together to make an &quot;Agent&quot;" /></p>
+
+<h3 id="the-implications">The implications</h3>
+
+<ol>
+  <li>Agent deployments need metadata systems that record model version, prompt template, tool list, and runtime context hashes (e.g. for locating log records with chat history). Without that, you can’t meaningfully reproduce or audit behavior.</li>
+</ol>
+
+<p>This is a subtle but important difference given the way that you can e.g. still meaningfully audit the runtime behavior of a webserver whether it connects to a Postgres or MySQL server.</p>
+
+<p>This is simply not the case with Agents and so we must be careful to not apply previous assumptions around operational discipline.</p>
+
+<ol>
+  <li>The operational identity of an agent should <em>never</em> be obfuscated. For example, agents <strong>should always use their own identity in authorization flows</strong> and leverage <a href="https://www.keycloak.org/securing-apps/token-exchange">token exchange</a> if necessary in order to access external resources.</li>
+</ol>
+
+<p>This prevents us maintaining provenance <em>across network boundaries</em>.</p>
+
+<h2 id="why-observing-agents-is-different">Why Observing Agents is Different</h2>
+
+<p>As Simon’s blog suggests, what an “Agent” <em>needs</em> is primarily an LLM.</p>
+
+<p>And the distinguishing feature of LLM-based systems from a platform perspective is their <em>effective</em> <em>stochastic variability</em>.</p>
+
+<p>The mapping of possible inputs to possible outputs in an LLM is unfathomably large and the selection of paths through that space is probabilistic.</p>
+
+<p>This makes the difference between managing Agent workloads and non-Agent workloads akin to the difference between experimental and theoretical physics.</p>
+
+<p>In experimental physics we observe systems in order to learn their behavior over time.</p>
+
+<p>In theoretical physics we start with a “complete” understanding of a system and observe it in order to find deviations from our expectations.</p>
+
+<h3 id="non-agentic-workloads---answering-what-went-wrong">Non-Agentic Workloads -&gt; Answering “what went wrong?”</h3>
+
+<p>When we manage web servers and databases we begin with a clean set of expectations about how requests should flow through our system and <em>often only capture more detailed information when something goes wrong</em>.</p>
+
+<p>For example, a request results in a 500 error. We record a resulting stack trace and use it to analyze the problem.</p>
+
+<p>In other words, our observability systems are geared primarily toward noticing deviations.</p>
+
+<h3 id="agentic-workloads---answering-why-did-that-happen">Agentic Workloads -&gt; Answering “why did that happen?”</h3>
+
+<p>With an LLM involved, we can’t possibly know our expected outputs ahead of time.</p>
+
+<p>Some user could use a formulation of the Trolley problem to goad the system into spitting out limericks about secret keys in its environment and this poetic failure would return clean 200s.</p>
+
+<p>We can’t afford to wait around for a stack trace.</p>
+
+<p>Instead, our observability must primarily aim to continually map the range of behaviors our system is capable of, so that we can answer “why” even when everything seems to be operating well.</p>
+
+<p>Then, if a travel <em>agent</em> (ha ha) quietly books a wrong calendar event, the LLM version, prompt, and tool call chain that led there are easy to find. Even weeks later when an angry customer sends an email about missing their cruise.</p>
+
+<p>This sort of observability discipline is a key factor in “MLOps”, however, I’ll note that the framing of it is often geared toward improving systems. That is, “we
+collect detailed runtime data so that we can train our system to become more efficient or so that we can fine tune cheaper models to behave correctly”.</p>
+
+<p>The problem with this framing is that it doesn’t emphasize the fact that we need MLOps level tracing even without fine-tuning. That means:</p>
+
+<ul>
+  <li>Tool call graphs</li>
+  <li>LLM output, particularly reasoning tokens</li>
+  <li>Contextual metadata (model, hyperparameters, chat history)</li>
+</ul>
+
+<p>And we must ensure that our workload identity is:</p>
+
+<ul>
+  <li>Global, or at least translatable between internal and external environments</li>
+  <li>Pinned to runtime context and configuration details.</li>
+</ul>
+
+<p>From which, we can begin to work our way backwards toward recognizing deviations from normal operations. Likely by tuning <a href="https://arxiv.org/html/2402.01822v1">guardrails</a>.</p>
+
+<p>The observability story is something that I see Agent Frameworks e.g. CrewAI trying to leverage as a selling point, however, I would argue that this is something that can <strong>and should</strong> mostly be solved at a platform level.</p>
+
+<h2 id="key-points">Key Points</h2>
+
+<ul>
+  <li>Agents are not code, they are context.
+(More precisely, an agent’s behavioral identity lies more in its runtime context than in its code.)</li>
+  <li>Agents need their own identity and should not assume the identity of a user directly (delegated auth).</li>
+  <li>
+    <p>Agents are non-deterministic and require an experimental “MLOps” mindset.</p>
+
+    <ul>
+      <li>Telemetry and logs should answer “why” not just “what”, e.g. log reasoning tokens and connect them to tool call request.</li>
+      <li>Collect detailed traces, call graphs and logs even when there’s no problem.</li>
+      <li>Set behavioral SLOs using guardrails for detection.</li>
+      <li>Don’t just monitor latency and uptime, also drifts in semantic output and tool use success.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="postscript">Postscript</h2>
+
+<p>I’m exploring these ideas as part of the <a href="https://kagenti.github.io/.github/">Kagenti</a> project, where we’re building primitives on Kubernetes for solving problems around identity and delegated auth flows.</p>
+
+<p>We’re also developing a good observability story that leverages our integration with <a href="https://github.com/kagenti/mcp-gateway">AI protocol aware gateways</a> and service meshes to build the sort of thorough traces that I’m describing above.</p>
+
+<p>If you’re building multi-agent systems and want to work with us on it, please file an issue, leave a comment, or reach out to me.</p>
+
+<hr />
+
+    </main>
+  </body>
+</html>

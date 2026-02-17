@@ -1,3 +1,9 @@
+## February 2026
+
+[Old things that look like agents (and what makes them different)](2026/old-things-that-look-like-agents.md)
+
+Agents aren’t entirely new: Mechanical Turk, SETI@home, AWS Lambda and IAM each hint at the infrastructure we need. This essay ties the parallels together.
+
 ## January 2026
 
 [The best projects](2026/advice-00.md)
@@ -42,4 +48,3 @@ Abandoned approach: [PR Instead](https://github.com/kubernetes-sigs/wg-ai-gatewa
 Disclaimer: This is my *personal* blog. The opinions here do not represent my employer. 
 
 [main profile](https://github.com/usize)
-

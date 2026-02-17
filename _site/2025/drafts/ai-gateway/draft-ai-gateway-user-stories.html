@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Gateway User Stories Draft</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <main class="markdown-body">
+      <h1 id="ai-gateway-user-stories-draft">AI Gateway User Stories Draft</h1>
+
+<p>Below I have a hypothetical architecture for an Egress Gateway which allows for network policies at three different scopes: Gateway (global), Backend (per FQDN), Route (per HTTP/GRPCRoute).</p>
+
+<h2 id="proposed-high-level-implementation">Proposed High Level Implementation</h2>
+
+<p>The proposal reuses existing Gateway API primitives (Gateway, HTTPRoute, GRPCRoute) and introduces a Backend resource derived from <a href="https://docs.google.com/document/d/1QLJ_X99VfTgRCzwAaoBzsBq_u4anxT2N5kjlCSJNROc/edit?tab=t.0#heading=h.luxzkmb8apq4">this proposal</a>
+for representing external destinations and cross-cluster endpoints.</p>
+
+<p>The diff for my proposal is <a href="https://github.com/kubernetes-sigs/wg-ai-gateway/pull/16">here</a>.</p>
+
+<p>Two networking modes are available: <strong>Endpoint</strong> and <strong>Parent</strong>. In Endpoint mode the gateway connects directly to requested resources. In Parent mode it
+treats another gateway as its sole upstream.</p>
+
+<p><img src="endpoint-mode.png" alt="Endpoint Mode Diagram" />
+<img src="parent-mode.png" alt="Parent Mode Diagram" /></p>
+
+<h2 id="policy-pattern-summary">Policy Pattern summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Policy Layer</th>
+      <th>Example CRDs / Patterns</th>
+      <th>Typical Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Gateway</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code>, <code class="language-plaintext highlighter-rouge">RegionAllowListPolicy</code>, <code class="language-plaintext highlighter-rouge">ObservabilityPolicy</code></td>
+      <td>Org-wide posture: geo restrictions, auditing, deny-lists</td>
+    </tr>
+    <tr>
+      <td><strong>Backend</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">CredentialInjector</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">DNSPolicy</code>, <code class="language-plaintext highlighter-rouge">QoSController</code></td>
+      <td>Per-destination credentials, rate/QoS, DNS, mTLS</td>
+    </tr>
+    <tr>
+      <td><strong>Route</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">PayloadProcessor</code>, <code class="language-plaintext highlighter-rouge">ExternalAuth</code></td>
+      <td>Per-request parsing, redaction, or access filtering</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="policy-scopes.png" alt="Policy Scopes" /></p>
+
+<h2 id="user-stories-in-this-model">User Stories in this Model</h2>
+
+<p>These user stories were taken directly from the AI Gateway Working Group’s <a href="https://github.com/kubernetes-sigs/wg-ai-gateway/blob/main/proposals/10-egress-gateways.md#user-stories">egress-gateway proposal</a>.</p>
+
+<h3 id="1-access-to-external-services"><strong>1. Access to external services</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin I need to provide workloads within my cluster access to services outside of my cluster, in particular cloud and otherwise hosted services.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">ExternalAuth</code> (allow/deny)</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">CredentialInjector</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, optional <code class="language-plaintext highlighter-rouge">RateLimitPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Baseline: HTTPRoute → Backend (FQDN) with credentials and TLS validation.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="2-central-token-management"><strong>2. Central token management</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin I need to manage access tokens for 3rd party AI services so workloads can perform inference without managing secrets directly.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">CredentialInjector</code> (rotating API keys, STS/OIDC), <code class="language-plaintext highlighter-rouge">RateLimitPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">CredentialInjector</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Secrets stay centralized; credentials injected dynamically per backend.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="3-cloud-fail-over"><strong>3. Cloud fail-over</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin providing token management for 3rd party AI cloud services, I need fail-over between providers when the primary fails.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">ExternalAuth</code> or health filter</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>Multiple <code class="language-plaintext highlighter-rouge">Backend</code> objects with <code class="language-plaintext highlighter-rouge">RateLimitPolicy</code>, priority/weight for fail-over</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional backoff defaults (<code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code>)</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">QoSController</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Fail-over handled at backend level; avoids duplicate inference.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="4-verify-external-service-identity"><strong>4. Verify external service identity</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin providing egress routing to external services, I need to verify the identity of the remote service and enforce authentication.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint or Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code> (CA/hostname validation), optional mTLS</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional global TLS settings</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">EgressPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Ensures outbound TLS verification and optional mTLS client auth.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="5-verify-client-to-external-service"><strong>5. Verify client to external service</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin providing egress routing to external services, I need to verify the client identity when connecting to the external service.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint or Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>mTLS via <code class="language-plaintext highlighter-rouge">BackendTLSPolicy.clientCertificateRef</code></td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional PKI defaults</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">EgressPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Gateway acts as TLS client; authenticates with per-backend certificate.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="6-manage-custom-cas-and-crls"><strong>6. Manage custom CAs and CRLs</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin, I need to manage certificate authorities for egress connections, including pinning, intermediates, and CRLs.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint or Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code> (custom CA bundle, SPKI pins, CRL/OCSP config)</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional global CA defaults</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Per-destination trust; centralized CA revocation or pinning.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="7-controlled-dns-resolution"><strong>7. Controlled DNS resolution</strong></h3>
+
+<blockquote>
+  <p>As a gateway admin providing egress routing to external services, I need to control DNS resolution for these sources and enable reverse DNS checks.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint or Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">DNSPolicy</code> (resolver, TTL, reverse-DNS enforcement)</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional global resolver config</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">DNSPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Backend overrides global resolver defaults; secured DNS chain.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="8-dedicated-inference-cluster"><strong>8. Dedicated inference cluster</strong></h3>
+
+<blockquote>
+  <p>As a cluster admin I need to provide inference to workloads, but through a dedicated cluster for separation.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">ExternalAuth</code>, <code class="language-plaintext highlighter-rouge">PayloadProcessor</code></td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>Backend = parent gateway; <code class="language-plaintext highlighter-rouge">CredentialInjector</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code> at parent gateway</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Local retries only; parent gateway manages pool routing and guardrails.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="9-cloud-inference-access"><strong>9. Cloud inference access</strong></h3>
+
+<blockquote>
+  <p>As a cluster admin I need to provide inference access via cloud services (e.g., Vertex, Bedrock) instead of running models locally.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">PayloadProcessor</code></td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">CredentialInjector</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">RegionAllowList</code></td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code>, <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Managed API egress with centralized credential and TLS handling.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="10-specialized-provider-features"><strong>10. Specialized provider features</strong></h3>
+
+<blockquote>
+  <p>As a developer building an inference-enabled app, I need access to AI cloud providers offering unique capabilities.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">PayloadProcessor</code>, <code class="language-plaintext highlighter-rouge">ExternalAuth</code></td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>Provider-specific headers via <code class="language-plaintext highlighter-rouge">CredentialInjector</code>, optional QoS</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">ModelDenyList</code> or <code class="language-plaintext highlighter-rouge">RegionAllowList</code></td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">CredentialInjector</code>, <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Backend policies abstract provider details and headers.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="11-local-to-cloud-fail-over"><strong>11. Local-to-cloud fail-over</strong></h3>
+
+<blockquote>
+  <p>As a developer of an inference-enabled app, I need fail-over from local models to 3rd party providers if local workloads fail.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">PayloadProcessor</code></td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>Multiple <code class="language-plaintext highlighter-rouge">Backend</code> targets (local + remote); <code class="language-plaintext highlighter-rouge">Rate/QoS</code> per destination</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td>Optional <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code> or retry configuration</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">EgressPolicy</code>, <code class="language-plaintext highlighter-rouge">QoSController</code>, <code class="language-plaintext highlighter-rouge">BackendTLSPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Weighted fail-over with clear retry behavior to avoid duplication.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="12-outbound-attribution"><strong>12. Outbound attribution</strong></h3>
+
+<blockquote>
+  <p>As a platform operator I need to attribute outbound traffic per namespace or workload to enforce rate or utilization limits.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint or Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ObservabilityPolicy</code> (metrics, audit)</td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ObservabilityPolicy</code>, <code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Emit metrics tagged by <code class="language-plaintext highlighter-rouge">{gateway, route, backend, ns, sa}</code>. Enables billing and enforcement.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3 id="13-regional-compliance"><strong>13. Regional compliance</strong></h3>
+
+<blockquote>
+  <p>As a compliance engineer I need to ensure outbound traffic to third-party AI resources obeys regulatory restrictions like region locks.</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Routing mode</strong></td>
+      <td>Endpoint or Parent</td>
+    </tr>
+    <tr>
+      <td><strong>Route filters</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>Backend policies</strong></td>
+      <td>Optional metadata tag <code class="language-plaintext highlighter-rouge">region: eu-west</code></td>
+    </tr>
+    <tr>
+      <td><strong>Gateway attachments</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">RegionAllowListPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Example policy objects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">GuardRailsPolicy</code>, <code class="language-plaintext highlighter-rouge">RegionAllowListPolicy</code></td>
+    </tr>
+    <tr>
+      <td><strong>Notes</strong></td>
+      <td>Gateway rejects connection if destination not in approved region set.</td>
+    </tr>
+  </tbody>
+</table>
+
+    </main>
+  </body>
+</html>

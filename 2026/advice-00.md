@@ -1,3 +1,8 @@
+---
+layout: default
+title: "The best projects"
+---
+
 # The best projects 
 
 #### [usize](https://github.com/usize) Feb 2026

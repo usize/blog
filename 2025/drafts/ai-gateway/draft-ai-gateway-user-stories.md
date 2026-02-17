@@ -1,3 +1,8 @@
+---
+layout: default
+title: "AI Gateway User Stories Draft"
+---
+
 # AI Gateway User Stories Draft
 
 Below I have a hypothetical architecture for an Egress Gateway which allows for network policies at three different scopes: Gateway (global), Backend (per FQDN), Route (per HTTP/GRPCRoute).
@@ -225,4 +230,3 @@ These user stories were taken directly from the AI Gateway Working Group's [egre
 | **Gateway attachments**    | `RegionAllowListPolicy`                                               |
 | **Example policy objects** | `GuardRailsPolicy`, `RegionAllowListPolicy`                           |
 | **Notes**                  | Gateway rejects connection if destination not in approved region set. |
-

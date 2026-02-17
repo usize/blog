@@ -1,3 +1,8 @@
+---
+layout: default
+title: "To impersonate, or not to impersonate?"
+---
+
 # To impersonate, or not to impersonate?  
 
 #### [usize](https://github.com/usize) Jan 2026

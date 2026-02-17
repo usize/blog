@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="description" content="Schema-driven extraction with small LLMs to find school district documents reliably and cheaply, without heavy agent tooling.">
+  <title>Schema-Driven Crawling is Cheap and Effective</title>
+  
+  <!-- Google Font (matching main site) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Prism.js for syntax highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  
+  <!-- Blog-specific styles (from your template) -->
+  <style>
+    /* Global styles (matching main site) */
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Roboto',sans-serif;background:#f4f4f9;color:#333}
+    img{max-width:100%;height:auto;display:block}
+    a{color:#0062cc;text-decoration:none}
+    a:hover{text-decoration:underline}
+    h1,h2,h3,h4,h5,h6{margin:0;font-weight:500}
+    h2{font-size:2rem}
+    p{line-height:1.6;margin:0 0 16px}
+    
+    /* Blog-specific layout */
+    .blog-post{max-width:800px;margin:0 auto;padding:0 20px 60px}
+    .blog-header{padding:20px 20px 20px;text-align:center}
+    .blog-title{font-size:2.5rem;color:#222;margin-bottom:20px}
+    .blog-meta{font-size:.9rem;color:#666;margin-bottom:20px}
+    .blog-content{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:40px;box-shadow:0 2px 6px rgba(0,0,0,0.05);text-align:left}
+    
+    /* Blog post styling */
+    .blog-content p{margin-bottom:16px}
+    .blog-content h2{font-size:1.8rem;margin:30px 0 16px;padding-bottom:8px;border-bottom:2px solid #e0e0e0;color:#222}
+    .blog-content h3{font-size:1.4rem;margin:24px 0 12px;color:#333}
+    .blog-content ul,.blog-content ol{margin:0 0 20px 20px}
+    .blog-content li{margin-bottom:8px}
+    .blog-content blockquote{border-left:4px solid #0062cc;padding-left:20px;margin:20px 0;font-style:italic;color:#666}
+    .blog-content code{background:#f4f4f4;padding:2px 4px;border-radius:3px;font-family:monospace;font-size:.9em}
+    .blog-content pre{background:#f4f4f4;padding:0;border-radius:8px;overflow-x:auto;margin:20px 0}
+    .blog-content pre code{background:none;padding:20px;display:block}
+    
+    /* Navigation */
+    .blog-nav{text-align:center;margin:20px 0}
+    .blog-nav a{display:inline-block;padding:8px 16px;background:#0062cc;color:#fff;border-radius:4px;font-weight:500;font-size:.8em}
+    .blog-nav a:hover{background:#004999;text-decoration:none}
+    
+    /* Responsive */
+    @media(max-width:768px){.blog-content{padding:24px}.blog-title{font-size:2rem}}
+  </style>
+</head>
+<body>
+
+<!-- Blog Header -->
+<header class="blog-header">
+  <h1 class="blog-title">Schema-Driven Crawling is Cheap and Effective</h1>
+  <div class="blog-meta">
+        Published by <a href="https://github.com/usize">usize</a> on August 8, 2025
+  </div>
+</header>
+
+<main class="blog-content">
+    <sub>
+  <h2>tl;dr</h2>
+  <ul>
+        <li>I've found that I can achieve good results using cheap models by focusing them on data extraction while decisions are handled via heuristics or decision trees.</li>
+        <li>By using a schema with descriptive fields, it doubles as the prompt and makes the codebase easier to maintain.</li>
+        <li>Exploring sites with a ranked link frontier is extremely simple and it works extremely well.</li>
+  </ul>
+    </sub>
+  <br/>
+  <h2>The Problem of Crawling Public Documents</h2>
+  <p>There are over 13,000 school districts in the United States. The state of Washington alone has nearly 300, and each one stores their public documents in a unique way, not just in naming conventions, document schemas, and file types, but also in where and how they store them.</p>
+
+  <p>Before we even think about solving the hard problems of format normalization, we have to solve these first:</p>
+
+  <ol>
+    <li>Figuring out the (usually multiple) places where public documents are stored.</li>
+    <li>Figuring out whether each storage location is an archive or a dumping ground for fresh data.</li>
+  </ol>
+
+  <p>Many districts create a new subfolder or subpage for each school year, then move the whole thing into an archive when the year turns over.</p>
+
+  <p>If we can tell when a page is only hosting fresh documents for the current year, we can skip crawling it until the year turns over and save a lot of compute.</p>
+
+  <p>Examples:</p>
+  <pre class="line-numbers"><code class="language-bash">someurl.edu/board/docs/2024-2025
+someurl.edu/board/docs/archive/2024-2025
+someurl.edu/board/docs/2024-2025-archived</code></pre>
+
+  <h2>The Basic Approach</h2>
+  <ol>
+    <li>Hook an LLM up to a web browser. The usual method is an MCP server plus Playwright (more on why I didn’t do this below).</li>
+    <li>Navigate to each district website and have the LLM click through until it finds a store of documents.</li>
+    <li>Record metadata about what’s there and save the location for future crawls.</li>
+  </ol>
+
+  <h2>Abandoned Approaches</h2>
+
+  <h3>Tool calling plus Playwright</h3>
+  <p>In my tests, cheaper models could only navigate a few clicks deep before getting lost. Eventually they’d find an event calendar and declare the job done.</p>
+
+  <blockquote>
+    Homepage -&gt; Board of Directors -&gt; Documents -&gt; School Year [subpages for each year]
+  </blockquote>
+
+  <p>Even with aggressive markdown conversion, a direct path through a site like this can take hundreds of thousands of tokens.</p>
+
+  <p>With a little overhead, the rough cost might look something like:</p>
+  <pre class="line-numbers"><code class="language-bash">tokens in/out: 55,000 / 5,000
+
+    gpt-5-mini:
+    (55,000/1e6 * 0.25) + (5,000/1e6 * 2.00) = $0.02375
+
+    gpt-5:
+    (55,000/1e6 * 1.25) + (5,000/1e6 * 10.00) = $0.11875</code></pre>
+
+<p>This may not seem like much, but when you factor in crawling over 10,000 pages on a recurring basis it adds up to many thousands of dollars a year.</p>
+
+  <h3>Agents like Operator or firecrawl.dev</h3>
+  <p>Still expensive. In Firecrawl’s case, the metadata extraction was too limited, so I would have to run results through another LLM anyway to decide if a page was current or archival.</p>
+
+  <h2>The Turning Point</h2>
+  <p>After a lot of frustration with agentic approaches, I realized two things:</p>
+  <ol>
+    <li>Small models are bad at tool use.</li>
+    <li>Small models are pretty good at extracting data into schemas.</li>
+  </ol>
+  <p>If I shift decision-making into crawler logic and keep LLMs focused on structured extraction, I can use much cheaper models without losing accuracy.</p>
+
+  <h2>The Schema</h2>
+  <p>Here’s the Pydantic model I ended up with (truncated). Full version: <a href="https://gist.github.com/NoosphereAnalytics/2c2aabb0265f437a9f6780d5d00fcaa8">gist link</a></p>
+
+  <pre class="line-numbers"><code class="language-python">class RelevantPage(BaseLLMModel):
+    url: str
+    title: str
+    has_data: bool = Field(
+        description="True if this page contains the desired data, False otherwise."
+    )
+    has_data_links: bool = Field(
+        description="True if this page contains links to subpages with the desired data, False otherwise."
+    )
+    description: t.Optional[str] = Field(
+        description="A brief description of the page's content."
+    )
+    data_page_info: t.Optional[DataPageInfo] = Field(
+        description="If this page has relevant data this should have metadata about it."
+    )
+    possible_relevant_pages: t.List[PossibleRelevantPage] = Field(
+        description="Links on the current page that seem likely to lead to relevant data"
+    )
+    no_data_found: t.Optional[int] = Field(
+        default=None,
+        description="Number of times a scraper visited this page and found no data.",
+    )</code></pre>
+
+  <p>I treat the schema like a prompt by using descriptive field definitions. If I change the model, I don’t have to update a separate prompt - the descriptions are built in.</p>
+
+  <h2>How It Works</h2>
+  <ol>
+    <li>Start on a given page.</li>
+    <li>Ask the LLM to classify:
+      <ul>
+        <li>Does this page have the data we want?</li>
+        <li>Is it current or archival? (I pass the current date)</li>
+        <li>Which links might lead to relevant data?</li>
+      </ul>
+    </li>
+    <li>Follow the highest-ranked links until we’ve exhausted the site.</li>
+  </ol>
+
+  <p>This moves complexity out of the LLM and into crawler heuristics.</p>
+
+  <h2>In Practice</h2>
+  <p>We don't explore the whole site, instead we look for possible data sources while checking the current page for signs of documents.
+    For 'possible relevant page's The model is instructed to assign a confidence of 0.5 if it's truly unsure, and more than 0.5 up to 1.0 for complete certainty. While this
+    is qualitative in nature, it suffices as a baseline particularly if we train LoRA adapters on our known good data and use them in future runs.</p>
+  <p>In a future post I might explore the LoRA adapters I've trained in order to distill good decisions from expensive models and stabilize things like 'assign a value' type instructions.</p>
+  <p>Truncated example. Full crawler logic: <a href="https://gist.github.com/NoosphereAnalytics/88cfbaa7f20f9bec1eca19adfb2d049b">gist link</a></p>
+
+  <pre class="line-numbers"><code class="language-python">start_page: StartPage = llm_client.invoke_with_model_response_json(
+    prompt, StartPage
+)
+
+visited.add(url)
+
+data_pages_candidates, to_visit_candidates = filter_possible_relevant_pages(
+    start_page.possible_relevant_pages, url, 0.5, visited
+)
+
+for dt, page_list in data_pages_candidates.items():
+    for p in page_list:
+        if p not in data_pages[dt]:
+            data_pages[dt].append(p)
+
+to_visit += to_visit_candidates
+
+# From here forward, we're crawling as usual.
+while to_visit and pages_visited &lt; max_pages:
+    current_url = (to_visit.pop()).url
+    if current_url in visited:
+        continue
+    pages_visited += 1
+    logger.info(f"visiting: {current_url}")
+    page_html = fetch_html_inner(current_url)
+    if not page_html:
+        logger.warning(f"No HTML found at the provided URL: {current_url}")
+        continue
+
+    page_text = render_page_with_links_as_markdown(page_html, base_url=current_url)
+    page_text = llm_utils.trim_to_token_count(page_text)
+    visited.add(current_url)
+    prompt = RelevantPagesPrompt.format(
+        entity_type=EntityType.SCHOOL_BOARD, text=page_text, url=current_url
+    )
+    try:
+        relevant_page: RelevantPage = llm_client.invoke_with_model_response_json(
+            prompt, RelevantPage
+        )
+    except ValueError as e:
+        logger.error(
+            f"Error generating relevant page response for {current_url}: {e}"
+        )
+        continue
+    relevant_page.url = current_url
+    if relevant_page.data_page_info:
+        data_pages[relevant_page.data_page_info.data_type] += (
+            [relevant_page]
+            if relevant_page
+            not in data_pages[relevant_page.data_page_info.data_type]
+            else []
+        )
+
+    data_pages_candidates, to_visit_candidates = filter_possible_relevant_pages(
+        relevant_page.possible_relevant_pages,
+        url,
+        crawl_confidence_threshold,
+        visited,
+    )
+
+    for dt, page_list in data_pages_candidates.items():
+        for p in page_list:
+            if p not in data_pages[dt]:
+                data_pages[dt].append(p)
+
+    to_visit += to_visit_candidates</code></pre>
+
+  <h2>The LLM Client</h2>
+  <p>Part of making this easy was adding helper methods to my LLM client for models without tool calling. Truncated. Full file: <a href="https://gist.github.com/NoosphereAnalytics/f89271f880d677ee2fb474a6feb8c149">gist link</a></p>
+
+  <pre class="line-numbers"><code class="language-python">def invoke_with_model_response_json(self, template: str, model: t.Any) -> t.Any:
+    """This method is intended for cases where a model does not have explicit tool calling capability.
+
+    In these cases the Pydantic Model cannot be bound directly, so, instead its signature is injected
+    into the provided prompt along with instructions to return output in this format. Output is further trimmed
+    in the common case where a valid JSON object is embedded into junk.
+    """
+    template = self.compile_model_response_template(template, model)
+
+    def _run(template, last_error: t.Optional[Exception] = None):
+        if last_error:
+            template = f"{template}\n\n--- THIS IS A RETRY, THE LAST CALL RESULTED IN AN ERROR ---:\n{last_error}"
+
+        # Invoke the llm with the new template
+        result = self.invoke(template)
+
+        # Trim any superfluous characters from the start and end of the response
+        trimmed_response = self.trim_json_response(result)
+
+        # Try to parse the response as JSON
+        json_response = json.loads(trimmed_response)
+
+        # Validate the response against the model's schema
+        model_result = model.model_validate(json_response)
+        model_result.llm_model_name = self.MODEL_NAME
+
+        return model_result
+
+    try:
+        return _run(template)
+    except (json.JSONDecodeError, ValueError) as e:
+        logger.error(f"Failed to parse or validate response: {e}")
+        logger.info("retrying llm call and model serialization.")
+        return _run(template, e)</code></pre>
+
+  <h2>The Results</h2>
+  <p>Sample output (full JSON: <a href="https://gist.github.com/NoosphereAnalytics/ea80ddf1870675330164c94508925d72">gist link</a>):</p>
+
+  <pre class="line-numbers"><code class="language-json">{
+  "pages": {
+    "Board of Trustee Information": [
+      {
+        "url": "https://www.swsd.k12.wa.us/o/swsd/page/series-1000-the-board-of-directors",
+        "title": "Series - 1000 The Board of Directors",
+        "has_data": true,
+        "has_data_links": false,
+        "description": "Information about the Board of Directors including policies and procedures.",
+        "data_page_info": {
+          "data_type": "Board of Trustee Information",
+          "is_archive": false,
+          "data_years_available": [],
+          "confidence": 0.9
+        },
+        "possible_relevant_pages": [],
+        "no_data_found": null,
+        "llm_model_name": "deepseek-r1:70b"
+      }
+    ],
+    "Meeting Recordings": [
+      {
+        "url": "https://www.swsd.k12.wa.us/documents/district/school-board-information/2024-2025-board-documents/2024-2025-board-meeting-recording/694276",
+        "title": "2024-2025 Board Meeting Recordings",
+        "has_data": true,
+        "has_data_links": false,
+        "description": "A page containing links to audio and video recordings of board meetings for the 2024-2025 academic year.",
+        "data_page_info": {
+          "data_type": "Meeting Recordings",
+          "is_archive": false,
+          "data_years_available": [
+            2024,
+            2025
+          ],
+          "confidence": 0.9
+        },
+        "possible_relevant_pages": [],
+        "no_data_found": null,
+        "llm_model_name": "deepseek-r1:70b"
+      }
+    ]
+  }
+}</code></pre>
+
+  <p>At a bit over 55,000 tokens in and 5000 out, for deepseek-r1:70b, this resulted in a current cost of <code>(5000/1000000 * $0.40)+(55000/1000000 * $0.10) == $0.0075</code>, <b>just under a penny</b>.</p> 
+
+  <p>Out of 298 school districts I track in Washington, this method got me 273 usable data_pages.json files with very cheap models. For the rest, I use more expensive fallback methods.</p>
+
+  <pre class="line-numbers"><code class="language-bash">(venv) ➜  data-pipeline git:(main) find data/countries/usa/states/wa/counties/*/school_boards/* -maxdepth 1 -name 'data_pages.json' | wc -l
+     273</code></pre>
+
+  <p>It all adds up to a much more efficient and maintainable infrastructure.</p>
+</main>
+
+<!-- Prism core + languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+</body>
+</html>

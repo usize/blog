@@ -1,3 +1,8 @@
+---
+layout: default
+title: "Handing Your Phone to a Stranger"
+---
+
 # Handing Your Phone to a Stranger, Why Agents Need Their Own Identity  
 
 #### [usize](https://github.com/usize) Oct 2025
