@@ -132,15 +132,17 @@ A fully isolated VPS is the *product*. A fully isolated agent is *useless*. Agen
 
 The kubernetes-sigs/agent-sandbox under SIG Apps launched in late 2025[^5]. It's a Sandbox CRD with gVisor/Kata isolation, warm pools, and lifecycle management, designed explicitly for AI agent runtimes. 
 
-The Kubernetes ecosystem already had the building blocks (RuntimeClass, Cilium, seccomp, SPIFFE); this project composes them into an agent-specific primitive.
+The Kubernetes ecosystem already had the building blocks (RuntimeClass, Cilium, seccomp); this project composes them into an agent-specific primitive.
+
+There is also a growing field of interesting sandbox and sandbox adjacent projects like [nono](https://github.com/always-further/nono) and [monty](https://github.com/pydantic/monty).
 
 ---
 
-## Case Study: Cloud IAM
+## Case Study: Service Account Federation 
 
-MTurk showed us how to trust untrusted output. VPS hosting showed us how to contain untrusted code. But agents also need to act on shared resources, across services, on behalf of someone. Where have we solved that before?
+MTurk showed us how to trust untrusted output. VPS hosting showed us how to contain untrusted code. But agents also need to act on shared resources, across services, on behalf of someone.
 
-You configure it every day. It's Cloud IAM.
+In a lot of this ways, this looks like an automated process in a CI system.
 
 **The similarity**
 
@@ -150,23 +152,25 @@ Authority flows through chains: User A authorizes Service B to assume Role C wit
 
 **The lessons**
 
-When a Kubernetes service account federates into a cloud role, that role has policies scoped to specific resources and actions. Every action is logged and attributed. Credentials are short-lived and automatically rotated. This flow enables CI bots, GitHub Apps and service accounts among other things.
+When a Kubernetes service account federates into a cloud role, that role has policies scoped to specific resources and actions. Every action is logged and attributed. Credentials are short-lived and automatically rotated. This flow enables CI bots, but it's also almost EXACTLY what agents need. 
 
 The agent version is the same problem: it needs its own identity (it's not the user), a delegated claim on the user's behalf (it's acting *for* the user), and to be scoped to exactly what the task requires (not admin-level anything), then finally revocable the instant something goes sideways.
 
 **Caveat!**
 
-Agents blur the line between human principal and service workload, so they need *both* identity models at once. That is, it is a service that also acts as a user of [other] services. 
+Agents blur the line between human principal and service workload, so they need *both* identity models at once. That is, it is a service that also acts as a user of [other] services. In other words, it needs its own set of permissions and those need to intersect with the actors delegating to it in real time. This allows us to host multi-tenant agents and gain fine-grained auth in real time.
 
 **Where we are now**
 
-This is where the most capital is flowing. 
+There's a lot of work happening here. 
 
 Microsoft shipped Entra Agent ID, granting agents first-class identities with Conditional Access and lifecycle governance[^6]. 
 
 CyberArk's Secure AI Agents Solution applies least-privilege and real-time threat detection to agent identities[^7]. 
 
 Auth0's Auth for GenAI embeds authentication and fine-grained authorization into agent code, and their Cross App Access protocol extends OAuth for agent-to-app interactions[^8]. 
+
+RFC 8693 (token exchange) semantics are being implemented across open source identity providers, to allow for delegation semantics to be embedded in JWT tokens.
 
 The Wafers project proposes portable capability tokens where each delegation in the chain can only *narrow* permissions, never widen them[^9].
 
@@ -198,11 +202,11 @@ This may seem unprecedented, but we have already had to deal with:
 
 - Operating API servers with highly flexible but fundamentally unreliable executors (humans).
 - Allowing workloads in our trust domain to execute untrusted code, at scale.
-- Providing authentication and authorization for large numbers of actors and resources with many fine grained policy distinctions based on roles and relationships.
+- Delegating access to services so that they can act on our behalf.
 
 Our work now is to leverage the lessons we've learned from each as we merge all of these challenges within a single workload.
 
-There is tension to resolve: We can't completely lock down our agent the way we can a VPS. We can't simply mint agents user accounts and treat them as ordinary service principals.
+There is tension to resolve: We can't completely lock down our agent the way we can a VPS. We can't simply mint agents service account tokens. 
 
 However, past solutions suggest that we have an iterative way forward that we can start building in the here and now. 
 
