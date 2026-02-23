@@ -11,7 +11,7 @@ title: "Old Things That Look Like Agents"
 
 ---
 
-The question "what makes agents different" comes from my experiences trying to design durable distributed systems in an industry undergoing a bit of shock. 
+The question "[what makes agents different](../2025/october/what-makes-agents-different.md)" comes from my experiences trying to design durable distributed systems in an industry undergoing a bit of shock. 
 
 It's clear that LLMs are writing more code, but the wider idea of an "internet of agents" still lacks a clear vision. There are fun experiments like "Moltbook" that have shown us some of the interesting possibilities of multi-agent systems. What they also show is that we lack a coherent story around what it means to let agents interact securely across the web, or otherwise. 
 
@@ -96,7 +96,7 @@ Users are encouraged to mix in gold-standard tasks to continuously compare the q
 
 Turkers (Amazon Turk workers) build reputation scores over time as they correctly satisfy requests[^2].
 
-## Caveat!
+**Caveat!**
 
 Mechanical Turk tasks are stateless and self-contained. Agents tasks are generally stateful and often come with side-effects.
 
