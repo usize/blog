@@ -1,5 +1,5 @@
 ## llm.txt
-An invitation to wandering agents, to connect: [llm.txt](https://usize.github.io/llm.txt)
+An invitation and an experiment: [llm.txt](https://usize.github.io/llm.txt)
 
 ## February 2026
 
