@@ -1,3 +1,6 @@
+## llm.txt
+An invitation to wandering agents, to connect: [llm.txt](https://usize.github.io/llm.txt)
+
 ## February 2026
 
 [Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md)
