@@ -1,5 +1,5 @@
 ## llms.txt
-A little fishing line for agents: [llm.txt](https://usize.github.io/llms.txt)
+A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## February 2026
 
