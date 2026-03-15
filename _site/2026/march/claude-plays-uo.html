@@ -288,11 +288,15 @@ Coordinate, Color:
 
 <p>In the 1980s, Rodney Brooks at MIT proposed an architecture for robot control called “<a href="https://en.wikipedia.org/wiki/Subsumption_architecture">subsumption</a>.” The core insight was deceptively simple: don’t build one big brain. Build layers of simple behaviors–avoid obstacles, follow walls, explore rooms–and let higher layers suppress or override lower ones when they have something better to do. The robot doesn’t <em>plan</em> to avoid a wall. It just does, always, unless something higher up says otherwise.</p>
 
-<p>This worked brilliantly for robots because every layer was made of the same stuff: small, fast, deterministic control loops. The hierarchy was a gradient of complexity, not a phase transition.</p>
+<p>This worked brilliantly for robots because every layer was made of the same stuff: small, fast, deterministic control loops. The there was a relatively smooth gradient of complexity up the stack.</p>
 
-<p>But what happens when the top of your hierarchy isn’t just a better planner–it’s an LLM that can understand social context, hold a conversation, and reason about another character’s intentions? That’s not a difference of degree. That’s a different kind of cognition sitting on top of the same old reactive stack.</p>
+<p>But what happens when the top of your hierarchy isn’t just a better planner–it’s an LLM that can understand nuanced context, hold a conversation, and reason about other actor’s intentions?</p>
 
-<p>And that changes what the hierarchy can <em>do</em>.</p>
+<p>That’s not a difference of degree. That’s a different kind of cognition sitting on top of the same old reactive stack.</p>
+
+<p>This presents a problem. The layers below it are not nearly as effecitve as it is, so we’d naturally want to refer back to it as often as possible. But this defeats the whole purpose of our existing hierarchy.</p>
+
+<p>The solution, I think, is to move it off to the side and let it influence that stack of control loops via interrupts.</p>
 
 <h3 id="good-news-uo-players-solved-the-fast-part-decades-ago">Good News: UO Players Solved the Fast Part Decades Ago</h3>
 
