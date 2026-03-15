@@ -1,12 +1,15 @@
+## llms.txt
+A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
+
 ## February 2026
 
-[Old things that look like agents (and what makes them different)](2026/old-things-that-look-like-agents.md)
+[Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md)
 
 Agents aren’t entirely new: Mechanical Turk, VPS Hosts and Cloud IAM each hint at the infrastructure we need. 
 
 ## January 2026
 
-[The best projects](2026/advice-00.md)
+[The Best Projects](2026/advice-00.md)
 
 > “The best projects are ones where you’d be happy if you found out that somebody had already done it.”
 
