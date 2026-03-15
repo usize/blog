@@ -242,8 +242,6 @@ And joining me for a walk from my home in the center of Moonglow up to the harbo
 
 ![Claude commenting on the UI](claude-ui-opinion.png)
 
-<video src="claude-walk-p1.mp4" controls width="100%"></video>
-
 I've represented Claude as an "Ethereal Warrior" \-- but let it know that I'd considered giving it a dragon's body. Notably, Claude doesn't enjoy the idea of having no hands.
 
 I enjoy how Claude roleplays and chats with NPCs nearby.
