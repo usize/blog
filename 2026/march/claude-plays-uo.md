@@ -13,19 +13,19 @@ title: "Adventuring with Claude in Ultima Online"
 
 When I was eleven, most people would not have guessed by looking at me that I spent my spare time fiddling with computers and gleefully tuning into '[Saturday Anime](https://www.youtube.com/watch?v=GEGzjlPk7sM)' on the SciFi Channel. So much so, that when a boy at school started passing around a CD-R full of splotchy low-res RealPlayer files of \[mostly\] subtitled Dragonball GT episodes he told me to 'f-off' when I asked to borrow it.
 
-But when I asked again in private a few days later and he skeptically handed it over, a friendship started to kindle between us. Over months, we would chat about popular science and about his dream of becoming a physicist–I wonder if I'd have majored in Physics if not for those conversations–or swap bits of Stargate SG1 lore. The friendship blossomed to the point where he shared something with me that he kept closer to his chest than anime bootlegs: Ultima Online.
+But when I asked again in private a few days later and he skeptically handed it over, a friendship started to kindle between us. Over months, we would chat about popular science and about his dream of becoming a physicist–I wonder if I'd have majored in Physics if not for those conversations–or swap bits of Stargate SG-1 lore. The friendship blossomed to the point where he shared something with me that he kept closer to his chest than anime bootlegs: Ultima Online.
 
-I think he didn't share his love of this game freely because it was more than entertainment. It was another life, away from our small town in Kentucky where being too interested in books by Carl Sagan–I'd once asked for a [Carl Sagan](https://www.youtube.com/watch?v=wupToqz1e2g) book for Christmas and gotten a scolding from a local pastor who recognized Sagan as an atheist–could mark you. If he'd invited the wrong person along, his refuge would be spoiled.
+I think he didn't share his love of this game freely because it was more than entertainment. It was another life, away from our small town in Kentucky where being too interested in books by Carl Sagan–I'd once asked for a [Carl Sagan](https://www.youtube.com/watch?v=wupToqz1e2g) book for Christmas and gotten a scolding from a local pastor who recognized Sagan as an atheist–could cause a hit to your reputation. If he'd invited the wrong person along, his refuge would be spoiled.
 
 I'm forever grateful that he trusted me with that refuge, because joining him there in Sosaria was life changing.
 
-I started my own second life as an animal tamer and real estate mogul. When a group of kids from Indiana scammed me out of a home, I even emulated their screen-safe criminality for a while until I realized that being a villain wasn't my idea of a life well lived. That world, and the connections I made with people from all geographies and walks of life became so real to me that when I recollect my childhood, many of my most vivid memories are from the perspective of my avatars and the adventures they had.
+I started my own second life as an animal tamer and real estate mogul. When a group of kids from Indiana scammed me out of a home, I emulated their screen-safe criminality for a while until I realized that being a villain wasn't my idea of a life well lived. That world, and the connections I made with people from all geographies and walks of life became so real to me that when I remember my childhood, many of the most vivid scenes are from the perspective of my avatars and the adventures they had.
 
-But, y'know, what does this have to do with my blog? Today I work mostly on AI infrastructure via the Kubernetes community and IBM Research projects.
+But, y'know, what does this have to do with my blog? Today I work mostly on AI infrastructure via the [Kubernetes community](https://github.com/kubernetes-sigs/wg-ai-gateway) and [IBM Research projects](https://github.com/kagenti/kagenti/).
 
-Well, recently I got to thinking about how playing UO was a formative experience for me. Its systems were simple enough for an eleven year old to comprehend, but had enough depth that I truly learned valuable lessons about: personal finance (it had a complex economy), group dynamics (guild system), human nature (players could steal and murder in UO) and what it means to create your own meaning (UO was a sandbox without a well developed quest system, so all meaning was self-defined by players).
+Well, recently I got to thinking about why UO was so formative for me. The conclusion I drew was that its systems were simple enough for an eleven year old to comprehend, but had enough depth that I truly learned valuable lessons about: personal finance (it had a complex economy), group dynamics (guild system), human nature (players could steal and murder in UO) and what it means to create your own meaning (UO was a sandbox without a well developed quest system).
 
-The world is genuinely rich and layered with complex systems that allow for self-expression. Gardening, fishing, crafting, designing homes, cooking, seafaring, cartography, alchemy and endless seemingly combinations of these with the many other skills and capabilities. As much as entertaining, playing that game during my formative years taught me about who *I* was and what I enjoyed.
+If you've never played it, the world is genuinely rich and layered with complex systems that allow for self-expression. Gardening, fishing, crafting, designing homes, cooking, seafaring, cartography, alchemy and endless combinations of these with the many other skills and capabilities. As much as entertaining, playing that game during my formative years taught me about who *I* was and what I enjoyed.
 
 And given all that, I wondered, what would Claude do in a world like that if left to its own devices? Free to explore a huge world full of layered complex systems and establish its own goals?
 
@@ -37,7 +37,9 @@ Playing games with Claude comes with two broad categories of challenges that wil
 
 These challenges aren't new, but LLMs present us with a phase transition in terms of the sorts of capabilities we might leverage at the top level of our cognitive hierarchy (more on that later).
 
-Because I enjoy playing with multi-agent systems, I already have a bit of experience with control systems–in particular through a simulation platform I built called "[monument](https://github.com/usize/monument)" where I use [Batch Synchronous Parallelism](https://en.wikipedia.org/wiki/Bulk_synchronous_parallel) to experiment with multi-agent systems without over-the-top API fees or hardware needs. More importantly, I've tried to get a feel for how various command and control hierarchies look by assigning agents the task of drawing images on a 2d grid with varying organizational structures and system prompts.
+Because I enjoy playing with multi-agent systems, I already have a bit of experience with control systems–in particular through a simulation platform I built called "[monument](https://github.com/usize/monument)" where I use [Batch Synchronous Parallelism](https://en.wikipedia.org/wiki/Bulk_synchronous_parallel) to experiment with multi-agent systems without over-the-top API fees or hardware needs. 
+
+More importantly, I've tried to get a feel for how various command and control hierarchies look by assigning agents the task of drawing images on a 2d grid with varying organizational structures and system prompts.
 
 Of course, the first challenge I faced was representing the grid of pixels to my text-based models effectively.
 
@@ -371,9 +373,9 @@ INSTINCTS (highest priority first)
 
 \[4\] IDLE:    if no other instinct active \-\> emote \*looks around curiously\*
 
-The runtime evaluates these top to bottom every tick. Higher priority rules suppress lower ones--exactly like Brooks' subsumption. But unlike Brooks, these weren't hand-coded by an engineer. Claude wrote them, just now, based on its understanding of the current situation.
+The runtime evaluates these top to bottom every tick. Higher priority rules suppress lower ones--exactly like Brooks' subsumption. But unlike Brooks, these weren't hand-coded by an engineer. *Claude wrote them, just now, based on its understanding of the current situation*.
 
-Walk into a dungeon? Claude wakes up on a heartbeat, sees the new environment, and pushes a completely different stack:
+So, if it walk into a dungeon Claude can take in the new environment and pushe a completely different stack:
 
 INSTINCTS (dungeon mode)
 
@@ -397,7 +399,7 @@ This is kinda like how many humans play UO, by the way. It’s why Razor and oth
 
 If this sort of fast and slow system looks workable, we can expand it further.
 
-        \+--------------+ \+---------------+ \+---------------+
+        +--------------+ +---------------+ +---------------+
 
         |  SOCIAL LLM  | |  SPATIAL LLM  | |  COMBAT LLM  |
 
@@ -405,13 +407,13 @@ If this sort of fast and slow system looks workable, we can expand it further.
 
         | and NPCs      | | and movement  | | hostiles      |
 
-        \+------+--------+ \+------+--------+ \+------+--------+
+        +------+--------+ +------+--------+ +------+--------+
 
                |                 |                  |
 
                v                 v                  v
 
-        \+---------------------------------------------------+
+        +---------------------------------------------------+
 
         |             EXECUTIVE (synthesizer)                |
 
@@ -419,17 +421,17 @@ If this sort of fast and slow system looks workable, we can expand it further.
 
         |  Compiles the unified script.                      |
 
-        \+-------------------------+-------------------------+
+        +-------------------------+-------------------------+
 
                                   |
 
                                   v
 
-        \+---------------------------------------------------+
+        +---------------------------------------------------+
 
         |                 SCRIPT RUNTIME (fast)              |
 
-        \+---------------------------------------------------+
+        +---------------------------------------------------+
 
 Each specialized LLM watches a filtered slice of the perception stream. The social observer only sees journal entries and nearby NPC dialogue. The spatial observer only sees the map and movement data. The combat observer only sees… well, you get it. Then we can join those streams back up into a supervisor.
 
@@ -461,4 +463,4 @@ You don't want the LLM evaluating every readiness probe. You want it writing the
 
 I don't have answers to all of these yet. I don’t even have my control loop in UO figured out yet. But I’m going to keep building and learning what I can, because it’s fun.
 
-Come help me figure it out if you’d like. The code is [here](https://github.com/usize/ClassicUO/tree/ai_sandbox).  
+Come help me figure it out if you’d like. The code is [here](https://github.com/usize/ClassicUO/tree/ai_sandbox).
