@@ -5,7 +5,7 @@ title: "Adventuring with Claude in Ultima Online"
 
 # Adventuring with Claude in Ultima Online
 
-![Claude commenting on the UI](first-login.gif)
+<img src="first-login.gif" alt="Claude commenting on the UI" style="max-width: 720px; width: 100%;">
 
 *skip to the code: [here](https://github.com/usize/ClassicUO/tree/ai_sandbox)*
 
@@ -72,7 +72,7 @@ And strangely enough, this aided tremendously in the identification of global st
 
 So, finally, I gave it both views and the performance improved notably. That is, it did a better job of understanding its global progress and a better job of keeping track of how it should navigate between points (x, y) and (x', y').
 
-![a monument sim running](monument.gif)
+<img src="monument.gif" alt="a monument sim running" style="max-width: 720px; width: 100%;">
 
 With those experiences in mind, I set about trying to create a text-only user interface for Ultima Online so that a text-only LLM might be able to use it effectively.
 
@@ -80,14 +80,19 @@ With those experiences in mind, I set about trying to create a text-only user in
 
 Luckily for me, there is an excellent and actively maintained open source UO client available, "ClassicUO". So, I simply created a REST API that would hook into it. Allowing for commands to be sent, and also for the graphical subsystem to render into plain text. Here's [the code](https://github.com/usize/ClassicUO/tree/ai_sandbox/src/ClassicUO.RestAPI), and here's what it looks like when you run it and hit `curl http://127.0.0.1:9000/api/summary`
 
-```
+<br/>
+<details>
+
+<summary>Click here to expand the world summary that Claude sees.</summary>
+
+<pre>
 ────────────────────────────────────────────────────────────────────────────
 
   IN GAME  •  ModernUO  •  up 0m50s
 
 ────────────────────────────────────────────────────────────────────────────
 
-  Gemma  (0x00007AEB)  Trammel  (4403, 1107, 0\)  facing S
+  Gemma  (0x00007AEB)  Trammel  (4403, 1107, 0)  facing S
 
   HP 62/62  MP 45/45  Stam 19/20  Gold 1,000  Wt 68/127
 
@@ -95,7 +100,7 @@ Luckily for me, there is an excellent and actively maintained open source UO cli
 
 ────────────────────────────────────────────────────────────────────────────
 
-  KEY  \#=wall/impassable  \+=door  @=you  M=hostile creature  N=NPC / vendor  i=item  r=reagent  w=weapon
+  KEY  #=wall/impassable  +=door  @=you  M=hostile creature  N=NPC / vendor  i=item  r=reagent  w=weapon
 
   MAP  20t E/W  10t N/S  (N↑)
 
@@ -111,126 +116,130 @@ Luckily for me, there is an excellent and actively maintained open source UO cli
 
   .........................................
 
-  \#\#\#\#\#\#\#\#\#...........M.......\#\#\#\#\#\#\#\#\#....
+  #########...........M.......#########....
 
-  \#.......\#...................\#\#\#\#\#\#\#\#\#....
+  #.......#...................#########....
 
-  \#.......\#...M...............\#\#\#\#\#\#\#\#\#....
+  #.......#...M...............#########....
 
-  \#.......\#...................\#\#\#\#\#\#\#\#\#....
+  #.......#...................#########....
 
-  \#.......\#...........@...\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
+  #.......#...........@...#################
 
-  \#.......\#...............\#...N...........\#
+  #.......#...............#...N...........#
 
-  \#.......\#...............\#...\#..\#\#\#\#.....\#
+  #.......#...............#...#..####.....#
 
-  \#.......\#...............\#...\#N.\#\#\#\#.....\#
+  #.......#...............#...#N.####.....#
 
-  \#\#\#\#\#\#..\#\#\#\#\#\#\#\#\#.......\#...\#..\#\#\#\#......
+  ######..#########.......#...#..####......
 
-  \#........\#\#\#\#\#\#\#\#.......\#...\#..\#\#\#\#......
+  #........########.......#...#..####......
 
-  \#........\#\#\#\#\#\#\#\#.......\#..N\#..\#\#\#\#.....\#
+  #........########.......#..N#..####.....#
 
-  \#........\#\#\#\#\#\#\#\#.......\#...............\#
+  #........########.......#...............#
 
-  \#\#\#\#\#\#\#.........\#w......\#\#\#\#\#.......\#\#\#\#\#
+  #######.........#w......#####.......#####
 
-  \#\#\#\#\#\#\#..N......\#...........\#\#\#\#\#\#\#\#\#....
+  #######..N......#...........#########....
 
-  \#\#\#\#\#\#\#.....N...+...........\#\#\#\#\#\#\#\#\#....
+  #######.....N...+...........#########....
 
 ────────────────────────────────────────────────────────────────────────────
 
     SERIAL       NAME                   TYPE       DIST  DIR    DX   DY  STATUS
 
-  M  0x000006FA  a sparrow              creature     4t    N     0   \-4  Gray  HP 100%
+  M  0x000006FA  a sparrow              creature     4t    N     0   -4  Gray  HP 100%
 
-  M  0x000006DB  a rat                  creature     7t   NE     6   \-7  Gray  HP 100%
+  M  0x000006DB  a rat                  creature     7t   NE     6   -7  Gray  HP 100%
 
-  M  0x000006D7  a dog                  creature     7t    N     2   \-7  Gray  HP 100%
+  M  0x000006D7  a dog                  creature     7t    N     2   -7  Gray  HP 100%
 
   N  0x000001DD  Alcina                 NPC          7t   SE     7    6  Invulnerable  HP 100%
 
   N  0x000001DC  Sancia                 NPC          8t    E     8    1  Invulnerable  HP 100%
 
-  M  0x000006D3  a crow                 creature     8t    W    \-8   \-2  Gray  HP 100%
+  M  0x000006D3  a crow                 creature     8t    W    -8   -2  Gray  HP 100%
 
   N  0x000001DE  Chuck                  NPC          9t    E     9    3  Invulnerable  HP 100%
 
-  N  0x00008E0D  Benson                 NPC         10t   SW    \-8   10  Invulnerable  HP 100%
+  N  0x00008E0D  Benson                 NPC         10t   SW    -8   10  Invulnerable  HP 100%
 
-  M  0x000006DF  a cat                  creature    11t   NE     6  \-11  Gray  HP 100%
+  M  0x000006DF  a cat                  creature    11t   NE     6  -11  Gray  HP 100%
 
-  N  0x0000008F  Sidney                 NPC         11t   SW   \-11    9  Invulnerable  HP 100%
+  N  0x0000008F  Sidney                 NPC         11t   SW   -11    9  Invulnerable  HP 100%
 
-  N  0x00000090  Adonis                 NPC         12t   SW   \-12   11  Invulnerable  HP 100%
+  N  0x00000090  Adonis                 NPC         12t   SW   -12   11  Invulnerable  HP 100%
 
-  M  0x000006ED  a dog                  creature    13t   NW   \-13  \-13  Gray  HP 100%
+  M  0x000006ED  a dog                  creature    13t   NW   -13  -13  Gray  HP 100%
 
-  M  0x000006E3  a dog                  creature    15t   NW   \-13  \-15  Gray  HP 100%
+  M  0x000006E3  a dog                  creature    15t   NW   -13  -15  Gray  HP 100%
 
   M  0x000006F0  a raven                creature    17t    S     3   17  Gray  HP 100%
 
-  w  0x4001945B  The Mighty Axe         weapon       8t    S    \-3    8
+  w  0x4001945B  The Mighty Axe         weapon       8t    S    -3    8
 
-  \+  0x4001A1BA  Wooden Door            door        10t    S    \-4   10
+  +  0x4001A1BA  Wooden Door            door        10t    S    -4   10
 
-  i  0x40019455  The Mage's Seat        item        11t   NE    11  \-11
+  i  0x40019455  The Mage's Seat        item        11t   NE    11  -11
 
-  \+  0x4001A1C7  Wooden Door            door        12t   NE    12  \-12
+  +  0x4001A1C7  Wooden Door            door        12t   NE    12  -12
 
-  \+  0x4001A1C8  Wooden Door            door        13t   NE    13  \-12
+  +  0x4001A1C8  Wooden Door            door        13t   NE    13  -12
 
-  r  0x4000B160  Black Pearl            reagent     16t   NW   \-14  \-16
+  r  0x4000B160  Black Pearl            reagent     16t   NW   -14  -16
 
   r  0x4000B124  Black Pearl            reagent     18t   SE    18   12
 
 ────────────────────────────────────────────────────────────────────────────
 
-  13:49:36  \[a rat\]  a rat
+  13:49:36  [a rat]  a rat
 
-  13:49:37  \[Maud\]  Maud the carpenter
+  13:49:37  [Maud]  Maud the carpenter
 
-  13:49:37  \[Penn\]  Penn the architect
+  13:49:37  [Penn]  Penn the architect
 
-  13:49:37  \[Celeste\]  Celeste the real estate broker
+  13:49:37  [Celeste]  Celeste the real estate broker
 
-  13:49:37  \[a dog\]  a dog
+  13:49:37  [a dog]  a dog
 
-  13:49:38  \[a dog\]  a dog
+  13:49:38  [a dog]  a dog
 
-  13:49:38  \[a cat\]  a cat
+  13:49:38  [a cat]  a cat
 
-  13:49:39  \[a rat\]  a rat
+  13:49:39  [a rat]  a rat
 
-  13:49:39  \[a dog\]  a dog
+  13:49:39  [a dog]  a dog
 
-  13:49:40  \[a sparrow\]  a sparrow
+  13:49:40  [a sparrow]  a sparrow
 
-  13:49:40  \[a sparrow\]  a sparrow
+  13:49:40  [a sparrow]  a sparrow
 
-  13:49:40  \[a crow\]  a crow
+  13:49:40  [a crow]  a crow
 
-  13:49:41  \[Sancia\]  Sancia the alchemist
+  13:49:41  [Sancia]  Sancia the alchemist
 
-  13:49:41  \[Chuck\]  Chuck the hairstylist
+  13:49:41  [Chuck]  Chuck the hairstylist
 
-  13:49:41  \[System\]  Your skill in Focus has increased by 0.4.  It is now 0.8.
+  13:49:41  [System]  Your skill in Focus has increased by 0.4.  It is now 0.8.
 
-  13:49:42  \[Alcina\]  Alcina the herbalist
+  13:49:42  [Alcina]  Alcina the herbalist
 
-  13:49:42  \[Sidney\]  Sidney the armorer
+  13:49:42  [Sidney]  Sidney the armorer
 
-  13:49:43  \[Benson\]  Benson the animal trainer
+  13:49:43  [Benson]  Benson the animal trainer
 
-  13:49:43  \[Adonis\]  Adonis the weaponsmith
+  13:49:43  [Adonis]  Adonis the weaponsmith
 
-  13:49:47  \[a raven\]  a raven
+  13:49:47  [a raven]  a raven
 
 ────────────────────────────────────────────────────────────────────────────
-```
+</pre>
+
+</details>
+
+<br/>
 
 It's basic. It could use richer descriptions. But is it functional enough to allow for some gameplay? Yes. It absolutely is.
 
@@ -240,7 +249,7 @@ Here's Claude purchasing some reagents, all on its own.
 
 And joining me for a walk from my home in the center of Moonglow up to the harbor. I asked for its opinion on the UI and got a good response.
 
-![Claude commenting on the UI](claude-ui-opinion.png)
+<img src="claude-ui-opinion.png" alt="Claude commenting on the UI" style="max-width: 720px; width: 100%;">
 
 I've represented Claude as an "Ethereal Warrior" \-- but let it know that I'd considered giving it a dragon's body. Notably, Claude doesn't enjoy the idea of having no hands.
 
