@@ -301,7 +301,7 @@ That's the LLM's actual role here. Not a better bot. A bot *author* that's alway
 
 ### Proposal: The Fast System and the Slow System
 
-              \+-----------------------------------------+
+              +-----------------------------------------+
 
               |         CLAUDE (supervisor)              |
 
@@ -311,9 +311,9 @@ That's the LLM's actual role here. Not a better bot. A bot *author* that's alway
 
               |  Rewrites when context shifts.           |
 
-              |  Wakes on heartbeat \+ escalation.        |
+              |  Wakes on heartbeat + escalation.        |
 
-              \+----------+--------------+---------------+
+              +----------+--------------+---------------+
 
                   writes |              | kills & takes
 
@@ -321,7 +321,7 @@ That's the LLM's actual role here. Not a better bot. A bot *author* that's alway
 
                          v              v
 
-              \+-----------------------------------------+
+              +-----------------------------------------+
 
               |         SCRIPT RUNTIME (fast)            |
 
@@ -331,19 +331,19 @@ That's the LLM's actual role here. Not a better bot. A bot *author* that's alway
 
               |  Signals Claude on escalation triggers.  |
 
-              \+-----------------------------------------+
+              +-----------------------------------------+
 
                          |
 
                          v
 
-              \+-----------------------------------------+
+              +-----------------------------------------+
 
               |         UO CLIENT (REST API)             |
 
               |  goto, say, cast, attack, etc.           |
 
-              \+-----------------------------------------+
+              +-----------------------------------------+
 
 At any given moment, Claude is in one of three modes:
 

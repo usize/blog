@@ -304,7 +304,7 @@ Coordinate, Color:
 
 <h3 id="proposal-the-fast-system-and-the-slow-system">Proposal: The Fast System and the Slow System</h3>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          \+-----------------------------------------+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          +-----------------------------------------+
 
           |         CLAUDE (supervisor)              |
 
@@ -314,9 +314,9 @@ Coordinate, Color:
 
           |  Rewrites when context shifts.           |
 
-          |  Wakes on heartbeat \+ escalation.        |
+          |  Wakes on heartbeat + escalation.        |
 
-          \+----------+--------------+---------------+
+          +----------+--------------+---------------+
 
               writes |              | kills &amp; takes
 
@@ -324,7 +324,7 @@ Coordinate, Color:
 
                      v              v
 
-          \+-----------------------------------------+
+          +-----------------------------------------+
 
           |         SCRIPT RUNTIME (fast)            |
 
@@ -334,19 +334,19 @@ Coordinate, Color:
 
           |  Signals Claude on escalation triggers.  |
 
-          \+-----------------------------------------+
+          +-----------------------------------------+
 
                      |
 
                      v
 
-          \+-----------------------------------------+
+          +-----------------------------------------+
 
           |         UO CLIENT (REST API)             |
 
           |  goto, say, cast, attack, etc.           |
 
-          \+-----------------------------------------+
+          +-----------------------------------------+
 </code></pre></div></div>
 
 <p>At any given moment, Claude is in one of three modes:</p>
