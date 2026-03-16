@@ -261,7 +261,11 @@ I enjoy how Claude roleplays and chats with NPCs nearby.
 
 So.. our UI works well enough for navigation and I have added Claude skills that act as a relatively complete game client for interacting with the world in other ways too. However, it's extremely SLOW and EXPENSIVE because I'm just running the summary skill in an endless loop.
 
-What's worse, I don't think Claude could, for example, be much use in a dungeon right now because it's missing the ability to react to stimulus in real time. 
+What's worse, Claude gets womped everytime it goes into battle because it's missing the ability to react to stimulus in real time.
+
+Here it is getting rekt by a zombie because it didn't heal itself in time.
+
+<video src="claude-gets-womped.mp4" controls width="100%"></video>
 
 As you can see in the reagent video, the loop looks like: read the summary, think about the whole world, issue a sequence of commands, wait, read the summary again. Every single action--moving to some location, saying hello--pays the full cost of an LLM round trip.
 
