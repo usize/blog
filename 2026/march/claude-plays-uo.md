@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "Adventuring with Claude in Ultima Online"
+title: "Teaching Claude to Play Ultima Online (and What Broke)"
 ---
 
-# Adventuring with Claude in Ultima Online
+# Teaching Claude to Play Ultima Online (and What Broke)
 
 <img src="first-login.gif" alt="Claude commenting on the UI" style="max-width: 720px; width: 100%;">
 
