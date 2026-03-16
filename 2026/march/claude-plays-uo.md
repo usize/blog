@@ -1,9 +1,9 @@
 ---
 layout: default
-title: "Teaching Claude to Play Ultima Online (and What Broke)"
+title: "Can Claude Play Ultima Online?"
 ---
 
-# Teaching Claude to Play Ultima Online (and What Broke)
+# Can Claude Play Ultima Online? 
 
 <img src="first-login.gif" alt="Claude commenting on the UI" style="max-width: 720px; width: 100%;">
 

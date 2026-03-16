@@ -3,9 +3,9 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## March 2026
 
-[Teaching Claude to Play Ultima Online (and What Broke)](2026/march/claude-plays-uo.md)
+[Can Claude Play Ultima Online?](2026/march/claude-plays-uo.md)
 
-Building a text-based interface so Claude can explore the world of Ultima Online, and a proposed architecture for real-time LLM agents inspired by subsumption.
+Building a text-based interface so Claude can explore the world of Sosaria, and a proposed architecture for real-time LLM agents inspired by subsumption.
 
 ## February 2026
 
