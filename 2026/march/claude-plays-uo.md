@@ -5,7 +5,7 @@ title: "Can Claude Play Ultima Online?"
 
 # Can Claude Play Ultima Online? 
 
-<img src="first-login.gif" alt="Claude commenting on the UI" style="max-width: 720px; width: 100%;">
+<img src="first-login.gif" alt="Claude commenting on the UI" style="width: 100%;">
 
 *skip to the code: [here](https://github.com/usize/ClassicUO/tree/ai_sandbox)*
 
