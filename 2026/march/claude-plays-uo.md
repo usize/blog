@@ -405,6 +405,16 @@ The idea is, we let Claude do what it excels at: solving problems by writing scr
 
 This is kinda like how many humans play UO, by the way. It’s why Razor and other macro systems exist.
 
+### Prior Art: Researchers Arriving at the Same Pattern
+
+This fast/slow split isn’t just my idea--researchers working on the integration of LLMs with real-time systems have converged on the same core architecture independently.
+
+In UAV sensor data processing, Luo’s [CurationAgent](https://pmc.ncbi.nlm.nih.gov/articles/PMC12736879/) implements a "State-Gated Agent Architecture" with explicit fast and slow paths--a deterministic FSM handles high-frequency commands at millisecond latency while the LLM is invoked only for complex reasoning. They draw directly from Dual Process Theory (System 1 fast/automatic, System 2 slow/deliberative) as the theoretical basis, which maps neatly onto the supervisory/authoring/direct-control modes I described above.
+
+In Minecraft, Wang et al.’s [VOYAGER](https://arxiv.org/abs/2305.16291) takes the "LLM as author, not executor" idea even further. Rather than having GPT-4 issue every action, VOYAGER builds an ever-growing skill library of executable JavaScript programs. The LLM writes code that the game engine runs cheaply, retrieves and composes previously written skills, and only invokes the LLM again when it needs a new capability. The result: 3.3x more unique items discovered and 15.3x faster progression than agents that lean on the LLM for every decision.
+
+Where I think my approach differs is in the fast layer. Both CurationAgent and VOYAGER build their reactive runtimes from scratch--a custom FSM in one case, a JavaScript skill library in the other. But in UO, we already *have* a fast layer with twenty-five years of community iteration behind it. Razor and UOAssist are battle-tested prioritized condition-action runtimes that players have been refining since the early 2000s. Rather than inventing a new scripting runtime, the opportunity here is to let Claude target one that already exists, and that real players have already proven works.
+
 ### Taking It Even Further: Parallel Attention
 
 If this sort of fast and slow system looks workable, we can expand it further.
