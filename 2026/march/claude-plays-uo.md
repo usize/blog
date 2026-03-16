@@ -4,7 +4,7 @@ title: "Can Claude Play Ultima Online?"
 ---
 
 # Can Claude Play Ultima Online? 
-### Sort of, but it needs some work..
+### Yes, but it needs a better architecture..
 
 
 <img src="first-login.gif" alt="Claude commenting on the UI" style="width: 100%;">
