@@ -285,13 +285,13 @@ What if, instead of treating Claude as the pilot of every action, we treated it 
 
 In the 1980s, Rodney Brooks at MIT proposed an architecture for robot control called "[subsumption](https://en.wikipedia.org/wiki/Subsumption_architecture)." The core insight was deceptively simple: don't build one big brain. Build layers of simple behaviors--avoid obstacles, follow walls, explore rooms--and let higher layers suppress or override lower ones when they have something better to do. The robot doesn't *plan* to avoid a wall. It just does, always, unless something higher up says otherwise.
 
-This worked brilliantly for robots because every layer was made of the same stuff: small, fast, deterministic control loops. The there was a relatively smooth gradient of complexity up the stack.
+This worked brilliantly for robots because every layer was made of the same stuff: small, fast, deterministic control loops. There was a relatively smooth gradient of complexity up the stack.
 
-But what happens when the top of your hierarchy isn't just a better planner--it's an LLM that can understand nuanced context, hold a conversation, and reason about other actor's intentions?
+But what happens when the top of your hierarchy isn't just a better planner--it's an LLM that can understand nuanced context, hold a conversation, and reason about other actors intentions?
 
 That's not a difference of degree. That's a different kind of cognition sitting on top of the same old reactive stack.
 
-This presents a problem. The layers below it are not nearly as effecitve as it is, so we'd naturally want to refer back to it as often as possible. But this defeats the whole purpose of our existing hierarchy.
+This presents a problem. The layers below it are not nearly as effective as it is, so we'd naturally want to refer back to it as often as possible. But this defeats the whole purpose of our existing hierarchy.
 
 The solution, I think, is to move it off to the side and let it influence that stack of control loops via interrupts.
 
