@@ -463,7 +463,7 @@ It seems like a promising way of integrating LLMs into robotics and game systems
 
 This is where I'm headed, and there's a lot I haven't figured out yet.
 
-- What should the script language actually look like? I’ll try to start with something like Razor, but it’s going to be incredibly tedious to test. What would it look like to build an SDK? Or even a simple stack based VM with OPCODES?
+- What should the script language actually look like? I’ll try to start with something like Razor, but it’s going to be incredibly tedious to test. What would it look like to build an SDK? Or even a simple stack based vm?
 
 - The heartbeat is an interrupt timer essentially, but we need other ways of defining interrupts. It’s not clear to me yet what the best triggers will be here.
 
