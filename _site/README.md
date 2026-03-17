@@ -3,6 +3,11 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## March 2026
 
+[Video of talk from CNCF Vancouver](https://www.youtube.com/watch?v=wettr4kyP84)
+
+This talk was based on [Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md). It was a lot of fun to give and there were lots of good questions at the end.
+British Columbia has a wonderful and welcoming tech community.
+
 [Can Claude Play Ultima Online?](2026/march/claude-plays-uo.md)
 
 Building a text-based interface so Claude can explore the world of Sosaria, and a proposed architecture for real-time LLM agents inspired by subsumption.

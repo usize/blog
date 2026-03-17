@@ -8,6 +8,9 @@
   </head>
   <body>
     <main class="markdown-body">
+      {% unless page.url == "/" %}
+      <nav class="back-link"><a href="{{ '/' | relative_url }}">&larr; main</a></nav>
+      {% endunless %}
       {{ content }}
     </main>
   </body>

@@ -138,6 +138,11 @@ pre code {
   overflow-x: auto;
 }
 
+.back-link {
+  font-size: 0.8em;
+  margin: 0 0 -1rem;
+}
+
 .markdown-body > :first-child {
   margin-top: 0;
 }
