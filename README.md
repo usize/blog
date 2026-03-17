@@ -13,7 +13,7 @@ Building a text-based interface so Claude can explore the world of Sosaria, and 
 
 For the past few months I've had the privilege of working heavily on this work-group, acting as a co-chair and contributing to its [egress proposal](https://github.com/kubernetes-sigs/wg-ai-gateway/blob/main/proposals/10-egress-gateways.md) in particular.
 
-It's a really crucial component for genai systems, because all of the AI specific network policy we're applying: kv cache aware routing, guardrails policies, token based rate limiting and more... don't have a well considered control-plane which breaks things terrible due to the necessecity for many of these policies to fire off in some sort of controlled pipeline.
+It's a really crucial component for GenAI systems, because all of the AI specific network policy we're applying: kv cache aware routing, guardrails policies, token based rate limiting and more... lack a fully featured control-plane. This is a big problem since e.g., many use cases imply strict requirements around policy ordering.
 
 Our meetings are all recorded and available on YouTube [here](https://www.youtube.com/playlist?list=PL69nYSiGNLP0sN57uRPbr38QX6tJxxV0o). 
 
