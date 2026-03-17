@@ -3,14 +3,26 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## March 2026
 
+[Can Claude Play Ultima Online?](2026/march/claude-plays-uo.md)
+
+Building a text-based interface so Claude can explore the world of Sosaria, and a proposed architecture for real-time LLM agents inspired by subsumption.
+
+----
+
+[Announcing the AI Gateway Working Group](https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/)
+
+For the past few months I've had the privilege of working heavily on this work-group, acting as a co-chair and contributing to its [egress proposal](https://github.com/kubernetes-sigs/wg-ai-gateway/blob/main/proposals/10-egress-gateways.md) in particular.
+
+It's a really crucial component for genai systems, because all of the AI specific network policy we're applying: kv cache aware routing, guardrails policies, token based rate limiting and more... don't have a well considered control-plane which breaks things terrible due to the necessecity for many of these policies to fire off in some sort of controlled pipeline.
+
+Our meetings are all recorded and available on YouTube [here](https://www.youtube.com/playlist?list=PL69nYSiGNLP0sN57uRPbr38QX6tJxxV0o). 
+
+----
+
 [Video of talk from CNCF Vancouver](https://www.youtube.com/watch?v=wettr4kyP84)
 
 This talk was based on [Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md). It was a lot of fun to give and there were lots of good questions at the end.
 British Columbia has a wonderful and welcoming tech community.
-
-[Can Claude Play Ultima Online?](2026/march/claude-plays-uo.md)
-
-Building a text-based interface so Claude can explore the world of Sosaria, and a proposed architecture for real-time LLM agents inspired by subsumption.
 
 ## February 2026
 
