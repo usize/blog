@@ -3,6 +3,13 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## March 2026
 
+[On a Podcast Talking about about Delegated Authorization](https://www.reasoning.show/episodes/18864723)
+
+A colleague referred me to this tech podcast and they reached out to chat. We mostly went over why delegation semantics are important, and how they're implied (like it or not)
+in systems with multi-tenant agents.
+
+----
+
 [Can Claude Play Ultima Online?](2026/march/claude-plays-uo.md)
 
 Building a text-based interface so Claude can explore the world of Sosaria, and a proposed architecture for real-time LLM agents inspired by subsumption.
