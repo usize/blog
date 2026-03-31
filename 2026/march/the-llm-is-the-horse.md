@@ -8,7 +8,7 @@ title: "The LLM is the Horse"
 
 #### [usize](https://github.com/usize) March 2026
 
-When the [Claude Code source was leaked](https://github.com/chatgptprojects/claude-code/blob/642c7f944bbe5f7e57c05d756ab7fa7c9c5035cc/src/utils/userPromptKeywords.ts#L8), one detail that caught people's attention was the use of regular expressions for basic sentiment detection. A function called `matchesNegativeKeyword` uses a regex to check whether user input contains frustration markers--tracking when people curse at Claude more or less, haha. Someone on Hacker News said:
+When the [Claude Code source was leaked](https://github.com/chatgptprojects/claude-code/blob/642c7f944bbe5f7e57c05d756ab7fa7c9c5035cc/src/utils/userPromptKeywords.ts#L8), one detail that caught people's attention was the use of regular expressions for basic sentiment detection. A function called `matchesNegativeKeyword` uses a regex to track when people curse at Claude more or less, haha. Someone on Hacker News said:
 
 <img src="regex.png" alt="HN comment: An LLM company using regexes for sentiment analysis? That's like a truck company using horses to transport parts. Weird choice." style="max-width: 720px; width: 100%;">
 

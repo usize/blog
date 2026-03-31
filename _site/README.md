@@ -3,14 +3,39 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## March 2026
 
-[Video of talk from CNCF Vancouver](https://www.youtube.com/watch?v=wettr4kyP84)
+[The LLM is the Horse](2026/march/the-llm-is-the-horse.md)
 
-This talk was based on [Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md). It was a lot of fun to give and there were lots of good questions at the end.
-British Columbia has a wonderful and welcoming tech community.
+Someone on Hacker News compared an LLM company using regexes to a truck company using horses. But the analogy is backwards: the LLM is the horse. :]
+
+----
+
+[On a Podcast Talking about Delegated Authorization](https://www.reasoning.show/episodes/18864723)
+
+A colleague referred me to this tech podcast and they reached out to chat. We mostly went over why delegation semantics are important, and how they're implied (like it or not)
+in systems with multi-tenant agents.
+
+----
 
 [Can Claude Play Ultima Online?](2026/march/claude-plays-uo.md)
 
 Building a text-based interface so Claude can explore the world of Sosaria, and a proposed architecture for real-time LLM agents inspired by subsumption.
+
+----
+
+[Announcing the AI Gateway Working Group](https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/)
+
+For the past few months I've had the privilege of working heavily on this work-group, acting as a co-chair and contributing to its [egress proposal](https://github.com/kubernetes-sigs/wg-ai-gateway/blob/main/proposals/10-egress-gateways.md) in particular.
+
+It's a really crucial component for GenAI systems, because all of the AI specific network policy we're applying: kv cache aware routing, guardrails policies, token based rate limiting and more... lack a fully featured control-plane. This is a big problem since e.g., many use cases imply strict requirements around policy ordering.
+
+Our meetings are all recorded and available on YouTube [here](https://www.youtube.com/playlist?list=PL69nYSiGNLP0sN57uRPbr38QX6tJxxV0o). 
+
+----
+
+[Video of talk from CNCF Vancouver](https://www.youtube.com/watch?v=wettr4kyP84)
+
+This talk was based on [Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md). It was a lot of fun to give and there were lots of good questions at the end.
+British Columbia has a wonderful and welcoming tech community.
 
 ## February 2026
 

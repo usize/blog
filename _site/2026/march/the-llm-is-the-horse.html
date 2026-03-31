@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The LLM is the Horse</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <main class="markdown-body">
+      
+      <nav class="back-link"><a href="/">&larr; main</a></nav>
+      
+      <h1 id="the-llm-is-the-horse">The LLM is the Horse</h1>
+<h3 id="and-the-regex-is-the-wheelbarrow">…and the regex is the wheelbarrow.</h3>
+
+<h4 id="usize-march-2026"><a href="https://github.com/usize">usize</a> March 2026</h4>
+
+<p>When the <a href="https://github.com/chatgptprojects/claude-code/blob/642c7f944bbe5f7e57c05d756ab7fa7c9c5035cc/src/utils/userPromptKeywords.ts#L8">Claude Code source was leaked</a>, one detail that caught people’s attention was the use of regular expressions for basic sentiment detection. A function called <code class="language-plaintext highlighter-rouge">matchesNegativeKeyword</code> uses a regex to track when people curse at Claude more or less, haha. Someone on Hacker News said:</p>
+
+<p><img src="regex.png" alt="HN comment: An LLM company using regexes for sentiment analysis? That's like a truck company using horses to transport parts. Weird choice." style="max-width: 720px; width: 100%;" /></p>
+
+<p>I see why they might say that, but the analogy is backwards.</p>
+
+<h2 id="llms-are-like-horses">LLMs are like horses</h2>
+
+<p><strong>The LLM is the horse</strong>. Horses are magnificent. They’re strong and capable of navigating complex terrain. But they eat massive amounts of food, need medical care and probably a lot of other things I don’t know about since I’ve never owned a horse!</p>
+
+<p>In terms of operating expenses, LLMs are a bit like horses. They’re powerful and flexible, capable of handling ambiguity and nuance that would be impossible to encode in rules. But every invocation comes at a relatively high cost due to the capex and opex required to run them at scale.</p>
+
+<h2 id="regular-expressions-are-like-wheelbarrows">Regular expressions are like wheelbarrows</h2>
+
+<p>The regex is more like a wheelbarrow. It relies on human [brain] power. Someone has to design and maintain it. It will never surprise you with emergent capability. But it’s very cheap, it’s very fast, and does not require heavy infrastructure to run. Plus nobody has ever needed to debug a wheelbarrow’s reasoning.</p>
+
+<p>Wheelbarrows didn’t become obsolete when trucks were invented. They filled–and continue to fill–a niche where the overhead of a more powerful tool isn’t justified. Checking whether a user typed “wtf” doesn’t need a language model.</p>
+
+<h2 id="this-pattern-applies-all-over">This pattern applies all over</h2>
+
+<p>This same tension shows up in the work I’ve been doing with the <a href="https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/">AI Gateway Working Group</a>, where we’ve been debating support for out-of-band body processing.</p>
+
+<p>The question boils down to: when a gateway needs to make a decision based on the contents of a request body, should that logic run <em>inside</em> the gateway (in-process), or should the body be shipped off to an external service for evaluation (out-of-band)?</p>
+
+<p>I’ve argued that out-of-band processing has real advantages. For example, when the policy is expensive to implement–say, <a href="https://llm-d.ai/docs/architecture/Components/inference-scheduler">running a complicated routing algorithm</a>–it makes sense to offload that work to a dedicated service. And if you design it to fail open, you limit the blast radius: when it fails you don’t have to drain the proxy.</p>
+
+<p>But for many common cases, simpler is better. Consider something as simple as promoting the model name from a JSON request body to a header so the gateway can route on it. John Howard <a href="https://blog.howardjohn.info/posts/cel-is-good/">wrote about exactly this pattern</a> in the context of <a href="https://agentgateway.dev/">agentgateway</a>, where a CEL expression like <code class="language-plaintext highlighter-rouge">json(request.body).model</code> replaces what would otherwise require standing up a 5,000-line external processor in Envoy, heh. The flexibility and limited blast radius aren’t as needed here. So it makes more sense to run it in the proxy.</p>
+
+<p>I <a href="https://colocatedeventseu2026.sched.com/event/2DY4J/panel-routing-intelligence-vs-traffic-control-architectural-tradeoffs-for-ai-inference-in-gateway-api-etai-lev-ran-ibm-abdullah-gharaibeh-google-morgan-foster-red-hat-john-howard-soloio">brought this topic up during a panel at Cloud Native AI Day</a> in Amsterdam, where we discussed these architectural tradeoffs in the context of AI inference and Gateway API. Answering the question of “to ext_proc or not to ext_proc” with “why not both” may seem cagey, but I mean it. Just like there’s room for regular expressions and LLMs to exist side by side in the world of NLP, there’s room for out of band processors and inline processors in the proxy. :D</p>
+
+<h2 id="tldr">tl;dr</h2>
+
+<p>For the same reason I expect wheelbarrows to be in use 100 years from now–though maybe pushed by an android–I expect regular expressions to be in heavy use as well. Why? Because there’s always a place for simple and complex to live together side by side, like the way sand fills the gaps in a jar full of pebbles. And likewise, when we’re engineering complex systems we should make room for the simple path.</p>
+
+    </main>
+  </body>
+</html>
