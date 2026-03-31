@@ -22,7 +22,7 @@ LLMs are the same: powerful and flexible. But every invocation comes at a relati
 
 ## Regular expressions are like wheelbarrows 
 
-The humble regex is more like a wheelbarrow. It relies on human [brain] power. Someone has to design and write/push it. It will never suddenly do something cool and useful that you didn't expect. But you'll also never have to convince it to do what you want on the fly and its cheap to operate.
+The regex is more like a wheelbarrow. It relies on human [brain] power. Someone has to design and write/push it. It will never suddenly do something cool and useful that you didn't expect. But you'll also never have to convince it to do what you want on the fly and its cheap to operate.
 
 Because of these properties--cheap, simple to maintain and predictable--wheelbarrows will always be useful. In fact, I could imagine some highly complex android using a wheelbarrow. Because *the expensive, complex and adaptable and the cheap, simple and straightforward compliment one another*.
 
