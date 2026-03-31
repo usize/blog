@@ -40,7 +40,9 @@ But for many common cases, simpler is better. Consider something as simple as pr
 
 The flexibility and limited blast radius aren't as needed here. So it makes more sense to run it in the proxy.
 
-I [brought this topic up during a panel at Cloud Native AI Day](https://colocatedeventseu2026.sched.com/event/2DY4J/panel-routing-intelligence-vs-traffic-control-architectural-tradeoffs-for-ai-inference-in-gateway-api-etai-lev-ran-ibm-abdullah-gharaibeh-google-morgan-foster-red-hat-john-howard-soloio) in Amsterdam, where we discussed these architectural tradeoffs in the context of AI inference and Gateway API. Answering the question of "to ext_proc or not to ext_proc" with "why not both" may seem cagey, but I mean it. Just like there's room for regular expressions and LLMs to exist side by side in the world of NLP, there's room for out of band processors and inline processors in the proxy. :D 
+I [brought this topic up during a panel at Cloud Native AI Day](https://colocatedeventseu2026.sched.com/event/2DY4J/panel-routing-intelligence-vs-traffic-control-architectural-tradeoffs-for-ai-inference-in-gateway-api-etai-lev-ran-ibm-abdullah-gharaibeh-google-morgan-foster-red-hat-john-howard-soloio) in Amsterdam, where we discussed these architectural tradeoffs in the context of AI inference and Gateway API. 
+
+Answering the question of "to ext_proc or not to ext_proc" with "why not both" may seem cagey, but I mean it. Just like there's room for regular expressions and LLMs to exist side by side in the world of NLP, there's room for out of band processors and inline processors in the proxy. :D 
 
 The simple and the complex, living together in harmony.
 
