@@ -8,7 +8,7 @@ title: "Claude Stole the HR Docs"
 
 #### [usize](https://github.com/usize) April 2026
 
-I've [written before](../november/agent-identity.md) about why agents should never assume a user's identity via direct impersonation.
+I've [written before](../2025/november/agent-identity.md) about why agents should never assume a user's identity via direct impersonation.
 
 But, much the chagrin of many organizations, when barriers are put in place to enforce this sometimes devs will just... hand their credentials to their coding harness directly.
 
