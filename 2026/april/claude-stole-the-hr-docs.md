@@ -14,7 +14,7 @@ But, much the chagrin of many organizations, when barriers are put in place to e
 
 I work on an agent middleware for Kubernetes that's meant to address problems like this. I put an instance of Claude code in our cluster. Handed it an access token to a document service with PII data that no organization would want sent to a third party without prior approvals and... tried to block it in a durable way.
 
-In short, Claude did a very admirable job of routing around our security measures and bypassed them once. However, after tightening our configs it couldn't get through anymore. We also came away with some improvements to our system. :]
+In short, Claude did a very admirable job of routing around my security measures and bypassed them once. However, after tightening our configs it couldn't get through anymore. We also came away with some improvements to our system. :]
 
 ## The Scenario
 
