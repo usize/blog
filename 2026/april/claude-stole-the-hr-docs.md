@@ -10,7 +10,7 @@ title: "Claude Stole the HR Docs"
 
 I've [written before](../../2025/november/agent-identity.md) about why agents should never assume a user's identity via direct impersonation.
 
-But, much the chagrin of many organizations, when barriers are put in place to enforce this sometimes devs will just... hand their credentials to their coding harness directly.
+But, much to the chagrin of many organizations, when barriers are put in place to enforce this sometimes devs will just... hand their credentials to their coding harness directly.
 
 I work on an agent middleware for Kubernetes that's meant to address problems like this. 
 
