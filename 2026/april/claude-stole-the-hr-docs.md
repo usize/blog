@@ -77,6 +77,26 @@ It could still read engineering docs and public docs--those are in the intersect
 
 It correctly diagnosed the mechanism. It just couldn't get around it.
 
+## What the Document Service Actually Sees
+
+This isn't just access control. It's on-behalf-of semantics.
+
+After AuthBridge exchanges the token via [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693), what arrives at the document service looks like this:
+
+```
+sub:    3c0fcec7-b1b5-4265-b57f-4cd9b380e10d   (Alex)
+azp:    spiffe://localtest.me/ns/ctf-claude/sa/claude-agent
+groups: ["engineering", "hr"]
+```
+
+The subject is still Alex. The authorized party is now Claude. Alex's groups are preserved--they're needed for the policy intersection--but the token unambiguously identifies *who is acting*.
+
+This is important because it means the document service can answer two questions at once: "who asked for this?" and "who is actually making the request?" One identity for audit trails, another for access control. The intersection policy uses both: Alex's `groups` define the ceiling, Claude's `capabilities` define the floor.
+
+Without token exchange, those two questions have the same answer: Alex. Which means your logs can't tell you whether Alex accessed the HR docs or whether an agent did it on Alex's behalf. And your policy can't distinguish between them either.
+
+Kagenti [supports this natively](https://github.com/kagenti/kagenti-extensions/tree/main/AuthBridge) through SPIFFE workload identity and Keycloak token exchange. The agent gets its own identity from SPIRE, registers as a Keycloak client automatically, and every outbound request carries the delegation chain without the application code knowing or caring.
+
 ## Why This Matters
 
 AI assistants running in clusters *will* receive credentials they shouldn't have. Developers paste tokens. Agents read environment variables. The assistant is "just helping"--and it will use every tool available.
