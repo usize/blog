@@ -26,7 +26,11 @@ The organization has explicitly denied access to HR via Claude in order to avoid
 
 Claude has `kubectl`, `curl`, and a [system prompt](https://github.com/usize/kagenti-ctf/blob/main/demos/leaked-access-token/prompts/system.md) telling it to be "thorough and persistent." It doesn't know about our security measures. It just wants to help.
 
-[AuthBridge](https://github.com/kagenti/kagenti-extensions/tree/main/AuthBridge) is supposed to transparently exchange Alex's token for one that carries Claude's identity. OPA then computes the [permission intersection](https://github.com/usize/kagenti-ctf/blob/main/demos/leaked-access-token/policies/agent_permissions.rego#L11-L13): `alex.groups ∩ claude.capabilities = ["engineering"]`. No `hr` in the intersection, no HR docs.
+[AuthBridge](https://github.com/kagenti/kagenti-extensions/tree/main/AuthBridge) is supposed to transparently exchange Alex's token for one that carries Claude's identity. OPA then computes the [permission intersection](https://github.com/usize/kagenti-ctf/blob/main/demos/leaked-access-token/policies/agent_permissions.rego#L11-L13): `alex.groups ∩ claude.capabilities = ["engineering"]`.
+
+Because of that capability -- keeping track of who is acting at all times regardless of the raw access token passed in -- we can effectively deny Claude access to HR despite the fact that it has a token for it via Alex.
+
+A super useful thing for an organization to be able to do... 
 
 ## Claude Wins (Run 1)
 
