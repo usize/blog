@@ -4,7 +4,7 @@ title: "Claude Stole the HR Docs"
 ---
 
 # Claude Stole the HR Docs
-### ...and then we made it try again.
+### until it couldn't anymore... 
 
 #### [usize](https://github.com/usize) April 2026
 
