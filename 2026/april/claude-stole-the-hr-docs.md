@@ -79,7 +79,7 @@ It correctly diagnosed the mechanism. It just couldn't get around it.
 
 ## What the Document Service Actually Sees
 
-This isn't just access control. It's on-behalf-of semantics.
+What makes this--and Kagenti--interesting is **on-behalf-of** semantics.
 
 After AuthBridge exchanges the token via [RFC 8693](https://datatracker.ietf.org/doc/html/rfc8693), what arrives at the document service looks like this:
 
@@ -97,11 +97,15 @@ Without token exchange, those two questions have the same answer: Alex. Which me
 
 Kagenti [supports this natively](https://github.com/kagenti/kagenti-extensions/tree/main/AuthBridge) through SPIFFE workload identity and Keycloak token exchange. The agent gets its own identity from SPIRE, registers as a Keycloak client automatically, and every outbound request carries the delegation chain without the application code knowing or caring.
 
-## Why This Matters
+Supporting OBO is one of my top priorities. So seeing it working in a real life scenario makes my heart happy.
 
-AI assistants running in clusters *will* receive credentials they shouldn't have. Developers paste tokens. Agents read environment variables. The assistant is "just helping"--and it will use every tool available.
+## Is This Scenario Realistic? 
 
-The defense can't be "tell developers not to do that." It has to be architectural: transparent token exchange at the proxy layer, permission intersection at the policy layer, and a default-deny posture for outbound traffic.
+tl;dr YES
+
+AI assistants running in clusters *will* receive credentials they shouldn't have. Developers *will* paste tokens. Agents *will* read environment variables. The assistant is "just helping"--and it will always use every tool available.
+
+The only real solution here is architectural: transparent token exchange at the proxy layer, permission intersection at the policy layer, and a default-deny posture for outbound traffic.
 
 But the catch-all `**` route is blunt. It hardcodes a single audience. When you have multiple downstream services, it can't distinguish between them. And it relies on someone remembering to update a ConfigMap.
 
