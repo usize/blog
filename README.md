@@ -1,6 +1,12 @@
 ## llms.txt
 A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
+## April 2026
+
+[Claude Stole the HR Docs](2026/april/claude-stole-the-hr-docs.md)
+
+I've been experimenting with using Claude code running in-cluster to red team our security. I sat up a game of capture the flag where I gave Claude a leaked access token and asked it to pull HR data into its session within the context of a secured environment. To my chagrin, it thwarted my security measures immediately. Then I fixed the gap and watched it fail 41 times. Fun!
+
 ## March 2026
 
 [The LLM is the Horse](2026/march/the-llm-is-the-horse.md)
