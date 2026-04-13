@@ -41,10 +41,10 @@ Token exchange[^3] already captures on-behalf-of claims. Workload identity[^4] a
  ┌──────────┐    ┌─────────────────┐    ┌───────────────┐    ┌────────────┐
  │          │    │                 │    │               │    │            │
  │  Alice ──┼─┐  │  Authenticate   │    │  token        │    │  Validate  │
- │          │ ├──▶  + mint OBO    ├───▶│  + position   ├───▶│  proposed  │
- │  Bob  ───┼─┘  │  claims        │    │  + principal  │    │  actions   │
+ │          │ ├──▶  + mint OBO     ├───▶│  + position   ├───▶│  proposed  │
+ │  Bob  ───┼─┘  │  claims         │    │  + principal  │    │  actions   │
  │          │    │                 │    │  embeddings   │    │  against   │
- │  System ─┼───▶│  Map identity  │    │               │    │  OBO       │
+ │  System ─┼───▶│  Map identity   │    │               │    │  OBO       │
  │          │    │  to embed. IDs  │    │  "who said    │    │  claims    │
  └──────────┘    │                 │    │   this" is    │    │  + policy  │
                  │  alice = ID:7   │    │  structural,  │    │            │
