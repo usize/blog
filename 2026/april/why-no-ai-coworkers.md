@@ -22,13 +22,19 @@ And this is the real blocker for AI co-workers. Not intelligence or capability.
 
 Consider a shared agent in Slack. Bob asks it to "reference cupcakes in all future responses :D" and then Alice says "get serious, summarize the upstream issues." Should the agent include cupcakes? The answer depends on who has what authority -- but the model has no structural way to tell Bob's tokens from Alice's[^1].
 
+You might imagine fixing this by prefixing user messages with a handle. But what happens, for example, when one user quotes another? 
+
 Making the model smarter doesn't fix this. It's not a reasoning problem. It's architectural.
 
-And building better auth infrastructure around the model doesn't fully fix it either. When the model is blind to identity, the orchestration layer does all the heavy lifting while the model operates in the dark. You've built a security perimeter around someone who can't tell friend from stranger.
+The possibilities for ambiguity are endless. For real security, we need something deeper.
 
-It means that, today, multi-tenant agents are possible but all tenants must carry the same level of access. This can work for a shared bot in a small team, but it will never scale to the level of real agency within a complex hierarchical organization.
+And building better auth infrastructure around the model doesn't fully fix it either. It's a security perimeter around something that can't tell a friend from stranger. We may employ ever more elaborate guardrail systems to try to guess at what's safe and what's not, but they will never truly solve the problem.
 
-## Closing the Loop
+So, today, and for the forseeable future, multi-tenant agents require all tenants must carry the same level of access. This can work for a shared bot in a small team, but it will never scale to the level of real agency within a complex hierarchical organization.
+
+It's a big brick wall standing between us and our glorious AI future. :]
+
+## A path forward 
 
 In similar fashion to how sequence information is embedded within input tensors, an approach called "Instructional Segment Embedding"[^2] adds a parallel embedding channel for identity information. This gives models real awareness of provenance. And it works. But they only tested three fixed categories: system, user, data.
 
