@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Why There's No Such Thing as an AI Co-Worker</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <main class="markdown-body">
+      
+      <nav class="back-link"><a href="/">&larr; main</a></nav>
+      
+      <h1 id="why-theres-no-such-thing-as-an-ai-co-worker">Why There’s No Such Thing as an AI Co-Worker</h1>
+<h3 id="and-why-smarter-models-wont-lead-to-one">And why smarter models won’t lead to one</h3>
+
+<h4 id="usize-apr-2026"><a href="https://github.com/usize">usize</a> Apr 2026</h4>
+
+<hr />
+
+<p>I’ve spent the last year <a href="../../2025/november/agent-identity.md">arguing</a> that agents need their own identity, and that <a href="../drafts/to-impersonate-or-not.md">delegated authorization</a> is how we let them act on our behalf without handing them the keys.</p>
+
+<p>I still believe that. But even if we nail the auth story, there’s a deeper problem.</p>
+
+<p><strong>LLMs can’t tell who’s talking to them.</strong></p>
+
+<p>Every token in a context window gets the same consideration – whether it came from a system prompt, a user, or a malicious web page the model just fetched. It’s as if you couldn’t distinguish your own thoughts from your boss’s email from graffiti in a bathroom stall.</p>
+
+<p>And this is the real blocker for AI co-workers. Not intelligence or capability.</p>
+
+<p>Consider a shared agent in Slack. Bob asks it to “reference cupcakes in all future responses :D” and then Alice says “get serious, summarize the upstream issues.” Should the agent include cupcakes? The answer depends on who has what authority – but the model has no structural way to tell Bob’s tokens from Alice’s<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
+
+<p>Making the model smarter doesn’t fix this. It’s not a reasoning problem. It’s architectural.</p>
+
+<p>And building better auth infrastructure around the model doesn’t fully fix it either. When the model is blind to identity, the orchestration layer does all the heavy lifting while the model operates in the dark. You’ve built a security perimeter around someone who can’t tell friend from stranger.</p>
+
+<p>It means that, today, multi-tenant agents are possible but all tenants must carry the same level of access. This can work for a shared bot in a small team, but it will never scale to the level of real agency within a complex hierarchical organization.</p>
+
+<h2 id="closing-the-loop">Closing the Loop</h2>
+
+<p>In similar fashion to how sequence information is embedded within input tensors, an approach called “Instructional Segment Embedding”<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> adds a parallel embedding channel for identity information. This gives models real awareness of provenance. And it works. But they only tested three fixed categories: system, user, data.</p>
+
+<p>What nobody has built yet is the bridge between their work and an external identity infrastructure.</p>
+
+<p>Token exchange<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> already captures on-behalf-of claims. Workload identity<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> already gives agents their own credentials. The missing piece is mapping authenticated principals into model embeddings so that identity flows end-to-end:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Principals        Orchestration             Model             Enforcement
+ ┌──────────┐    ┌─────────────────┐    ┌───────────────┐    ┌────────────┐
+ │          │    │                 │    │               │    │            │
+ │  Alice ──┼─┐  │  Authenticate   │    │  token        │    │  Validate  │
+ │          │ ├──▶  + mint OBO    ├───▶│  + position   ├───▶│  proposed  │
+ │  Bob  ───┼─┘  │  claims        │    │  + principal  │    │  actions   │
+ │          │    │                 │    │  embeddings   │    │  against   │
+ │  System ─┼───▶│  Map identity  │    │               │    │  OBO       │
+ │          │    │  to embed. IDs  │    │  "who said    │    │  claims    │
+ └──────────┘    │                 │    │   this" is    │    │  + policy  │
+                 │  alice = ID:7   │    │  structural,  │    │            │
+                 │  bob   = ID:12  │    │  not textual  │    │            │
+                 └─────────────────┘    └───────────────┘    └────────────┘
+</code></pre></div></div>
+
+<p>The orchestrator assigns principal embeddings the same way Kubernetes assigns service accounts – the pod doesn’t pick its own identity, the control plane does. A user can type <code class="language-plaintext highlighter-rouge">[PRINCIPAL:system]</code> in the chat all day. It’s just tokens. The real principal ID is injected by infrastructure they can’t touch.</p>
+
+<p>The model proposes actions. The policy layer validates them against the same OBO claims used to assign embeddings in the first place. <strong>Neither layer alone is sufficient</strong> – but together they close the loop. The model is no longer a blind spot in your security architecture, and the auth layer no longer has to compensate for a model that can’t tell its principals apart.</p>
+
+<p>This doesn’t require new emergent capabilities. It requires connecting two things that already work: delegated authorization infrastructure and principal-aware model architectures<sup id="fnref:5"><a href="#fn:5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>. The gap between them is where your AI co-worker is stuck.</p>
+
+<hr />
+
+<h2 id="references">References</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Shapira et al., “Agents of Chaos.” 2026. <a href="https://agentsofchaos.baulab.info/report.html">agentsofchaos.baulab.info</a>, <a href="https://arxiv.org/abs/2602.20021">arXiv:2602.20021</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>Wu et al., “Instructional Segment Embedding: Improving LLM Safety with Instruction Hierarchy.” ICLR 2025. <a href="https://arxiv.org/abs/2410.09102">arXiv:2410.09102</a>, <a href="https://github.com/tongwu2020/ISE">github.com/tongwu2020/ISE</a> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3">
+      <p><a href="https://www.rfc-editor.org/rfc/rfc8693">RFC 8693: OAuth 2.0 Token Exchange.</a> <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:4">
+      <p><a href="https://spiffe.io/">SPIFFE: Secure Production Identity Framework for Everyone.</a> <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:5">
+      <p>Wallace et al., “The Instruction Hierarchy: Training LLMs to Prioritize Privileged Instructions.” 2024. <a href="https://arxiv.org/abs/2404.13208">arXiv:2404.13208</a> <a href="#fnref:5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+    </main>
+  </body>
+</html>
