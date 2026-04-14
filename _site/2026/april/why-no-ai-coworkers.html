@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="/assets/style.css" />
   </head>
   <body>
+    <canvas id="c64-bg"></canvas>
     <main class="markdown-body">
       
-      <nav class="back-link"><a href="/">&larr; main</a></nav>
+      <nav class="back-link"><a href="/">&larr; MAIN</a></nav>
       
       <h1 id="why-theres-no-such-thing-as-an-ai-co-worker">Why There’s No Such Thing as an AI Co-Worker</h1>
 <h3 id="and-why-smarter-models-wont-lead-to-one">And why smarter models won’t lead to one</h3>
@@ -30,13 +31,19 @@
 
 <p>Consider a shared agent in Slack. Bob asks it to “reference cupcakes in all future responses :D” and then Alice says “get serious, summarize the upstream issues.” Should the agent include cupcakes? The answer depends on who has what authority – but the model has no structural way to tell Bob’s tokens from Alice’s<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
 
+<p>You might imagine fixing this by prefixing user messages with a handle. But what happens, for example, when one user quotes another?</p>
+
 <p>Making the model smarter doesn’t fix this. It’s not a reasoning problem. It’s architectural.</p>
 
-<p>And building better auth infrastructure around the model doesn’t fully fix it either. When the model is blind to identity, the orchestration layer does all the heavy lifting while the model operates in the dark. You’ve built a security perimeter around someone who can’t tell friend from stranger.</p>
+<p>The possibilities for ambiguity are endless. For real security, we need something deeper.</p>
 
-<p>It means that, today, multi-tenant agents are possible but all tenants must carry the same level of access. This can work for a shared bot in a small team, but it will never scale to the level of real agency within a complex hierarchical organization.</p>
+<p>And building better auth infrastructure around the model doesn’t fully fix it either. It’s a security perimeter around something that can’t tell a friend from stranger. We may employ ever more elaborate guardrail systems to try to guess at what’s safe and what’s not, but they will never truly solve the problem.</p>
 
-<h2 id="closing-the-loop">Closing the Loop</h2>
+<p>So, today, and for the forseeable future, multi-tenant agents require all tenants must carry the same level of access. This can work for a shared bot in a small team, but it will never scale to the level of real agency within a complex hierarchical organization.</p>
+
+<p>It’s a big brick wall standing between us and our glorious AI future. :]</p>
+
+<h2 id="a-path-forward">A path forward</h2>
 
 <p>In similar fashion to how sequence information is embedded within input tensors, an approach called “Instructional Segment Embedding”<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> adds a parallel embedding channel for identity information. This gives models real awareness of provenance. And it works. But they only tested three fixed categories: system, user, data.</p>
 
@@ -48,10 +55,10 @@
  ┌──────────┐    ┌─────────────────┐    ┌───────────────┐    ┌────────────┐
  │          │    │                 │    │               │    │            │
  │  Alice ──┼─┐  │  Authenticate   │    │  token        │    │  Validate  │
- │          │ ├──▶  + mint OBO    ├───▶│  + position   ├───▶│  proposed  │
- │  Bob  ───┼─┘  │  claims        │    │  + principal  │    │  actions   │
+ │          │ ├──▶  + mint OBO     ├───▶│  + position   ├───▶│  proposed  │
+ │  Bob  ───┼─┘  │  claims         │    │  + principal  │    │  actions   │
  │          │    │                 │    │  embeddings   │    │  against   │
- │  System ─┼───▶│  Map identity  │    │               │    │  OBO       │
+ │  System ─┼───▶│  Map identity   │    │               │    │  OBO       │
  │          │    │  to embed. IDs  │    │  "who said    │    │  claims    │
  └──────────┘    │                 │    │   this" is    │    │  + policy  │
                  │  alice = ID:7   │    │  structural,  │    │            │
@@ -90,5 +97,7 @@
 </div>
 
     </main>
+    
+    <script src="/assets/c64.js"></script>
   </body>
 </html>

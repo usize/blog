@@ -1,15 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&family=Share+Tech+Mono&display=swap");
 
 :root {
   color-scheme: dark;
-  --page-bg: #07090f;
-  --page-grid: rgba(255, 255, 255, 0.045);
-  --panel-bg: rgba(10, 13, 22, 0.94);
-  --text: #f2f4f8;
-  --muted: #9aa5bf;
-  --accent: #9dd6ff;
-  --accent-strong: #ffd29f;
-  --code-bg: rgba(20, 25, 40, 0.95);
+
+  /* Commodore 64 VIC-II palette */
+  --c64-blue: #352879;
+  --c64-light-blue: #6c5eb5;
+  --c64-cyan: #70a4b2;
+  --c64-green: #588d43;
+  --c64-light-green: #9ad284;
+  --c64-yellow: #b8c76f;
+  --c64-white: #ffffff;
+  --c64-light-grey: #959595;
+
+  /* Theme tokens – breadbin hardware + CRT screen */
+  --page-bg: #3a3430;
+  --screen-bg: #1c1a28;
+  --border: #585048;
+  --text: #c8c6e0;
+  --muted: #908ea8;
+  --accent: #7daeb8;
+  --accent-strong: var(--c64-yellow);
+  --heading: var(--c64-light-green);
+  --heading-h1: #90c4d2;
+  --code-bg: #151328;
 }
 
 * {
@@ -19,54 +33,96 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--page-bg);
-  background-image: none;
+  background: var(--page-bg);
   color: var(--text);
-  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono",
-    Menlo, monospace;
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  font-size: 21px;
+  line-height: 1.5;
   display: flex;
   justify-content: center;
-  padding: 3.5rem 1.5rem 4rem;
-  line-height: 1.75;
-  letter-spacing: 0.01em;
+  padding: 2.5rem 1.5rem 3rem;
 }
 
-body > * {
+body > *:not(#c64-bg) {
   width: 100%;
 }
 
 main,
 article,
 .markdown-body {
-  width: min(1080px, 100%);
+  width: min(920px, 100%);
   margin: 0 auto;
-  background: var(--panel-bg);
-  padding: clamp(2rem, 4vw, 3rem);
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  font-size: 18px;
+  background: var(--screen-bg);
+  padding: clamp(1.8rem, 4vw, 2.8rem);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  position: relative;
+  box-shadow:
+    0 0 40px rgba(20, 16, 40, 0.6),
+    inset 0 0 80px rgba(0, 0, 0, 0.08);
+}
+
+/* CRT vignette */
+main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0, 0, 0, 0.15) 100%
+  );
+  pointer-events: none;
+  border-radius: 6px;
+  z-index: 1;
+}
+
+/* Scanlines */
+main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  border-radius: 6px;
+  z-index: 2;
 }
 
 h1,
 h2,
 h3,
 h4 {
-  color: var(--accent-strong);
-  letter-spacing: 0.05em;
-  font-weight: 500;
-  margin-top: 2.3rem;
+  font-family: "Press Start 2P", monospace;
+  color: var(--heading);
+  text-shadow: 0 0 10px rgba(154, 210, 132, 0.4);
+  letter-spacing: 0.02em;
+  line-height: 2;
+  margin-top: 2.5rem;
   margin-bottom: 1rem;
+  font-weight: normal;
 }
 
 h1 {
-  font-size: clamp(2.1rem, 4vw, 2.6rem);
-  color: var(--accent);
-  border-bottom: 2px solid rgba(157, 214, 255, 0.4);
-  padding-bottom: 0.75rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  color: var(--heading-h1);
+  text-shadow: 0 0 12px rgba(144, 196, 210, 0.4);
+  border-bottom: 3px solid var(--border);
+  padding-bottom: 1rem;
 }
 
 h2 {
-  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-size: clamp(0.75rem, 2vw, 1rem);
+}
+
+h3,
+h4 {
+  font-size: clamp(0.65rem, 1.5vw, 0.85rem);
 }
 
 p,
@@ -94,7 +150,7 @@ a::after {
   height: 1px;
   background: var(--accent);
   opacity: 0.4;
-  transition: opacity 120ms ease;
+  transition: opacity 120ms ease, background 120ms ease;
 }
 
 a:hover,
@@ -105,10 +161,11 @@ a:focus-visible {
 a:hover::after,
 a:focus-visible::after {
   opacity: 1;
+  background: var(--accent-strong);
 }
 
 blockquote {
-  border-left: 3px solid rgba(157, 214, 255, 0.6);
+  border-left: 3px solid var(--border);
   padding-left: 1.25rem;
   color: var(--muted);
   font-style: italic;
@@ -117,30 +174,46 @@ blockquote {
 hr {
   margin: 3rem 0;
   border: none;
-  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  border-top: 2px dashed var(--border);
 }
 
 code {
   display: inline-block;
   background: var(--code-bg);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.15rem 0.45rem;
-  border-radius: 4px;
-  font-size: 0.95em;
-  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono",
-    Menlo, monospace;
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.4rem;
+  border-radius: 2px;
+  font-size: 0.92em;
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  color: var(--c64-light-green);
+}
+
+pre {
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 16px;
+  line-height: 1.5;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 1rem;
+  overflow-x: auto;
+  color: var(--c64-light-green);
 }
 
 pre code {
-  width: 100%;
   display: block;
-  padding: 1rem;
-  overflow-x: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .back-link {
-  font-size: 0.8em;
-  margin: 0 0 -1rem;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.5em;
+  margin: 0 0 -0.5rem;
 }
 
 .markdown-body > :first-child {
@@ -157,7 +230,7 @@ pre code {
   width: 100%;
   height: auto;
   margin: 2rem auto;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 2px solid var(--border);
 }
 
 .video-embed {
@@ -165,7 +238,7 @@ pre code {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 2px solid var(--border);
 }
 
 .video-embed iframe {
@@ -175,4 +248,99 @@ pre code {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/* Rule 30 background canvas */
+#c64-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body > *:not(#c64-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* C64 BASIC terminal */
+.c64-terminal {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--border);
+}
+
+.c64-boot-text {
+  font-family: "Press Start 2P", monospace;
+  font-size: clamp(9px, 2vw, 14px);
+  line-height: 2.2;
+  color: var(--heading-h1);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#c64-input {
+  display: block;
+  width: 100%;
+  background: var(--code-bg);
+  color: var(--c64-light-green);
+  border: 1px solid var(--border);
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 0.75rem;
+  resize: vertical;
+  outline: none;
+  border-radius: 2px;
+}
+
+#c64-input:focus {
+  border-color: var(--c64-light-green);
+}
+
+.c64-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+
+#c64-run {
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  color: var(--heading);
+  cursor: pointer;
+  user-select: none;
+}
+
+#c64-run:hover {
+  color: var(--accent-strong);
+}
+
+.c64-hint {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+#c64-output {
+  color: var(--c64-light-green);
+  font-family: "Share Tech Mono", "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.4;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
+::selection {
+  background: var(--border);
+  color: var(--c64-white);
 }
