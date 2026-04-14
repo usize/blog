@@ -3,6 +3,15 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## April 2026
 
+[Kubecon EU 2026 AI Gateway Talk](https://www.youtube.com/embed/JiQJcXvvajg?si=IfJBwlkHALzgD9Tz)
+
+We spent a lot of time socializing the AI Gateway Working Group's work at Kubecon EU 2026. Unfortunately some of my workmates couldn't make it. Though I was happily joined by one of our other co-chair's, Flynn, on stage. I think we made a good team. :] This is timely, since some of the Egress work I speak about at ~15 minutes is now in the process of being reviewed for inclusion in Gateway API, see: [GEP-4747](https://github.com/kubernetes-sigs/gateway-api/pull/4746).
+<br/>
+<br/>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JiQJcXvvajg?si=IfJBwlkHALzgD9Tz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+----
+
 [Why There's No Such Thing as an AI Co-Worker](2026/april/why-no-ai-coworkers.md)
 
 To solve the biggest problems around agent identity, we need to connect our existing infrastructure to models themselves. At the level of input tokens (not text).
@@ -24,6 +33,10 @@ Someone on Hacker News compared an LLM company using regexes to a truck company 
 ----
 
 [On a Podcast Talking about Delegated Authorization](https://www.reasoning.show/episodes/18864723)
+
+<br/>
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/episode/7AFPuD2nfPBtr52ZN4xbh3?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 A colleague referred me to this tech podcast and they reached out to chat. We mostly went over why delegation semantics are important, and how they're implied (like it or not)
 in systems with multi-tenant agents.
@@ -47,6 +60,9 @@ Our meetings are all recorded and available on YouTube [here](https://www.youtub
 ----
 
 [Video of talk from CNCF Vancouver](https://www.youtube.com/watch?v=wettr4kyP84)
+
+<br/>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/wettr4kyP84?si=M-rBh1sJNihcWNsp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 This talk was based on [Old Things That Look Like Agents](2026/old-things-that-look-like-agents.md). It was a lot of fun to give and there were lots of good questions at the end.
 British Columbia has a wonderful and welcoming tech community.
