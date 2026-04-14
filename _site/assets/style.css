@@ -28,6 +28,7 @@
 
 * {
   box-sizing: border-box;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='32' viewBox='0 0 12 16'%3E%3Cpath d='M0 0h2v2h-2zM2 2h2v2h-2zM4 4h2v2h-2zM6 6h2v2h-2zM8 8h2v2h-2zM0 2h2v2h-2zM0 4h2v2h-2zM0 6h2v2h-2zM0 8h2v2h-2zM0 10h2v2h-2zM0 12h2v2h-2zM2 12h2v2h-2zM2 10h2v2h-2zM2 8h2v2h-2zM2 6h2v2h-2zM2 4h2v2h-2zM4 6h2v2h-2zM4 8h2v2h-2zM4 10h2v2h-2zM6 8h2v2h-2zM6 10h2v2h-2zM8 10h2v2h-2z' fill='%2390c4d2'/%3E%3Cpath d='M2 2h2v2h-2zM2 4h2v2h-2zM2 6h2v2h-2zM2 8h2v2h-2zM4 6h2v2h-2zM4 8h2v2h-2zM6 8h2v2h-2z' fill='%231c1a28'/%3E%3C/svg%3E") 0 0, auto;
 }
 
 body {
@@ -100,7 +101,7 @@ h3,
 h4 {
   font-family: "Press Start 2P", monospace;
   color: var(--heading);
-  text-shadow: 0 0 10px rgba(154, 210, 132, 0.4);
+  text-shadow: 0 0 8px rgba(154, 210, 132, 0.15);
   letter-spacing: 0.02em;
   line-height: 2;
   margin-top: 2.5rem;
@@ -111,7 +112,7 @@ h4 {
 h1 {
   font-size: clamp(0.9rem, 2.5vw, 1.2rem);
   color: var(--heading-h1);
-  text-shadow: 0 0 12px rgba(144, 196, 210, 0.4);
+  text-shadow: 0 0 8px rgba(144, 196, 210, 0.15);
   border-bottom: 3px solid var(--border);
   padding-bottom: 1rem;
 }
@@ -266,78 +267,59 @@ body > *:not(#c64-bg) {
   z-index: 1;
 }
 
-/* C64 BASIC terminal */
-.c64-terminal {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 3px solid var(--border);
-}
-
-.c64-boot-text {
+/* C64 boot header */
+.c64-boot {
   font-family: "Press Start 2P", monospace;
   font-size: clamp(9px, 2vw, 14px);
   line-height: 2.2;
   color: var(--heading-h1);
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.c64-link {
+  color: inherit;
+}
+
+.c64-link::after {
+  display: none;
+}
+
+.c64-link:hover {
+  color: var(--accent-strong);
+}
+
+.c64-repl {
+  display: inline-block;
+  text-align: left;
 }
 
 #c64-input {
-  display: block;
-  width: 100%;
-  background: var(--code-bg);
-  color: var(--c64-light-green);
-  border: 1px solid var(--border);
-  font-family: "Share Tech Mono", "Courier New", monospace;
-  font-size: 15px;
-  line-height: 1.5;
-  padding: 0.75rem;
-  resize: vertical;
+  font: inherit;
+  color: inherit;
   outline: none;
-  border-radius: 2px;
+  cursor: text;
 }
 
-#c64-input:focus {
-  border-color: var(--c64-light-green);
-}
-
-.c64-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 0;
-}
-
-#c64-run {
-  font-family: "Press Start 2P", monospace;
-  font-size: 11px;
-  color: var(--heading);
+.c64-hint {
+  display: block;
+  text-align: right;
+  font-size: 1em;
+  color: var(--border);
+  margin-top: 0.3em;
+  letter-spacing: 0.15em;
   cursor: pointer;
   user-select: none;
 }
 
-#c64-run:hover {
-  color: var(--accent-strong);
-}
-
-.c64-hint {
-  font-size: 12px;
-  color: var(--muted);
+.c64-hint:hover {
+  color: var(--heading-h1);
 }
 
 #c64-output {
-  color: var(--c64-light-green);
-  font-family: "Share Tech Mono", "Courier New", monospace;
-  font-size: 15px;
-  line-height: 1.4;
-  max-height: 300px;
-  overflow-y: auto;
+  text-align: left;
   white-space: pre-wrap;
   word-break: break-all;
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: none;
 }
 
 ::selection {

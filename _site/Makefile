@@ -6,4 +6,4 @@ install:
 	$(BUNDLE) install
 
 serve: install
-	$(BUNDLE) exec jekyll serve --livereload
+	$(BUNDLE) exec jekyll serve --host 0.0.0.0 --livereload

@@ -1,45 +1,104 @@
-/* Rule 30 cellular automata background */
+/* C64 background display — driven by the BASIC interpreter */
 (function () {
-  var canvas, ctx, width, height, cells;
-  var BLOCK = 8;
-  var ALIVE = '#504a46';
-  var DEAD = '#3a3430';
+  var DEFAULT_PROGRAM = '10 PRINT CHR$(205.5+RND(1)); : GOTO 10';
 
-  function xorshift(s) {
-    s ^= s >> 12;
-    s ^= s << 25;
-    s ^= s >> 27;
-    return s;
-  }
+  var canvas, ctx;
+  var FONT_SIZE = 21;
+  var FONT = FONT_SIZE + 'px "Share Tech Mono", monospace';
+  var CELL_W, CELL_H;
+  var cols, rows;
+  var buffer = [];
+  var cursorCol = 0, cursorRow = 0;
+  var charQueue = [];
+  var FG = '#504a46';
+  var BG = '#3a3430';
+  var currentContext = null;
+  var dirty = false;
 
-  function seedCells() {
-    cells = [];
-    var s = (Date.now() * 9301 + 49297) & 0xFFFF;
-    for (var i = 0; i < width; i++) {
-      s = xorshift(s);
-      cells.push(s & 1);
+  function initBuffer() {
+    buffer = [];
+    cursorCol = 0;
+    cursorRow = 0;
+    charQueue = [];
+    dirty = true;
+    for (var r = 0; r < rows; r++) {
+      buffer.push(new Array(cols).fill(''));
     }
   }
 
-  function step() {
-    // Scroll canvas up by one block row
-    ctx.drawImage(canvas, 0, BLOCK, canvas.width, canvas.height - BLOCK,
-                          0, 0, canvas.width, canvas.height - BLOCK);
-    // Rule 30: left XOR (middle OR right)
-    var next = [];
-    for (var i = 0; i < width; i++) {
-      var l = i > 0 ? cells[i - 1] : cells[width - 1];
-      var m = cells[i];
-      var r = i < width - 1 ? cells[i + 1] : cells[0];
-      next.push(l ^ (m | r));
+  function writeChar(ch) {
+    if (ch === '\n') {
+      cursorCol = 0;
+      cursorRow++;
+    } else {
+      if (cursorRow >= 0 && cursorRow < rows) {
+        buffer[cursorRow][cursorCol] = ch;
+      }
+      cursorCol++;
+      if (cursorCol >= cols) {
+        cursorCol = 0;
+        cursorRow++;
+      }
     }
-    cells = next;
+    while (cursorRow >= rows) {
+      buffer.shift();
+      buffer.push(new Array(cols).fill(''));
+      cursorRow--;
+    }
+  }
 
-    // Draw new bottom row
-    var y = canvas.height - BLOCK;
-    for (var i = 0; i < width; i++) {
-      ctx.fillStyle = cells[i] ? ALIVE : DEAD;
-      ctx.fillRect(i * BLOCK, y, BLOCK, BLOCK);
+  function render() {
+    var perFrame = Math.ceil(cols / 3);
+    for (var i = 0; i < perFrame && charQueue.length > 0; i++) {
+      writeChar(charQueue.shift());
+      dirty = true;
+    }
+
+    if (!dirty) return;
+    dirty = false;
+
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Pass 1: draw / and \ as actual diagonal lines
+    ctx.beginPath();
+    ctx.strokeStyle = FG;
+    ctx.lineWidth = 2;
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var ch = buffer[r][c];
+        var x = c * CELL_W;
+        var y = r * CELL_H;
+        if (ch === '/') {
+          ctx.moveTo(x, y + CELL_H);
+          ctx.lineTo(x + CELL_W, y);
+        } else if (ch === '\\') {
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + CELL_W, y + CELL_H);
+        }
+      }
+    }
+    ctx.stroke();
+
+    // Pass 2: draw all other characters as text
+    ctx.fillStyle = FG;
+    ctx.font = FONT;
+    ctx.textBaseline = 'top';
+    for (var r = 0; r < rows; r++) {
+      var hasText = false;
+      var line = '';
+      for (var c = 0; c < cols; c++) {
+        var ch = buffer[r][c];
+        if (ch && ch !== '/' && ch !== '\\') {
+          line += ch;
+          hasText = true;
+        } else {
+          line += ' ';
+        }
+      }
+      if (hasText) {
+        ctx.fillText(line, 0, r * CELL_H);
+      }
     }
   }
 
@@ -47,79 +106,96 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     ctx = canvas.getContext('2d');
-    width = Math.floor(canvas.width / BLOCK);
-    height = Math.floor(canvas.height / BLOCK);
-    seedCells();
-    ctx.fillStyle = DEAD;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // Pre-fill so the canvas isn't empty on load
-    for (var i = 0; i < height; i++) step();
+    ctx.font = FONT;
+    CELL_W = Math.ceil(ctx.measureText('M').width);
+    CELL_H = Math.ceil(FONT_SIZE * 1.2);
+    cols = Math.floor(canvas.width / CELL_W);
+    rows = Math.floor(canvas.height / CELL_H);
+    initBuffer();
+  }
+
+  function runProgram(text) {
+    if (currentContext) currentContext.complete = true;
+    charQueue = [];
+    initBuffer();
+    try {
+      var stmts = parse(lexer(text));
+      stmts = orderProgram(stmts);
+      var compiler = new ByteCompiler(stmts);
+      currentContext = new Context(window, compiler, {
+        schedule: function (fn) { setTimeout(fn, 200); }
+      });
+      currentContext.runSlowly();
+    } catch (e) {
+      console.error('BASIK:', e);
+    }
   }
 
   function init() {
     canvas = document.getElementById('c64-bg');
     if (!canvas) return;
+
     resize();
-    setInterval(step, 200);
-    window.addEventListener('resize', function () {
-      resize();
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', init);
-})();
-
-/* BASIC terminal — home page only */
-(function () {
-  function init() {
-    var input = document.getElementById('c64-input');
-    var output = document.getElementById('c64-output');
-    var runBtn = document.getElementById('c64-run');
-    if (!input || !output || !runBtn) return;
+    setInterval(render, 200);
+    window.addEventListener('resize', resize);
 
     window.basicPrint = function (value) {
-      output.appendChild(document.createTextNode(String(value)));
-      output.scrollTop = output.scrollHeight;
+      var str = String(value);
+      for (var i = 0; i < str.length; i++) {
+        if (charQueue.length < cols * rows) {
+          charQueue.push(str[i]);
+        }
+      }
     };
 
     window.basicInput = function (message, returnType, callback) {
-      window.basicPrint(message || '');
-      var val = window.prompt(message || 'INPUT', '');
-      if (val === null) val = '0';
-      window.basicPrint(val + '\n');
-      var vals = val.split(',').map(function (v) {
-        return returnType === 'string' ? v : (Number(v) || 0);
-      });
-      callback(vals);
+      callback([0]);
     };
 
-    function run() {
-      output.textContent = '';
-      try {
-        var stmts = parse(lexer(input.value));
-        stmts = orderProgram(stmts);
-        var compiler = new ByteCompiler(stmts);
-        var context = new Context(window, compiler, {
-          schedule: function (fn) { setTimeout(fn, 0); }
-        });
-        context.runSlowly();
-      } catch (e) {
-        window.basicPrint('?SYNTAX ERROR\n' + e.toString() + '\n');
+    var input = document.getElementById('c64-input');
+    var output = document.getElementById('c64-output');
+
+    if (input) {
+      function run() {
+        if (output) output.textContent = '';
+        runProgram(input.innerText);
       }
-    }
 
-    runBtn.addEventListener('click', run);
+      var runBtn = document.getElementById('c64-run');
+      if (runBtn) runBtn.addEventListener('click', run);
 
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && e.shiftKey) {
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && e.shiftKey) {
+          e.preventDefault();
+          run();
+        }
+      });
+
+      input.addEventListener('paste', function (e) {
         e.preventDefault();
-        run();
-      }
-    });
+        var text = e.clipboardData.getData('text/plain');
+        document.execCommand('insertText', false, text);
+      });
 
-    // Auto-run the default program
-    setTimeout(run, 300);
+      setTimeout(function () {
+        run();
+        input.focus();
+        // Place cursor at end of text
+        var range = document.createRange();
+        range.selectNodeContents(input);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }, 300);
+    } else {
+      setTimeout(function () {
+        runProgram(DEFAULT_PROGRAM);
+      }, 300);
+    }
   }
 
-  document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('DOMContentLoaded', function () {
+    document.fonts.ready.then(init);
+  });
 })();

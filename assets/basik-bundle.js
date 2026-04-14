@@ -849,6 +849,13 @@ var builtinFunctions = {
   ABS: n => Math.abs(n),
   LEN: n => n.length,
   SIN: n => Math.sin(n),
+  CHR$: function(n) {
+    n = Math.floor(n);
+    // Map C64 PETSCII diagonal graphics characters
+    if (n === 205) return '\\';
+    if (n === 206) return '/';
+    return String.fromCharCode(n);
+  },
   _lastRandom: 0.001,
   _xorShiftRand: n => {
     n ^= n >> 12; // a
@@ -861,10 +868,8 @@ var builtinFunctions = {
       if x>0, random number between 0 and 1
       if x=0, repeats last random number
       if x<0, begins new repeatable sequence*/
-    if (n >= 1)
-       builtinFunctions._lastRandom = builtinFunctions._xorShiftRand(builtinFunctions._lastRandom * 1000);
-    if (n < 0)
-      builtinFunctions._lastRandom = builtinFunctions._xorShiftRand(builtinFunctions._lastRandom * 1000);
+    if (n !== 0)
+      builtinFunctions._lastRandom = Math.random();
     return builtinFunctions._lastRandom;
   },
 };

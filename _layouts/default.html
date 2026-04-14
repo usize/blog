@@ -9,43 +9,23 @@
   <body>
     <canvas id="c64-bg"></canvas>
     <main class="markdown-body">
-      {% if page.url == "/" %}
-      <div class="c64-terminal">
-        <div class="c64-boot-text">
-          **** COMMODORE 64 BASIC V2 ****<br>
-          64K RAM SYSTEM  38911 BASIC BYTES FREE
-        </div>
-        <textarea id="c64-input" spellcheck="false" rows="17">10 PRINT TAB(30);"SINE WAVE"
-20 PRINT TAB(15);"CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY"
-30 PRINT: PRINT: PRINT: PRINT: PRINT
-40 REM REMARKABLE PROGRAM BY DAVID AHL
-50 B=0
-100 REM  START LONG LOOP
-110 FOR T=0 TO 40 STEP .25
-120 A=INT(26+25*SIN(T))
-130 PRINT TAB(A);
-140 IF B=1 THEN 180
-150 PRINT "CREATIVE"
-160 B=1
-170 GOTO 200
-180 PRINT "COMPUTING"
-190 B=0
-200 NEXT T
-999 END</textarea>
-        <div class="c64-controls">
-          <span id="c64-run">RUN</span>
-          <span class="c64-hint">shift+enter</span>
-        </div>
-        <pre id="c64-output" class="c64-output"></pre>
-      </div>
-      {% else %}
+      {% unless page.url == "/" %}
       <nav class="back-link"><a href="{{ '/' | relative_url }}">&larr; MAIN</a></nav>
+      {% endunless %}
+      {% if page.url == "/" %}
+      <div class="c64-boot">
+        **** COMMODORE 64 <a href="https://github.com/usize/basik" class="c64-link">BASIK</a> V2 ****<br>
+        64K RAM SYSTEM  38911 BASIC BYTES FREE<br>
+        <br>
+        <div class="c64-repl">READY.<br>
+<span id="c64-input" contenteditable="true" spellcheck="false">10 PRINT CHR$(205.5+RND(1)); : GOTO 10</span>
+<div id="c64-output"></div>
+<span class="c64-hint" id="c64-run">&#x21E7;&#x23CE;</span></div>
+      </div>
       {% endif %}
       {{ content }}
     </main>
-    {% if page.url == "/" %}
     <script src="{{ '/assets/basik-bundle.js' | relative_url }}"></script>
-    {% endif %}
     <script src="{{ '/assets/c64.js' | relative_url }}"></script>
   </body>
 </html>
