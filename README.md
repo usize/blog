@@ -3,6 +3,12 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## April 2026
 
+[Cloud Summit](cloudsummit.ca)
+
+A talk about "AI Gateways" in general. Why they exist. What makes them different from other "Gateways". What are the challenges?
+
+Slides are [here](2026/april/cloudsummit/deck.html)
+
 [Kubecon EU 2026 AI Gateway Talk](https://www.youtube.com/embed/JiQJcXvvajg?si=IfJBwlkHALzgD9Tz)
 
 We spent a lot of time socializing the AI Gateway Working Group's work at Kubecon EU 2026. Unfortunately some of my workmates couldn't make it. Though I was happily joined by one of our other co-chair's, Flynn, on stage. I think we made a good team. :] This is timely, since some of the Egress work I speak about at ~15 minutes is now in the process of being reviewed for inclusion in Gateway API, see: [GEP-4747](https://github.com/kubernetes-sigs/gateway-api/pull/4746).
