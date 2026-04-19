@@ -3,7 +3,7 @@ A little fishing line for agents: [llms.txt](https://usize.github.io/llms.txt)
 
 ## April 2026
 
-[Cloud Summit](cloudsummit.ca)
+[Cloud Summit](https://cloudsummit.ca)
 
 A talk about "AI Gateways" in general. Why they exist. What makes them different from other "Gateways". What are the challenges?
 
