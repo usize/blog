@@ -450,13 +450,13 @@
 </section>
 
 <!-- 04 Dream deployment -->
-<section class="slide" data-label="Best-in-class AI Gateway">
+<section class="slide" data-label="Kitchen Sink Inference Policy">
   <div class="eyebrow">01 &nbsp;/&nbsp; The dream deployment</div>
-  <h2 class="title">The best-in-class AI gateway.</h2>
-  <div class="subtitle">Every feature on this diagram ships in some product today. Composing them correctly is where it falls apart.</div>
+  <h2 class="title">Everything and the kitchen sink inference policy.</h2>
+  <div class="subtitle">All of these policies exist in products today. What would it look like to compose them in a single AI Gateway?</div>
 
   <div style="flex:1; display: flex; align-items: center; justify-content: center;">
-    <svg viewBox="0 0 1680 640" width="100%" style="max-height: 600px;">
+    <svg viewBox="0 0 1870 640" width="100%" style="max-height: 600px;">
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
           <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--fg-2)"/>
@@ -464,7 +464,7 @@
       </defs>
 
       <!-- gateway container -->
-      <rect x="170" y="40" width="1330" height="560" fill="none" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="6 6"/>
+      <rect x="170" y="40" width="1515" height="560" fill="none" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="6 6"/>
       <text x="190" y="72" class="lbl">AI Gateway</text>
 
       <!-- User -->
@@ -490,12 +490,12 @@
         <text x="85" y="76" text-anchor="middle" class="node-t">guardrails</text>
         <text x="85" y="98" text-anchor="middle" class="node-s">jailbreak, PII</text>
       </g>
-      <!-- 3 Semantic routing -->
+      <!-- 3 Model picking -->
       <g transform="translate(570,160)">
         <rect x="0" y="0" width="170" height="110" fill="var(--bg)" stroke="var(--rule-strong)" stroke-width="1.5"/>
-        <text x="85" y="50" text-anchor="middle" class="node-t">Semantic</text>
-        <text x="85" y="76" text-anchor="middle" class="node-t">routing</text>
-        <text x="85" y="98" text-anchor="middle" class="node-s">picks model</text>
+        <text x="85" y="50" text-anchor="middle" class="node-t">Model</text>
+        <text x="85" y="76" text-anchor="middle" class="node-t">picking</text>
+        <text x="85" y="98" text-anchor="middle" class="node-s">SR, mapping</text>
       </g>
       <!-- 4 Cache lookup -->
       <g transform="translate(755,160)">
@@ -517,8 +517,14 @@
         <text x="85" y="76" text-anchor="middle" class="node-t">picker</text>
         <text x="85" y="98" text-anchor="middle" class="node-s">KV locality</text>
       </g>
-      <!-- 7 Credential injection -->
+      <!-- 7 Protocol translation -->
       <g transform="translate(1310,160)">
+        <rect x="0" y="0" width="170" height="110" fill="var(--bg)" stroke="var(--rule-strong)" stroke-width="1.5"/>
+        <text x="85" y="50" text-anchor="middle" class="node-t">Protocol</text>
+        <text x="85" y="76" text-anchor="middle" class="node-t">translation</text>
+      </g>
+      <!-- 8 Credential injection -->
+      <g transform="translate(1495,160)">
         <rect x="0" y="0" width="170" height="110" fill="var(--bg)" stroke="var(--rule-strong)" stroke-width="1.5"/>
         <text x="85" y="50" text-anchor="middle" class="node-t">Credential</text>
         <text x="85" y="76" text-anchor="middle" class="node-t">injection</text>
@@ -534,38 +540,46 @@
       <line x1="925" y1="215" x2="938" y2="215" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
       <line x1="1110" y1="215" x2="1123" y2="215" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
       <line x1="1295" y1="215" x2="1308" y2="215" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
+      <line x1="1480" y1="215" x2="1493" y2="215" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
 
       <!-- ========== MODEL POOL (right side, bridges top and bottom) ========== -->
-      <g transform="translate(1530,175)">
+      <g transform="translate(1715,175)">
         <rect x="0" y="0" width="140" height="85" fill="var(--surface)" stroke="var(--rule-strong)" stroke-width="1.5"/>
         <text x="70" y="38" text-anchor="middle" class="node-t">In-cluster</text>
         <text x="70" y="62" text-anchor="middle" class="node-s">primary pool</text>
       </g>
-      <g transform="translate(1530,275)">
+      <g transform="translate(1715,275)">
         <rect x="0" y="0" width="140" height="85" fill="var(--bg)" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/>
         <text x="70" y="38" text-anchor="middle" class="node-t" style="fill: var(--muted);">Cloud</text>
         <text x="70" y="62" text-anchor="middle" class="node-s" style="fill: var(--muted);">fallback</text>
       </g>
 
       <!-- request fan-in to pool + response fan-out from pool -->
-      <line x1="1480" y1="215" x2="1515" y2="215" stroke="var(--fg-2)" stroke-width="1.8"/>
-      <line x1="1515" y1="215" x2="1515" y2="317" stroke="var(--fg-2)" stroke-width="1.8"/>
-      <line x1="1515" y1="217" x2="1528" y2="217" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
-      <line x1="1515" y1="317" x2="1528" y2="317" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
+      <line x1="1665" y1="215" x2="1700" y2="215" stroke="var(--fg-2)" stroke-width="1.8"/>
+      <line x1="1700" y1="215" x2="1700" y2="317" stroke="var(--fg-2)" stroke-width="1.8"/>
+      <line x1="1700" y1="217" x2="1713" y2="217" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
+      <line x1="1700" y1="317" x2="1713" y2="317" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
 
       <!-- U-turn: pool → response path -->
-      <line x1="1600" y1="360" x2="1600" y2="475" stroke="var(--fg-2)" stroke-width="1.8"/>
-      <line x1="1600" y1="475" x2="1178" y2="475" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
+      <line x1="1785" y1="360" x2="1785" y2="475" stroke="var(--fg-2)" stroke-width="1.8"/>
+      <line x1="1785" y1="475" x2="1297" y2="475" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
 
       <!-- ========== RESPONSE PATH (bottom row, right-to-left) ========== -->
-      <text x="1370" y="400" class="lbl" style="fill: var(--fg-2); letter-spacing: 2px; text-anchor: end;">&larr; &nbsp;RESPONSE</text>
+      <text x="1560" y="400" class="lbl" style="fill: var(--fg-2); letter-spacing: 2px; text-anchor: end;">&larr; &nbsp;RESPONSE</text>
 
       <!-- Output guardrails -->
-      <g transform="translate(1010,420)">
+      <g transform="translate(1125,420)">
         <rect x="0" y="0" width="170" height="110" fill="var(--bg)" stroke="var(--rule-strong)" stroke-width="1.5"/>
         <text x="85" y="50" text-anchor="middle" class="node-t">Output</text>
         <text x="85" y="76" text-anchor="middle" class="node-t">guardrails</text>
         <text x="85" y="98" text-anchor="middle" class="node-s">PII, toxicity, leaks</text>
+      </g>
+      <!-- Token rate limit -->
+      <g transform="translate(940,420)">
+        <rect x="0" y="0" width="170" height="110" fill="var(--bg)" stroke="var(--rule-strong)" stroke-width="1.5"/>
+        <text x="85" y="50" text-anchor="middle" class="node-t">Token rate</text>
+        <text x="85" y="76" text-anchor="middle" class="node-t">limit</text>
+        <text x="85" y="98" text-anchor="middle" class="node-s">output tokens</text>
       </g>
       <!-- Cache write -->
       <g transform="translate(755,420)">
@@ -575,17 +589,18 @@
       </g>
 
       <!-- response arrows (right to left) -->
-      <line x1="1010" y1="475" x2="927" y2="475" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
+      <line x1="1125" y1="475" x2="1112" y2="475" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
+      <line x1="940" y1="475" x2="927" y2="475" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
       <line x1="755" y1="475" x2="150" y2="475" stroke="var(--fg-2)" stroke-width="1.8"/>
       <line x1="150" y1="475" x2="150" y2="372" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arr)"/>
 
       <!-- ========== OBSERVABILITY STRIP ========== -->
-      <rect x="172" y="570" width="1326" height="26" fill="var(--accent-2-soft)" stroke="var(--accent-2)" stroke-width="1" rx="1"/>
-      <text x="835" y="588" text-anchor="middle" class="lbl" style="fill: var(--accent-2); font-size: 17px; letter-spacing: 0.06em;">Observability &middot; token metering</text>
+      <rect x="172" y="570" width="1511" height="26" fill="var(--accent-2-soft)" stroke="var(--accent-2)" stroke-width="1" rx="1"/>
+      <text x="928" y="588" text-anchor="middle" class="lbl" style="fill: var(--accent-2); font-size: 17px; letter-spacing: 0.06em;">Observability &middot; token metering</text>
       <!-- tick marks from key pipeline boxes -->
-      <line x1="840" y1="270" x2="840" y2="570" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 5" opacity="0.5"/>
-      <line x1="1095" y1="530" x2="1095" y2="570" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 5" opacity="0.5"/>
-      <line x1="1600" y1="360" x2="1600" y2="570" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 5" opacity="0.5"/>
+      <line x1="1025" y1="270" x2="1025" y2="570" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 5" opacity="0.5"/>
+      <line x1="1210" y1="530" x2="1210" y2="570" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 5" opacity="0.5"/>
+      <line x1="1785" y1="360" x2="1785" y2="570" stroke="var(--accent-2)" stroke-width="1" stroke-dasharray="3 5" opacity="0.5"/>
     </svg>
   </div>
 
@@ -779,18 +794,67 @@
   </div>
 </section>
 
-<!-- 09 Section cover: Problem 2 -->
+<!-- 09 PayloadProcessingPipeline -->
+<section class="slide" data-label="PayloadProcessingPipeline">
+  <div class="eyebrow">02 &nbsp;/&nbsp; Primitive detail</div>
+  <h2 class="title">PayloadProcessingPipeline.</h2>
+
+  <div class="two-col" style="flex:1; gap: 80px; align-items: start;">
+    <div class="code" style="font-size: 18px;">
+<span class="k">kind:</span> <span class="acc">PayloadProcessingPipeline</span>
+<span class="k">metadata:</span>
+  <span class="k">name:</span> <span class="s">inference-pipeline</span>
+<span class="k">spec:</span>
+  <span class="k">processors:</span>
+  - <span class="k">name:</span> <span class="s">semantic-routing</span>
+    <span class="k">backendRefs:</span> [{ <span class="k">name:</span> <span class="s">router-svc</span> }]
+    <span class="k">config:</span>
+      <span class="k">timeout:</span> <span class="s">"100ms"</span>
+      <span class="k">failureMode:</span> <span class="s">closed</span>
+
+  - <span class="k">name:</span> <span class="s">guardrails</span>
+    <span class="k">backendRefs:</span> [{ <span class="k">name:</span> <span class="s">guardrail-svc</span> }]
+    <span class="k">config:</span>
+      <span class="k">timeout:</span> <span class="s">"500ms"</span>
+      <span class="k">failureMode:</span> <span class="s">closed</span>
+
+  - <span class="k">name:</span> <span class="s">semantic-cache</span>
+    <span class="k">backendRefs:</span> [{ <span class="k">name:</span> <span class="s">cache-svc</span> }]
+    <span class="k">config:</span>
+      <span class="k">timeout:</span> <span class="s">"200ms"</span>
+      <span class="k">failureMode:</span> <span class="s">open</span>
+    </div>
+
+    <div>
+      <ul class="clean tick">
+        <li class="body" style="font-size: 26px;"><strong>Ordered execution</strong> with explicit sequence.</li>
+        <li class="body" style="font-size: 26px;"><strong>Per-processor failure modes</strong> &mdash; fail-open or fail-closed, per step.</li>
+        <li class="body" style="font-size: 26px;"><strong>Per-processor timeouts</strong> and retry semantics.</li>
+        <li class="body" style="font-size: 26px;"><strong>Concurrent execution</strong> permitted for validate-only processors.</li>
+        <li class="body" style="font-size: 26px;"><strong>Bidirectional</strong> &mdash; processes requests and responses.</li>
+        <li class="body" style="font-size: 26px;"><strong>Can short-circuit</strong> &mdash; cache hit returns immediately; router can redirect.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="mark"><span class="swatch"></span><span>Primitive #1</span></div>
+    <div>09</div>
+  </div>
+</section>
+
+<!-- 10 Section cover: Problem 2 -->
 <section class="cover" data-label="Problem 2">
   <div class="eyebrow">Problem 2 of 3</div>
   <h2 class="title">Retry<br>semantics.</h2>
   <div class="subtitle">When the connection fails, what do you re-run?</div>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Retry is per-processor, not per-request</span></div>
-    <div>09</div>
+    <div>10</div>
   </div>
 </section>
 
-<!-- 10 Retry decision -->
+<!-- 11 Retry decision -->
 <section class="slide" data-label="The Retry Decision">
   <div class="eyebrow">Problem 2 &nbsp;/&nbsp; Connection fails &mdash; the pipeline already ran</div>
   <h2 class="title">Re-run which processors?</h2>
@@ -903,11 +967,11 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>The retry decision</span></div>
-    <div>10</div>
+    <div>11</div>
   </div>
 </section>
 
-<!-- 11 Per-processor retry policy -->
+<!-- 12 Per-processor retry policy -->
 <section class="slide" data-label="Per-Processor Retry Policy">
   <div class="eyebrow">Problem 2 &nbsp;/&nbsp; What we need</div>
   <h2 class="title">Retry is per-processor, not per-request.</h2>
@@ -971,22 +1035,22 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Motivates: per-processor retry policy</span></div>
-    <div>11</div>
+    <div>12</div>
   </div>
 </section>
 
-<!-- 12 Section cover: Problem 3 -->
+<!-- 13 Section cover: Problem 3 -->
 <section class="cover" data-label="Problem 3">
   <div class="eyebrow">Problem 3 of 3</div>
   <h2 class="title">Policy<br>scope.</h2>
   <div class="subtitle">Too broad, too narrow, never right.</div>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Policy attaches at the wrong scope today</span></div>
-    <div>12</div>
+    <div>13</div>
   </div>
 </section>
 
-<!-- 13 Too broad / too narrow / just right -->
+<!-- 14 Too broad / too narrow / just right -->
 <section class="slide" data-label="Too Broad Too Narrow">
   <div class="eyebrow">Problem 3 &nbsp;/&nbsp; The goldilocks problem</div>
   <h2 class="title">Attach credentials where?</h2>
@@ -1093,11 +1157,11 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Gateway · Route · Backend</span></div>
-    <div>13</div>
+    <div>14</div>
   </div>
 </section>
 
-<!-- 14 TLS consumer vs producer -->
+<!-- 15 TLS consumer vs producer -->
 <section class="slide" data-label="Consumer vs Producer TLS">
   <div class="eyebrow">Problem 3 &nbsp;/&nbsp; Same problem, TLS-shaped</div>
   <h2 class="title">The primitives were built for producers, not consumers.</h2>
@@ -1183,11 +1247,11 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Consumer vs. producer semantics</span></div>
-    <div>14</div>
+    <div>15</div>
   </div>
 </section>
 
-<!-- 15 Backend resource -->
+<!-- 16 Backend resource -->
 <section class="slide" data-label="The Backend Resource">
   <div class="eyebrow">Problem 3 &nbsp;/&nbsp; The primitive we need</div>
   <h2 class="title">The <span style="color: var(--accent);">Backend</span> resource.</h2>
@@ -1239,11 +1303,11 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Motivates: Backend resource + egress gateway</span></div>
-    <div>15</div>
+    <div>16</div>
   </div>
 </section>
 
-<!-- 16 Primitives mapped -->
+<!-- 17 Primitives mapped -->
 <section class="slide" data-label="Primitives Mapped">
   <div class="eyebrow">02 &nbsp;/&nbsp; How we&rsquo;re solving it</div>
   <h2 class="title">Three problems. Three primitives.</h2>
@@ -1279,55 +1343,6 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Primitives, mapped</span></div>
-    <div>16</div>
-  </div>
-</section>
-
-<!-- 17 PayloadProcessingPipeline -->
-<section class="slide" data-label="PayloadProcessingPipeline">
-  <div class="eyebrow">02 &nbsp;/&nbsp; Primitive detail</div>
-  <h2 class="title">PayloadProcessingPipeline.</h2>
-
-  <div class="two-col" style="flex:1; gap: 80px; align-items: start;">
-    <div class="code" style="font-size: 18px;">
-<span class="k">kind:</span> <span class="acc">PayloadProcessingPipeline</span>
-<span class="k">metadata:</span>
-  <span class="k">name:</span> <span class="s">inference-pipeline</span>
-<span class="k">spec:</span>
-  <span class="k">processors:</span>
-  - <span class="k">name:</span> <span class="s">semantic-routing</span>
-    <span class="k">backendRefs:</span> [{ <span class="k">name:</span> <span class="s">router-svc</span> }]
-    <span class="k">config:</span>
-      <span class="k">timeout:</span> <span class="s">"100ms"</span>
-      <span class="k">failureMode:</span> <span class="s">closed</span>
-
-  - <span class="k">name:</span> <span class="s">guardrails</span>
-    <span class="k">backendRefs:</span> [{ <span class="k">name:</span> <span class="s">guardrail-svc</span> }]
-    <span class="k">config:</span>
-      <span class="k">timeout:</span> <span class="s">"500ms"</span>
-      <span class="k">failureMode:</span> <span class="s">closed</span>
-
-  - <span class="k">name:</span> <span class="s">semantic-cache</span>
-    <span class="k">backendRefs:</span> [{ <span class="k">name:</span> <span class="s">cache-svc</span> }]
-    <span class="k">config:</span>
-      <span class="k">timeout:</span> <span class="s">"200ms"</span>
-      <span class="k">failureMode:</span> <span class="s">open</span>
-    </div>
-
-    <div>
-      <ul class="clean tick">
-        <li class="body" style="font-size: 26px;"><strong>Ordered execution</strong> with explicit sequence.</li>
-        <li class="body" style="font-size: 26px;"><strong>Per-processor failure modes</strong> &mdash; fail-open or fail-closed, per step.</li>
-        <li class="body" style="font-size: 26px;"><strong>Per-processor timeouts</strong> and retry semantics.</li>
-        <li class="body" style="font-size: 26px;"><strong>Concurrent execution</strong> permitted for validate-only processors.</li>
-        <li class="body" style="font-size: 26px;"><strong>Bidirectional</strong> &mdash; processes requests and responses.</li>
-        <li class="body" style="font-size: 26px;"><strong>Can short-circuit</strong> &mdash; cache hit returns immediately; router can redirect.</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div class="mark"><span class="swatch"></span><span>Primitive #1</span></div>
     <div>17</div>
   </div>
 </section>
