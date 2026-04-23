@@ -351,7 +351,7 @@
   </h1>
   <div class="meta">
     <span>Morgan Foster &nbsp;&middot;&nbsp; Co-Chair, WG AI Gateway</span>
-    <span>25 min / 22 slides</span>
+    <span>25 min / 24 slides</span>
   </div>
 </section>
 
@@ -361,8 +361,7 @@
   <h2 class="title">Didn&rsquo;t we already have API Gateways?</h2>
   <div style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; flex: 1;">
     <div class="body" style="font-size: 40px; line-height: 1.35; color: var(--fg-2); max-width: 900px;">
-      AI Gateways are popping up like weeds. Every vendor has one, every platform team
-      is asking if they need one.
+      "AI Gateway" is an overloaded term.
       <div style="margin-top: 40px; font-size: 44px; line-height: 1.25; color: var(--fg); font-weight: 500; letter-spacing: -0.01em;">
         What&rsquo;s actually different &mdash; and why can&rsquo;t we just use what we have?
       </div>
@@ -683,30 +682,26 @@
 <section class="slide" data-label="Observe and Meter">
   <div class="eyebrow">Policy landscape</div>
   <h2 class="title">Observe &amp; meter.</h2>
-  <div class="subtitle">Like API Gateways, one of the most important roles for an AI Gateway is as a centralized source of truth.</div>
+  <div class="subtitle" style="font-size: 32px;">Like API Gateways, one of the most important roles for an AI Gateway is as a centralized source of truth.</div>
 
   <div style="flex:1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 20px;">
 
     <div style="display: flex; flex-direction: column; gap: 20px;">
-      <div style="display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
-        <div class="tag" style="min-width: 160px;">Track costs</div>
-        <div class="body" style="font-size: 26px; color: var(--fg-2);">Token usage delta after upgrading from Opus&nbsp;4.6 to Opus&nbsp;4.7 &mdash; did our spend change?</div>
+      <div>
+        <div class="tag">Track costs</div>
+        <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 6px;">Token usage delta after upgrading from Opus&nbsp;4.6 to Opus&nbsp;4.7 &mdash; did our spend change?</div>
       </div>
-      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
-        <div class="tag" style="min-width: 160px;">Detect anomalies</div>
-        <div class="body" style="font-size: 26px; color: var(--fg-2);">Sudden spike in tool calls &mdash; is an agent stuck in a loop, or did behavior genuinely change?</div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px;">
+        <div class="tag">Detect anomalies</div>
+        <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 6px;">Sudden spike in tool calls &mdash; is an agent stuck in a loop, or did behavior genuinely change?</div>
       </div>
-      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
-        <div class="tag" style="min-width: 160px;">Correlate events</div>
-        <div class="body" style="font-size: 26px; color: var(--fg-2);">A usage spike lines up with a config change &mdash; root-cause in minutes, not hours.</div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px;">
+        <div class="tag">Attribute usage</div>
+        <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 6px;">Per-workload, per-team token spend &mdash; chargeback without guessing.</div>
       </div>
-      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
-        <div class="tag" style="min-width: 160px;">Attribute usage</div>
-        <div class="body" style="font-size: 26px; color: var(--fg-2);">Per-workload, per-team token spend &mdash; chargeback without guessing.</div>
-      </div>
-      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
-        <div class="tag" style="min-width: 160px;">Monitor policy</div>
-        <div class="body" style="font-size: 26px; color: var(--fg-2);">Guardrail rejection rates &mdash; a spike after deployment means a misconfigured policy, not a security event.</div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px;">
+        <div class="tag">Monitor policy</div>
+        <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 6px;">Guardrail rejection rates &mdash; a spike after deployment means a misconfigured policy, not a security event.</div>
       </div>
     </div>
 
@@ -925,40 +920,144 @@
   </div>
 </section>
 
-<!-- 11 Composition problems -->
+<!-- 11 Feature landscape -->
+<section class="slide" data-label="Feature Landscape">
+  <div class="eyebrow">Policy landscape</div>
+  <h2 class="title">These features already exist.</h2>
+  <div class="subtitle" style="font-size: 32px;">Every major AI Gateway ships some combination of these capabilities today.</div>
+
+  <div style="flex:1; display: flex; align-items: center; justify-content: center; margin-top: 16px;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 24px; font-family: 'IBM Plex Sans', system-ui, sans-serif;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--fg);">
+          <th style="text-align: left; padding: 12px 16px; font-weight: 600; color: var(--fg); font-size: 22px;"></th>
+          <th style="text-align: center; padding: 12px 16px; font-weight: 600; color: var(--fg); font-size: 22px;">LiteLLM</th>
+          <th style="text-align: center; padding: 12px 16px; font-weight: 600; color: var(--fg); font-size: 22px;">Portkey</th>
+          <th style="text-align: center; padding: 12px 16px; font-weight: 600; color: var(--fg); font-size: 22px;">Kong AI</th>
+          <th style="text-align: center; padding: 12px 16px; font-weight: 600; color: var(--fg); font-size: 22px;">Envoy AI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">AuthN / AuthZ</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Guardrails (in + out)</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Model routing</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Semantic cache</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--muted);">&#9680;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Token rate limiting</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Protocol translation</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Credential management</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">KV-aware endpoint picking</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--muted);">&cir;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--muted);">&cir;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--muted);">&cir;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--rule);">
+          <td style="padding: 10px 16px; font-weight: 500;">Observability &amp; metering</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 16px; font-weight: 500;">Retry / fallback</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+          <td style="text-align: center; padding: 10px 16px; color: var(--ok);">&bull;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display: flex; gap: 32px; align-items: center; margin-top: 8px; font-size: 20px; color: var(--muted);">
+    <span><span style="color: var(--ok);">&bull;</span> supported</span>
+    <span><span style="color: var(--muted);">&#9680;</span> partial</span>
+    <span><span style="color: var(--muted);">&cir;</span> not available</span>
+  </div>
+
+  <div class="footer">
+    <div class="mark"><span class="swatch"></span><span>The features exist &mdash; composition is the hard part</span></div>
+    <div>11</div>
+  </div>
+</section>
+
+<!-- 12 Composition problems -->
 <section class="slide" data-label="Composition Problems">
   <div class="eyebrow">Composition</div>
-  <h2 class="title" style="max-width: 1600px;">Mutability creates recurring composition problems.</h2>
+  <h2 class="title" style="max-width: 1600px;">When policies read and write the body, composition gets harder.</h2>
 
   <div style="flex:1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px; margin-top: 40px;">
     <div style="border-top: 2px solid var(--accent); padding-top: 36px;">
       <div style="font-size: 52px; font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; margin-top: 24px;">Data dependencies</div>
-      <div class="small" style="margin-top: 20px; color: var(--fg-2);">Processors consume each other&rsquo;s output. Order is not a preference.</div>
+      <div class="small" style="margin-top: 20px; color: var(--fg-2);">One policy&rsquo;s output is the next one&rsquo;s input. Get the order wrong and the pipeline silently degrades.</div>
     </div>
     <div style="border-top: 2px solid var(--accent); padding-top: 36px;">
       <div style="font-size: 52px; font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; margin-top: 24px;">Retry semantics</div>
-      <div class="small" style="margin-top: 20px; color: var(--fg-2);">Some processors must re-run on failure. Most must not.</div>
+      <div class="small" style="margin-top: 20px; color: var(--fg-2);">Policies make expensive callouts. On failure, some must re-run and some must not.</div>
     </div>
   </div>
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Composition problems</span></div>
-    <div>11</div>
+    <div>12</div>
   </div>
 </section>
 
-<!-- 12 Section cover: Data dependencies -->
+<!-- 13 Section cover: Data dependencies -->
 <section class="cover" data-label="Data Dependencies">
   <div class="eyebrow">Composition problem</div>
   <h2 class="title">Data<br>dependencies.</h2>
   <div class="subtitle">These aren&rsquo;t filters. They&rsquo;re a pipeline.</div>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Processing has data flow between steps</span></div>
-    <div>12</div>
+    <div>13</div>
   </div>
 </section>
 
-<!-- 13 PII redaction example -->
+<!-- 14 PII redaction example -->
 <section class="slide" data-label="PII Redaction Example">
   <div class="eyebrow">Data dependencies &nbsp;/&nbsp; A simple example</div>
   <h2 class="title">PII redaction before token rate limiting.</h2>
@@ -1025,11 +1124,11 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Mutation invalidates upstream policy</span></div>
-    <div>13</div>
+    <div>14</div>
   </div>
 </section>
 
-<!-- 14 Dependency graph -->
+<!-- 15 Dependency graph -->
 <section class="slide" data-label="The Dependency Graph">
   <div class="eyebrow">Data dependencies &nbsp;/&nbsp; The full picture</div>
   <h2 class="title">B&rsquo;s input is A&rsquo;s output.</h2>
@@ -1108,22 +1207,22 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Data dependencies, not just ordering</span></div>
-    <div>14</div>
+    <div>15</div>
   </div>
 </section>
 
-<!-- 15 Section cover: Retry semantics -->
+<!-- 16 Section cover: Retry semantics -->
 <section class="cover" data-label="Retry Semantics">
   <div class="eyebrow">Composition problem</div>
   <h2 class="title">Retry<br>semantics.</h2>
   <div class="subtitle">When the connection fails, what do you re-run?</div>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Retry is per-processor, not per-request</span></div>
-    <div>15</div>
+    <div>16</div>
   </div>
 </section>
 
-<!-- 16 Retry decision -->
+<!-- 17 Retry decision -->
 <section class="slide" data-label="The Retry Decision">
   <div class="eyebrow">Retry semantics &nbsp;/&nbsp; Connection fails &mdash; the pipeline already ran</div>
   <h2 class="title">Re-run which processors?</h2>
@@ -1236,78 +1335,9 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>The retry decision</span></div>
-    <div>16</div>
-  </div>
-</section>
-
-<!-- 17 Per-processor retry policy -->
-<section class="slide" data-label="Per-Processor Retry Policy">
-  <div class="eyebrow">Retry semantics &nbsp;/&nbsp; What we need</div>
-  <h2 class="title">Retry is per-processor, not per-request.</h2>
-
-  <div style="flex:1; display:grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: start;">
-    <table class="grid" style="font-size: 30px;">
-      <thead>
-        <tr>
-          <th>Processor</th>
-          <th style="width: 220px;">Re-run?</th>
-          <th>Why</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Semantic cache</td>
-          <td class="no">no</td>
-          <td class="small" style="color: var(--fg-2);">Result unchanged in window</td>
-        </tr>
-        <tr>
-          <td>Guardrails</td>
-          <td class="no">no</td>
-          <td class="small" style="color: var(--fg-2);">Payload unchanged</td>
-        </tr>
-        <tr>
-          <td>Semantic routing</td>
-          <td class="no">no</td>
-          <td class="small" style="color: var(--fg-2);">Prompt unchanged, same model</td>
-        </tr>
-        <tr style="background: var(--accent-soft);">
-          <td style="font-weight:600;">Endpoint picker</td>
-          <td class="yes">yes</td>
-          <td class="small" style="color: var(--fg);">Endpoint failed / KV state shifted</td>
-        </tr>
-        <tr>
-          <td>Credential injection</td>
-          <td class="yes" style="color: var(--fg-2);">maybe</td>
-          <td class="small" style="color: var(--fg-2);">If token expired</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div>
-      <div class="tag">Not in any gateway today</div>
-      <ul class="clean" style="margin-top: 32px;">
-        <li class="body" style="font-size: 32px;">
-          <strong>Traditional proxy:</strong> retry = reconnect &amp; resend the whole request.
-        </li>
-        <li class="body" style="font-size: 32px; margin-top: 32px;">
-          <strong>AI gateway:</strong> retry = re-run <em>some</em> processors, skip others &mdash;
-          each with its own semantics.
-        </li>
-        <li class="body" style="font-size: 32px; margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--rule);">
-          If you&rsquo;ve used Envoy <span class="mono" style="background: var(--surface-2); padding: 2px 10px; font-size: 28px;">ext_proc</span> you&rsquo;ve felt this:
-          on retry, does the callout happen again? <em>&ldquo;It depends.&rdquo;</em>
-          There&rsquo;s no way to declare what you want.
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div class="mark"><span class="swatch"></span><span>Motivates: per-processor retry policy</span></div>
     <div>17</div>
   </div>
 </section>
-
 
 <!-- 18 Egress gotchas cover -->
 <section class="cover" data-label="Egress Gotchas">
@@ -1494,28 +1524,33 @@
 <section class="slide" data-label="Summary" style="justify-content: center;">
   <div class="eyebrow">Putting it together</div>
   <h2 class="title" style="font-size: 48px; line-height: 1.3; max-width: 1500px;">
-    From the perspective of an organization building network policy around AI-enabled workloads,
-    we need to reason carefully about:
+    Writing policies against AI protocols means our gateways need to handle things they didn&rsquo;t before.
   </h2>
 
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 48px;">
+  <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; margin-top: 48px; align-items: start;">
 
-    <div>
-      <div class="tag">What we must reason about</div>
-      <ul class="clean" style="margin-top: 20px;">
-        <li class="body" style="font-size: 30px;">The <strong>direction</strong> our traffic is flowing.</li>
-        <li class="body" style="font-size: 30px; margin-top: 16px;">The <strong>information consumed and produced</strong> by our policies.</li>
-        <li class="body" style="font-size: 30px; margin-top: 16px;">The <strong>side effects of retry</strong> policies.</li>
-      </ul>
+    <div style="border-top: 2px solid var(--accent); padding-top: 28px;">
+      <div style="font-size: 36px; font-weight: 600; line-height: 1.15;">Responses don&rsquo;t just flow through our system &mdash; they change the flow <em>of</em> the system.</div>
+      <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 12px;">
+        Inference responses trigger tool calls, spawn agents, redirect workflows.
+        The policies we write against these requests are stateful and order-dependent.
+      </div>
     </div>
 
-    <div>
-      <div class="tag">Because GenAI networking often implies</div>
-      <ul class="clean" style="margin-top: 20px;">
-        <li class="body" style="font-size: 30px;"><strong>Stateful request handling</strong> &mdash; policies build on each other&rsquo;s output.</li>
-        <li class="body" style="font-size: 30px; margin-top: 16px;"><strong>Side effects</strong> &mdash; callouts to external services during request handling.</li>
-        <li class="body" style="font-size: 30px; margin-top: 16px;"><strong>Managing connections to upstream services</strong> on behalf of our workloads.</li>
-      </ul>
+    <div style="border-top: 2px solid var(--accent); padding-top: 28px;">
+      <div style="font-size: 36px; font-weight: 600; line-height: 1.15;">Policies have side effects.</div>
+      <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 12px;">
+        Guardrails call models. Routing runs inference. Caching queries a vector database.
+        These are network calls with cost, latency, and failure modes of their own.
+      </div>
+    </div>
+
+    <div style="border-top: 2px solid var(--accent); padding-top: 28px;">
+      <div style="font-size: 36px; font-weight: 600; line-height: 1.15;">We may connect to services we don&rsquo;t control.</div>
+      <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 12px;">
+        When traffic flows out to external providers, TLS semantics flip,
+        credential scoping matters, and failure modes change at the boundary.
+      </div>
     </div>
 
   </div>
@@ -1693,23 +1728,27 @@
   <div class="eyebrow">Close</div>
   <h2 class="title">Recap: why we need an AI Gateway.</h2>
 
-  <div style="flex:1; display: grid; grid-template-columns: auto 1fr; gap: 32px 48px; align-content: start; margin-top: 32px;">
-    <div class="mono" style="font-size: 48px; color: var(--accent); font-weight: 500; line-height: 1;">01</div>
-    <div style="font-size: 38px; font-weight: 500; line-height: 1.25; border-bottom: 1px solid var(--rule); padding-bottom: 24px;">
-      The body is where the signal is.
-      <div class="small" style="color: var(--fg-2); margin-top: 8px; font-size: 26px; font-weight: 400;">The gateway must parse and understand AI protocols &mdash; inference requests, A2A, MCP &mdash; not just headers.</div>
+  <div style="flex:1; display: flex; flex-direction: column; justify-content: center; gap: 48px; margin-top: 32px;">
+    <div style="font-size: 44px; font-weight: 500; line-height: 1.3; max-width: 1400px;">
+      An AI Gateway lets us write policies based on AI protocols &mdash; like inference requests.
     </div>
 
-    <div class="mono" style="font-size: 48px; color: var(--accent); font-weight: 500; line-height: 1;">02</div>
-    <div style="font-size: 38px; font-weight: 500; line-height: 1.25; border-bottom: 1px solid var(--rule); padding-bottom: 24px;">
-      Managing inference means reasoning about state.
-      <div class="small" style="color: var(--fg-2); margin-top: 8px; font-size: 26px; font-weight: 400;">We need gateways with policy semantics equipped for pipelines, not just linear filter chains.</div>
-    </div>
+    <div style="display: flex; flex-direction: column; gap: 32px; padding-left: 4px;">
+      <div style="display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start;">
+        <div style="width: 48px; border-top: 3px solid var(--accent); margin-top: 14px;"></div>
+        <div>
+          <div style="font-size: 36px; font-weight: 500; line-height: 1.25;">This implies changes in how we think about <span style="color: var(--accent);">policy composition</span>.</div>
+          <div class="small" style="color: var(--fg-2); margin-top: 8px; font-size: 26px; font-weight: 400;">Responses don&rsquo;t just flow through our system &mdash; they change the flow <em>of</em> the system. Policies are stateful, order-dependent, and have side effects.</div>
+        </div>
+      </div>
 
-    <div class="mono" style="font-size: 48px; color: var(--accent); font-weight: 500; line-height: 1;">03</div>
-    <div style="font-size: 38px; font-weight: 500; line-height: 1.25;">
-      AI-enabled workloads are consumers of upstream services.
-      <div class="small" style="color: var(--fg-2); margin-top: 8px; font-size: 26px; font-weight: 400;">We&rsquo;re managing requests to and responses from services we don&rsquo;t control.</div>
+      <div style="display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: start;">
+        <div style="width: 48px; border-top: 3px solid var(--accent); margin-top: 14px;"></div>
+        <div>
+          <div style="font-size: 36px; font-weight: 500; line-height: 1.25;">This <em>may</em> imply changes in how we think about the <span style="color: var(--accent);">flow of traffic</span>.</div>
+          <div class="small" style="color: var(--fg-2); margin-top: 8px; font-size: 26px; font-weight: 400;">When connecting to external providers, TLS semantics, credential scoping, and failure modes all change at the boundary.</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1762,22 +1801,6 @@
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Community input shapes the spec</span></div>
     <div>24</div>
-  </div>
-</section>
-
-<!-- 25 Thank you -->
-<section class="slide" data-label="Thank You" style="justify-content: center;">
-  <div style="display:flex; flex-direction: column; gap: 56px; flex: 1; justify-content: center;">
-    <div class="eyebrow">Fin.</div>
-    <div class="pullquote">
-      The <em>body</em><br>
-      is where<br>
-      the <em>signal</em> is.
-    </div>
-    <div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: 48px; border-top: 1px solid var(--rule); font-family: 'IBM Plex Mono', monospace; font-size: 22px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">
-      <div><strong style="color: var(--fg); font-weight: 500;">Morgan Foster</strong>  &nbsp;&middot;&nbsp;  @usize  &nbsp;&middot;&nbsp;  <a href="https://usize.github.io/blog" style="color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule);">usize.github.io/blog</a>  &nbsp;&middot;&nbsp;  Co-Chair, WG AI Gateway</div>
-      <div>Thank you for watching.</div>
-    </div>
   </div>
 </section>
 
