@@ -357,7 +357,7 @@
 
 <!-- 02 The Question -->
 <section class="slide" data-label="The Question">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Setup</div>
+  <div class="eyebrow">Setup</div>
   <h2 class="title">Didn&rsquo;t we already have API Gateways?</h2>
   <div style="display:grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; flex: 1;">
     <div class="body" style="font-size: 40px; line-height: 1.35; color: var(--fg-2); max-width: 900px;">
@@ -394,7 +394,7 @@
 
 <!-- 03 Ingress vs Egress -->
 <section class="slide" data-label="Ingress vs Egress">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Setup</div>
+  <div class="eyebrow">Setup</div>
   <h2 class="title">Two postures.</h2>
   <div class="subtitle">
     API Gateways apply policy to traffic entering a cluster.
@@ -497,7 +497,7 @@
 
 <!-- 04 Body vs Headers -->
 <section class="slide" data-label="Headers vs Body">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Thesis</div>
+  <div class="eyebrow">Setup</div>
   <h2 class="title">The body is where the signal is.</h2>
   <div class="subtitle" style="margin-bottom: 48px;">
     Traditional gateways route on headers. AI inference moves every routing, security,
@@ -554,7 +554,7 @@
 
 <!-- 05 In short -->
 <section class="slide" data-label="In Short" style="justify-content: center;">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Definition</div>
+  <div class="eyebrow">Setup</div>
   <div style="max-width: 1400px;">
     <h2 class="title" style="font-size: 56px; line-height: 1.3;">
       An &ldquo;AI Gateway&rdquo; is broadly defined as a gateway that speaks AI protocols.
@@ -573,50 +573,48 @@
 
 <!-- 06 What the AI Gateway does -->
 <section class="slide" data-label="What The Gateway Does">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Three kinds of policy</div>
+  <div class="eyebrow">Policy landscape</div>
   <h2 class="title">What an AI Gateway actually does.</h2>
-  <div class="subtitle">Three categories of work.</div>
+  <div class="subtitle">Two categories of work.</div>
 
   <div style="flex:1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; margin-top: 20px;">
 
-    <!-- LEFT: three categories -->
+    <!-- LEFT: two categories -->
     <div style="display: flex; flex-direction: column; gap: 24px;">
 
       <div style="display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: start;">
-        <div class="mono" style="font-size: 42px; color: var(--accent); font-weight: 500; line-height: 1; padding-top: 4px;">01</div>
+        <div class="mono" style="font-size: 42px; color: var(--accent-2); font-weight: 500; line-height: 1; padding-top: 4px;">01</div>
         <div style="border-bottom: 1px solid var(--rule); padding-bottom: 20px;">
-          <div style="font-size: 36px; font-weight: 600; line-height: 1.2;">Allow or deny.</div>
-          <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 8px;">Pass the request through, or reject it. No mutation.</div>
-          <div class="mono" style="font-size: 22px; color: var(--muted); margin-top: 10px;">guardrails &middot; AuthN / AuthZ &middot; token rate limits</div>
+          <div style="font-size: 36px; font-weight: 600; line-height: 1.2;">Observe &amp; meter.</div>
+          <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 8px;">Token-level cost attribution, usage tracking, and anomaly detection across workloads.</div>
         </div>
       </div>
 
       <div style="display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: start;">
         <div class="mono" style="font-size: 42px; color: var(--accent); font-weight: 500; line-height: 1; padding-top: 4px;">02</div>
-        <div style="border-bottom: 1px solid var(--rule); padding-bottom: 20px;">
-          <div style="font-size: 36px; font-weight: 600; line-height: 1.2;">Mutate.</div>
-          <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 8px;">Rewrite the request before it reaches the upstream.</div>
-          <div class="mono" style="font-size: 22px; color: var(--muted); margin-top: 10px;">semantic routing &middot; credential injection</div>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: start;">
-        <div class="mono" style="font-size: 42px; color: var(--accent); font-weight: 500; line-height: 1; padding-top: 4px;">03</div>
-        <div style="border-bottom: 1px solid var(--rule); padding-bottom: 20px;">
-          <div style="font-size: 36px; font-weight: 600; line-height: 1.2;">Respond.</div>
-          <div class="body" style="font-size: 24px; color: var(--fg-2); margin-top: 8px;">Short-circuit the pipeline and return a response directly.</div>
-          <div class="mono" style="font-size: 22px; color: var(--muted); margin-top: 10px;">semantic cache</div>
-        </div>
-      </div>
-
-      <!-- Cross-cutting: Observability -->
-      <div style="background: var(--accent-2-soft); border: 1.5px solid var(--accent-2); padding: 14px 24px; margin-top: 6px; display: grid; grid-template-columns: 56px 1fr; gap: 28px; align-items: center;">
-        <div style="width: 40px; height: 3px; background: var(--accent-2);"></div>
         <div>
-          <div style="font-size: 28px; font-weight: 600; line-height: 1.2; color: var(--fg);">Observe &amp; meter</div>
-          <div class="body" style="font-size: 20px; color: var(--fg-2); margin-top: 4px;">Token-level cost attribution across workloads &mdash; spans all three.</div>
+          <div style="font-size: 36px; font-weight: 600; line-height: 1.2;">Apply policies that&hellip;</div>
+
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px; padding-left: 8px;">
+            <div>
+              <div style="font-size: 30px; font-weight: 600; line-height: 1.2;">Allow or deny.</div>
+              <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 4px;">Pass the request through, or reject it. No mutation.</div>
+              <div class="mono" style="font-size: 20px; color: var(--muted); margin-top: 6px;">guardrails &middot; AuthN / AuthZ &middot; token rate limits</div>
+            </div>
+            <div style="border-top: 1px solid var(--rule); padding-top: 16px;">
+              <div style="font-size: 30px; font-weight: 600; line-height: 1.2;">Respond.</div>
+              <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 4px;">Short-circuit the pipeline and return a response directly.</div>
+              <div class="mono" style="font-size: 20px; color: var(--muted); margin-top: 6px;">semantic cache</div>
+            </div>
+            <div style="border-top: 1px solid var(--rule); padding-top: 16px;">
+              <div style="font-size: 30px; font-weight: 600; line-height: 1.2;">Mutate.</div>
+              <div class="body" style="font-size: 22px; color: var(--fg-2); margin-top: 4px;">Rewrite the request before it reaches the upstream.</div>
+              <div class="mono" style="font-size: 20px; color: var(--muted); margin-top: 6px;">semantic routing &middot; credential injection</div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
 
     <!-- RIGHT: minimal system illustration -->
@@ -636,12 +634,16 @@
         </g>
 
         <!-- Gateway -->
-        <g transform="translate(260,220)">
-          <rect x="0" y="0" width="200" height="200" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
-          <text x="100" y="36" text-anchor="middle" class="lbl" style="fill: var(--accent);">AI Gateway</text>
-          <text x="100" y="80" text-anchor="middle" class="node-s" style="font-size: 20px;">allow / deny</text>
-          <text x="100" y="120" text-anchor="middle" class="node-s" style="font-size: 20px;">mutate</text>
-          <text x="100" y="160" text-anchor="middle" class="node-s" style="font-size: 20px;">respond</text>
+        <g transform="translate(260,180)">
+          <!-- Observe & meter strip -->
+          <rect x="0" y="0" width="200" height="50" fill="var(--accent-2-soft)" stroke="var(--accent-2)" stroke-width="1.5" rx="0"/>
+          <text x="100" y="32" text-anchor="middle" class="node-s" style="font-size: 16px; fill: var(--accent-2); font-weight: 600;">observe &middot; meter</text>
+          <!-- Policy box -->
+          <rect x="0" y="50" width="200" height="200" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+          <text x="100" y="82" text-anchor="middle" class="lbl" style="fill: var(--accent);">AI Gateway</text>
+          <text x="100" y="120" text-anchor="middle" class="node-s" style="font-size: 18px;">allow / deny</text>
+          <text x="100" y="152" text-anchor="middle" class="node-s" style="font-size: 18px;">respond</text>
+          <text x="100" y="184" text-anchor="middle" class="node-s" style="font-size: 18px;">mutate</text>
         </g>
 
         <!-- Backend -->
@@ -667,9 +669,6 @@
         <path d="M 360 420 C 360 460 210 460 210 390" stroke="var(--fg-2)" stroke-width="1.5" fill="none" stroke-dasharray="4 4" marker-end="url(#arrR04)"/>
         <text x="300" y="475" class="annot" style="fill: var(--muted); font-size: 16px;">cache hit</text>
 
-        <!-- Observability / metrics bar -->
-        <rect x="262" y="500" width="196" height="24" fill="var(--accent-2-soft)" stroke="var(--accent-2)" stroke-width="1" rx="1"/>
-        <text x="360" y="517" text-anchor="middle" class="lbl" style="fill: var(--accent-2); font-size: 14px;">observe &middot; meter</text>
       </svg>
     </div>
   </div>
@@ -680,9 +679,101 @@
   </div>
 </section>
 
-<!-- 07 Allow/Deny policies -->
+<!-- 07 Observe and meter -->
+<section class="slide" data-label="Observe and Meter">
+  <div class="eyebrow">Policy landscape</div>
+  <h2 class="title">Observe &amp; meter.</h2>
+  <div class="subtitle">Like API Gateways, one of the most important roles for an AI Gateway is as a centralized source of truth.</div>
+
+  <div style="flex:1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 20px;">
+
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div class="tag" style="min-width: 160px;">Track costs</div>
+        <div class="body" style="font-size: 26px; color: var(--fg-2);">Token usage delta after upgrading from Opus&nbsp;4.6 to Opus&nbsp;4.7 &mdash; did our spend change?</div>
+      </div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div class="tag" style="min-width: 160px;">Detect anomalies</div>
+        <div class="body" style="font-size: 26px; color: var(--fg-2);">Sudden spike in tool calls &mdash; is an agent stuck in a loop, or did behavior genuinely change?</div>
+      </div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div class="tag" style="min-width: 160px;">Correlate events</div>
+        <div class="body" style="font-size: 26px; color: var(--fg-2);">A usage spike lines up with a config change &mdash; root-cause in minutes, not hours.</div>
+      </div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div class="tag" style="min-width: 160px;">Attribute usage</div>
+        <div class="body" style="font-size: 26px; color: var(--fg-2);">Per-workload, per-team token spend &mdash; chargeback without guessing.</div>
+      </div>
+      <div style="border-top: 1px solid var(--rule); padding-top: 20px; display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;">
+        <div class="tag" style="min-width: 160px;">Monitor policy</div>
+        <div class="body" style="font-size: 26px; color: var(--fg-2);">Guardrail rejection rates &mdash; a spike after deployment means a misconfigured policy, not a security event.</div>
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 680 520" width="100%">
+        <!-- Chart background -->
+        <rect x="60" y="20" width="600" height="400" fill="var(--surface)" stroke="var(--rule)" stroke-width="1" rx="4"/>
+
+        <!-- Y axis labels -->
+        <text x="50" y="60" text-anchor="end" class="node-s" style="font-size: 14px; fill: var(--muted);">50k</text>
+        <text x="50" y="140" text-anchor="end" class="node-s" style="font-size: 14px; fill: var(--muted);">35k</text>
+        <text x="50" y="220" text-anchor="end" class="node-s" style="font-size: 14px; fill: var(--muted);">20k</text>
+        <text x="50" y="300" text-anchor="end" class="node-s" style="font-size: 14px; fill: var(--muted);">10k</text>
+        <text x="50" y="380" text-anchor="end" class="node-s" style="font-size: 14px; fill: var(--muted);">0</text>
+
+        <!-- Grid lines -->
+        <line x1="60" y1="60" x2="660" y2="60" stroke="var(--rule)" stroke-width="0.5"/>
+        <line x1="60" y1="140" x2="660" y2="140" stroke="var(--rule)" stroke-width="0.5"/>
+        <line x1="60" y1="220" x2="660" y2="220" stroke="var(--rule)" stroke-width="0.5"/>
+        <line x1="60" y1="300" x2="660" y2="300" stroke="var(--rule)" stroke-width="0.5"/>
+        <line x1="60" y1="380" x2="660" y2="380" stroke="var(--rule)" stroke-width="0.5"/>
+
+        <!-- X axis labels -->
+        <text x="120" y="410" text-anchor="middle" class="node-s" style="font-size: 13px; fill: var(--muted);">Mon</text>
+        <text x="220" y="410" text-anchor="middle" class="node-s" style="font-size: 13px; fill: var(--muted);">Tue</text>
+        <text x="320" y="410" text-anchor="middle" class="node-s" style="font-size: 13px; fill: var(--muted);">Wed</text>
+        <text x="420" y="410" text-anchor="middle" class="node-s" style="font-size: 13px; fill: var(--muted);">Thu</text>
+        <text x="520" y="410" text-anchor="middle" class="node-s" style="font-size: 13px; fill: var(--muted);">Fri</text>
+        <text x="620" y="410" text-anchor="middle" class="node-s" style="font-size: 13px; fill: var(--muted);">Sat</text>
+
+        <!-- Token usage line (Opus 4.6 baseline, then jump after upgrade) -->
+        <polyline points="80,240 140,235 200,250 260,230 320,245 330,245"
+                  fill="none" stroke="var(--fg-2)" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- After upgrade: higher usage -->
+        <polyline points="330,245 340,160 400,140 460,155 520,130 580,145 640,135"
+                  fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linejoin="round"/>
+
+        <!-- Upgrade annotation line -->
+        <line x1="330" y1="40" x2="330" y2="380" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+        <!-- Annotation box -->
+        <rect x="340" y="42" width="200" height="52" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1" rx="4"/>
+        <text x="352" y="64" class="node-s" style="font-size: 15px; fill: var(--accent); font-weight: 600;">Model upgrade</text>
+        <text x="352" y="84" class="node-s" style="font-size: 14px; fill: var(--fg-2);">Opus 4.6 &rarr; 4.7</text>
+
+        <!-- Legend -->
+        <line x1="80" y1="460" x2="110" y2="460" stroke="var(--fg-2)" stroke-width="2.5"/>
+        <text x="118" y="465" class="node-s" style="font-size: 14px; fill: var(--fg-2);">tokens / day (before)</text>
+        <line x1="340" y1="460" x2="370" y2="460" stroke="var(--accent)" stroke-width="2.5"/>
+        <text x="378" y="465" class="node-s" style="font-size: 14px; fill: var(--accent);">tokens / day (after)</text>
+
+        <!-- Y axis title -->
+        <text x="18" y="220" text-anchor="middle" class="node-s" style="font-size: 14px; fill: var(--muted); writing-mode: tb;">tokens / day</text>
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="mark"><span class="swatch"></span><span>Centralized source of truth</span></div>
+    <div>07</div>
+  </div>
+</section>
+
+<!-- 08 Allow/Deny policies -->
 <section class="slide" data-label="Allow Deny Policies">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Policy types</div>
+  <div class="eyebrow">Policy landscape</div>
   <h2 class="title">Allow / deny policies.</h2>
   <div class="subtitle">These should come early in a pipeline &mdash; bail out before spending compute on expensive downstream work.</div>
 
@@ -723,13 +814,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Allow / deny &mdash; bail out early</span></div>
-    <div>07</div>
+    <div>08</div>
   </div>
 </section>
 
-<!-- 08 Direct response policies -->
+<!-- 09 Direct response policies -->
 <section class="slide" data-label="Direct Response Policies">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Policy types</div>
+  <div class="eyebrow">Policy landscape</div>
   <h2 class="title">Direct response policies.</h2>
   <div class="subtitle">Short-circuit the pipeline and return immediately &mdash; never reaching the upstream.</div>
 
@@ -774,13 +865,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Short-circuit &mdash; skip inference entirely</span></div>
-    <div>08</div>
+    <div>09</div>
   </div>
 </section>
 
-<!-- 09 Mutating policies -->
+<!-- 10 Mutating policies -->
 <section class="slide" data-label="Mutating Policies">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Policy types</div>
+  <div class="eyebrow">Policy landscape</div>
   <h2 class="title">Mutating policies.</h2>
   <div class="subtitle">These rewrite the request or response. Powerful, but they create tension in the pipeline.</div>
 
@@ -830,13 +921,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Mutation creates ordering constraints</span></div>
-    <div>09</div>
+    <div>10</div>
   </div>
 </section>
 
-<!-- 10 Composition problems -->
+<!-- 11 Composition problems -->
 <section class="slide" data-label="Composition Problems">
-  <div class="eyebrow">01 &nbsp;/&nbsp; Transition</div>
+  <div class="eyebrow">Composition</div>
   <h2 class="title" style="max-width: 1600px;">Mutability creates recurring composition problems.</h2>
 
   <div style="flex:1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 80px; margin-top: 40px;">
@@ -852,24 +943,95 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Composition problems</span></div>
-    <div>10</div>
+    <div>11</div>
   </div>
 </section>
 
-<!-- 11 Section cover: Data dependencies -->
+<!-- 12 Section cover: Data dependencies -->
 <section class="cover" data-label="Data Dependencies">
   <div class="eyebrow">Composition problem</div>
   <h2 class="title">Data<br>dependencies.</h2>
   <div class="subtitle">These aren&rsquo;t filters. They&rsquo;re a pipeline.</div>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Processing has data flow between steps</span></div>
-    <div>11</div>
+    <div>12</div>
   </div>
 </section>
 
-<!-- 12 Dependency graph -->
+<!-- 13 PII redaction example -->
+<section class="slide" data-label="PII Redaction Example">
+  <div class="eyebrow">Data dependencies &nbsp;/&nbsp; A simple example</div>
+  <h2 class="title">PII redaction before token rate limiting.</h2>
+  <div class="subtitle">When a mutating policy runs before a counting policy, the count is wrong.</div>
+
+  <div style="flex:1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+
+    <div style="display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 700 480" width="100%">
+        <defs>
+          <marker id="arrPII" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--fg-2)"/>
+          </marker>
+        </defs>
+
+        <!-- Step 1: Token rate limit -->
+        <rect x="40" y="30" width="280" height="100" fill="var(--bg)" stroke="var(--rule-strong)" stroke-width="2"/>
+        <text x="180" y="65" text-anchor="middle" class="node-t" style="font-size: 22px;">Token rate limit</text>
+        <text x="180" y="95" text-anchor="middle" class="node-s" style="font-size: 18px;">counts 500 tokens &rarr; allows</text>
+
+        <text x="360" y="80" class="lbl" style="fill: var(--ok); font-size: 18px;">&check; 500 / 1000 budget</text>
+
+        <line x1="180" y1="130" x2="180" y2="175" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arrPII)"/>
+
+        <!-- Step 2: PII redaction -->
+        <rect x="40" y="185" width="280" height="100" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+        <text x="180" y="220" text-anchor="middle" class="node-t" style="font-size: 22px;">PII redaction</text>
+        <text x="180" y="250" text-anchor="middle" class="node-s" style="font-size: 18px;">strips 80 tokens of PII</text>
+
+        <text x="360" y="235" class="lbl" style="fill: var(--accent); font-size: 18px;">420 tokens remain</text>
+
+        <line x1="180" y1="285" x2="180" y2="330" stroke="var(--fg-2)" stroke-width="1.8" marker-end="url(#arrPII)"/>
+
+        <!-- Result -->
+        <rect x="40" y="330" width="620" height="120" fill="var(--bg)" stroke="var(--accent)" stroke-width="2" rx="4"/>
+        <text x="350" y="378" text-anchor="middle" class="node-t" style="font-size: 22px; color: var(--accent);">Rate limit committed to 500 tokens</text>
+        <text x="350" y="412" text-anchor="middle" class="node-s" style="font-size: 18px; fill: var(--accent);">but only 420 were actually sent &mdash; budget is now wrong</text>
+      </svg>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 28px;">
+      <div class="body" style="font-size: 30px; line-height: 1.4; color: var(--fg-2);">
+        The token rate limit ran first and counted <strong style="color: var(--fg);">500 tokens</strong>
+        against the budget.
+      </div>
+      <div class="body" style="font-size: 30px; line-height: 1.4; color: var(--fg-2);">
+        Then PII redaction stripped 80 tokens of sensitive content.
+        The request that actually reached the model had only
+        <strong style="color: var(--fg);">420 tokens</strong>.
+      </div>
+      <div class="body" style="font-size: 30px; line-height: 1.4; color: var(--fg-2);">
+        The budget is now <strong style="color: var(--accent);">overcharged by 80 tokens</strong>.
+        Over thousands of requests, this drift compounds.
+      </div>
+      <div style="padding: 20px 28px; background: var(--accent-soft); border-left: 3px solid var(--accent);">
+        <div class="body" style="font-size: 26px; color: var(--fg);">
+          The fix is ordering: count tokens <em>after</em> redaction.
+          But that means the pipeline must know about the dependency.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="mark"><span class="swatch"></span><span>Mutation invalidates upstream policy</span></div>
+    <div>13</div>
+  </div>
+</section>
+
+<!-- 14 Dependency graph -->
 <section class="slide" data-label="The Dependency Graph">
-  <div class="eyebrow">Problem 1 &nbsp;/&nbsp; What the arrows mean</div>
+  <div class="eyebrow">Data dependencies &nbsp;/&nbsp; The full picture</div>
   <h2 class="title">B&rsquo;s input is A&rsquo;s output.</h2>
 
   <div style="flex:1; display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; align-items: center;">
@@ -946,24 +1108,24 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Data dependencies, not just ordering</span></div>
-    <div>12</div>
+    <div>14</div>
   </div>
 </section>
 
-<!-- 13 Section cover: Retry semantics -->
+<!-- 15 Section cover: Retry semantics -->
 <section class="cover" data-label="Retry Semantics">
   <div class="eyebrow">Composition problem</div>
   <h2 class="title">Retry<br>semantics.</h2>
   <div class="subtitle">When the connection fails, what do you re-run?</div>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Retry is per-processor, not per-request</span></div>
-    <div>13</div>
+    <div>15</div>
   </div>
 </section>
 
-<!-- 14 Retry decision -->
+<!-- 16 Retry decision -->
 <section class="slide" data-label="The Retry Decision">
-  <div class="eyebrow">Problem 2 &nbsp;/&nbsp; Connection fails &mdash; the pipeline already ran</div>
+  <div class="eyebrow">Retry semantics &nbsp;/&nbsp; Connection fails &mdash; the pipeline already ran</div>
   <h2 class="title">Re-run which processors?</h2>
 
   <div style="flex:1; display:flex; align-items: center; justify-content: center;">
@@ -1074,13 +1236,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>The retry decision</span></div>
-    <div>14</div>
+    <div>16</div>
   </div>
 </section>
 
-<!-- 15 Per-processor retry policy -->
+<!-- 17 Per-processor retry policy -->
 <section class="slide" data-label="Per-Processor Retry Policy">
-  <div class="eyebrow">Problem 2 &nbsp;/&nbsp; What we need</div>
+  <div class="eyebrow">Retry semantics &nbsp;/&nbsp; What we need</div>
   <h2 class="title">Retry is per-processor, not per-request.</h2>
 
   <div style="flex:1; display:grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: start;">
@@ -1142,24 +1304,24 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Motivates: per-processor retry policy</span></div>
-    <div>15</div>
+    <div>17</div>
   </div>
 </section>
 
 
-<!-- 16 Egress gotchas cover -->
+<!-- 18 Egress gotchas cover -->
 <section class="cover" data-label="Egress Gotchas">
   <div class="eyebrow">Composition problem</div>
   <h2 class="title">Egress gotchas<br>to consider.</h2>
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Egress assumptions that break from ingress</span></div>
-    <div>16</div>
+    <div>18</div>
   </div>
 </section>
 
-<!-- 17 TLS mismatch -->
+<!-- 19 TLS mismatch -->
 <section class="slide" data-label="TLS Mismatch">
-  <div class="eyebrow">02 &nbsp;/&nbsp; Egress gotcha</div>
+  <div class="eyebrow">Egress</div>
   <h2 class="title">TLS policies are client-oriented.</h2>
   <div class="subtitle">SNI and hostname won&rsquo;t necessarily match &mdash; an assumption that holds for ingress but breaks for egress.</div>
 
@@ -1241,13 +1403,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Egress TLS &mdash; two identities to reconcile</span></div>
-    <div>17</div>
+    <div>19</div>
   </div>
 </section>
 
-<!-- 18 Credential leak -->
+<!-- 20 Credential leak -->
 <section class="slide" data-label="Credential Leak">
-  <div class="eyebrow">02 &nbsp;/&nbsp; Egress gotcha</div>
+  <div class="eyebrow">Egress</div>
   <h2 class="title">Policies scoped too broadly leak credentials.</h2>
   <div class="subtitle">A credential injection policy on the gateway attaches tokens to every outbound request &mdash; including ones that shouldn&rsquo;t have them.</div>
 
@@ -1324,13 +1486,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Gateway-scoped credentials leak to unrelated routes</span></div>
-    <div>18</div>
+    <div>20</div>
   </div>
 </section>
 
-<!-- 19 Summary -->
+<!-- 21 Summary -->
 <section class="slide" data-label="Summary" style="justify-content: center;">
-  <div class="eyebrow">02 &nbsp;/&nbsp; In short</div>
+  <div class="eyebrow">Putting it together</div>
   <h2 class="title" style="font-size: 48px; line-height: 1.3; max-width: 1500px;">
     From the perspective of an organization building network policy around AI-enabled workloads,
     we need to reason carefully about:
@@ -1360,14 +1522,14 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>What makes GenAI networking different</span></div>
-    <div>19</div>
+    <div>21</div>
   </div>
 </section>
 
-<!-- 20 Kitchen sink -->
+<!-- 22 Kitchen sink -->
 
 <section class="slide" data-label="Kitchen Sink Inference Policy">
-  <div class="eyebrow">02 &nbsp;/&nbsp; The full picture</div>
+  <div class="eyebrow">Putting it together</div>
   <h2 class="title">Everything and the kitchen sink inference policy.</h2>
   <div class="subtitle">All of these policies exist in products today. What would it look like to compose them in a single AI Gateway?</div>
 
@@ -1522,13 +1684,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>The full picture</span></div>
-    <div>20</div>
+    <div>22</div>
   </div>
 </section>
 
-<!-- 21 Recap -->
+<!-- 23 Recap -->
 <section class="slide" data-label="Recap">
-  <div class="eyebrow">03 &nbsp;/&nbsp; Close</div>
+  <div class="eyebrow">Close</div>
   <h2 class="title">Recap: why we need an AI Gateway.</h2>
 
   <div style="flex:1; display: grid; grid-template-columns: auto 1fr; gap: 32px 48px; align-content: start; margin-top: 32px;">
@@ -1553,13 +1715,13 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Recap</span></div>
-    <div>21</div>
+    <div>23</div>
   </div>
 </section>
 
-<!-- 22 Get involved -->
+<!-- 24 Get involved -->
 <section class="slide" data-label="Get Involved">
-  <div class="eyebrow">03 &nbsp;/&nbsp; Call to action</div>
+  <div class="eyebrow">Close</div>
   <h2 class="title">Get involved.</h2>
   <div class="subtitle" style="margin-bottom: 56px;">
     We&rsquo;re working on a common Kubernetes AI Gateway control plane. Please drop in if you&rsquo;re interested.
@@ -1599,11 +1761,11 @@
 
   <div class="footer">
     <div class="mark"><span class="swatch"></span><span>Community input shapes the spec</span></div>
-    <div>22</div>
+    <div>24</div>
   </div>
 </section>
 
-<!-- 23 Thank you -->
+<!-- 25 Thank you -->
 <section class="slide" data-label="Thank You" style="justify-content: center;">
   <div style="display:flex; flex-direction: column; gap: 56px; flex: 1; justify-content: center;">
     <div class="eyebrow">Fin.</div>
