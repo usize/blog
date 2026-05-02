@@ -6,6 +6,4 @@ This presents real challenges from a technical perspective.
 
 Consider streaming requests. We have a full view of our headers when the streaming request is initiated, but the body arrives in chunks. So right away, we're facing the problem of accumulating state in order to make policy decisions.
 
-This raises questions like: should we accumulate the full body before making a policy decision? Can we bail out of a stream early in some cases?
-
 ...
