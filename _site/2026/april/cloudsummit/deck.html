@@ -2069,7 +2069,7 @@
       audio.removeEventListener('ended', autopilotEndedHandler);
       autopilotEndedHandler = null;
     }
-    audio.src = `voice/audio/slide-${String(currentSlideNum).padStart(2, '0')}.wav`;
+    audio.src = `voice/audio/slide-${String(currentSlideNum).padStart(2, '0')}.mp3`;
     autopilotEndedHandler = function () {
       autopilotEndedHandler = null;
       if (!autoplaying || autopilotPaused) return;
@@ -2177,7 +2177,7 @@
           stopAudio();
         } else {
           stopAudio();
-          audio.src = `voice/audio/slide-${String(slideNum).padStart(2, '0')}.wav`;
+          audio.src = `voice/audio/slide-${String(slideNum).padStart(2, '0')}.mp3`;
           audio.play().catch(() => {});
           playBtn.setAttribute('data-playing', '');
           playBtn.setAttribute('aria-label', 'Pause slide audio');
