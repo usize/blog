@@ -1,0 +1,7 @@
+Putting it all together, we can see a very "complete" set of operations that one might use in a very sophisticated policy chain.
+
+In a real scenario, some of these might be able to run in parallel, but, for now, let's notice how we've tried to strike a balance between policies that let us bail out early and cheaply, versus policies that are more expensive but supply information that's necessary to proceed further through the pipeline.
+
+It's also important to note that when a 'fallback' happens to another provider we may need to jump back into the pipeline or move over to a 'fallback policy chain'. That way we can re-inject credentials for example.
+
+...

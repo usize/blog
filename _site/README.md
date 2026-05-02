@@ -1,13 +1,21 @@
 ## llms.txt
 A little fishing line: [llms.txt](https://usize.github.io/llms.txt)
 
+## May 2026
+
+[Illustrated Primer to GenAI Networking](2026/april/cloudsummit/deck.html) <- click link for narrated slides 
+
+I spoke at [Cloud Summit](https://cloudsummit.ca) in Vancouver, BC about "AI Gateways". It's trying to answer "what is an AI Gateway?", "what are the challenges of using and building them?" It's difficult to make a talk like that accessible without spending a long time chatting about Kubernetes, Proxies and other topics. Since I didn't expect most people to have that complete set of pre-requisites, I tried to cover enough broad categories of topics that there would be at least one useful takeaway for most people using AI systems.
+
+----
+
+## Kagenti Blog -- When Claude Tried to Steal the HR Docs
+
+I re-purposed my writeup about red teaming the Agent ops platform I've been working on with IBM Research, "Kagenti" into a guest post on the official Kagenti blog. It's a fun story, that I'll be adding to as we do more red teaming exercises. :]
+
+The post is [here](https://medium.com/kagenti-the-agentic-platform/when-claude-tried-to-steal-the-hr-docs-a-kagenti-red-team-story-ed12a00e00a5).
+
 ## April 2026
-
-[Cloud Summit](https://cloudsummit.ca)
-
-A talk about "AI Gateways" in general. Why they exist. What makes them different from other "Gateways". What are the challenges?
-
-Slides are [here](2026/april/cloudsummit/deck.html)
 
 [Kubecon EU 2026 AI Gateway Talk](https://www.youtube.com/embed/JiQJcXvvajg?si=IfJBwlkHALzgD9Tz)
 

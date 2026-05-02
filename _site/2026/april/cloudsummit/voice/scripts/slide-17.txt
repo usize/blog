@@ -1,0 +1,7 @@
+Take endpoint picking for example. This might be based on key value cache locality. It might be based on spot pricing. It might be based on both. These are dynamic. If we run through this policy, then our request times out. Should we calculate a new endpoint? Probably.
+
+What about a guardrails policy though? It's relatively expensive and the context hasn't changed.
+
+With credential injection, are the credentials short lived? We may want to check the TTL before we retry our request again.
+
+...

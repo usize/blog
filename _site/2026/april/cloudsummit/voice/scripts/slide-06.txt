@@ -1,0 +1,13 @@
+Once we can "speak AI" we're able to do a lot of very useful things that just aren't possible otherwise.
+
+We can emit metrics about AI specific things like token counts.
+
+We can allow or deny traffic based on prompts and responses.
+
+We can circuit break and return a canned response quickly when inference isn't necessary.
+
+We can mutate an outgoing request in ways that conform with things like privacy requirements.
+
+Or even translate from one inference provider's protocol to another's. Meaning we get the same management interface regardless of where our tokens come from.
+
+...

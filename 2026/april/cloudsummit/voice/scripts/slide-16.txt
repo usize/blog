@@ -1,0 +1,3 @@
+Another consideration is retry semantics. In an API Gateway it might suffice to 'fail open' or 'fail closed', but in an AI Gateway the heavy cost of processing request payloads demands more.
+
+...

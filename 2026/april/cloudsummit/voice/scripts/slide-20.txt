@@ -1,0 +1,13 @@
+Let's also think about policy scoping.
+
+When we're applying ingress oriented policies, our policies tend to be scoped to the Gateway itself – e.g., a global TLS policy – or to individual routes.
+
+When we're applying credential injection policies, this can be fraught.
+
+Applying at the Gateway increases our odds of leaking credentials in plaintext logs when the wrong endpoint gets credentials.
+
+Attaching per route increases operational overhead and makes it more likely we'll fail to rotate credentials.
+
+Because of this, some egress gateways and some AI Gateways offer a policy scoped per backend.
+
+...

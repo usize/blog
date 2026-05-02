@@ -1,0 +1,7 @@
+In terms of policies, our foundational tool is the ability to accept and reject requests and responses.
+
+For example, we can accumulate the context of a request. Send that prompt to a guardrails system. Then drop anything that looks dangerous.
+
+We can also control costs by applying rate limits not just by QPS but by TPS which is a more important cost indicator in AI use cases.
+
+...

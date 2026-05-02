@@ -1,0 +1,5 @@
+And why do we need to read the body again? Because AI protocols live there. In those blobs of JSON, or whatever other protocol.
+
+So, in short, an AI Gateway is a Gateway that can "speak AI", by peering into the body of a request.
+
+...

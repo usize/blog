@@ -1,0 +1,3 @@
+In closing, an AI Gateway is a Gateway that speaks AI. Which allows us to control our usage of AI systems. Which lets us track and reduce costs. Increase safety. And reason about the composition of our policies with the care that AI workloads demand.
+
+...

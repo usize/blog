@@ -1,0 +1,15 @@
+Our most sophisticated tool is mutating policies.
+
+This enables advanced techniques like model selection via semantic routing or complexity analysis.
+
+It also enables seamless translation between inference providers, meaning we can fall back from OpenAI to Anthropic if one has an outage without needing to send a whole new request.
+
+Credential injection allows us to protect our API key. Since we can store it in a central location and then enable many different workloads to use it transparently.
+
+We can even configure guardrails to neither drop requests, nor respond to them, but instead to do things like redact sensitive information en route.
+
+And finally, it's possible to integrate with a file service so that you can upload a file once and then reference it via a handle going forward. With the contents hydrated at the gateway.
+
+The possibilities are sort of endless…. Which is a problem in its own way. We'll get to that later.
+
+...

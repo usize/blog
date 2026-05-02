@@ -1,0 +1,5 @@
+Hello, this presentation follows a script written by Morgan Foster, in a voice cloned from samples of her speaking via Qwen three TTS one point seven B. Morgan is a Co-chair on the "AI Gateway" working group in the Kubernetes community, where they are extending "Gateway API" – a control plane for proxies – to better support generative AI use cases. Both for distributed inference, and for services that consume inference. We broadly call proxies that support these use cases "AI Gateways".
+
+In this presentation, we'll be talking more about what an "AI Gateway" is. What sorts of use cases it supports, and touch on some of the challenges involved in enabling those use cases.
+
+...

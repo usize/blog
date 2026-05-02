@@ -1,0 +1,7 @@
+Let's say we want to track our costs across many users, many workloads and many inference providers. Now we can do that.
+
+Let's say we want to detect drift at a global – multi-agent – scale. An uptick in failures to pass guardrails might lead us to a pattern across many agents that might slip under the radar if we measure each individually and don't take care to aggregate the data by hand.
+
+The AI Gateway gives us that aggregation free of charge.
+
+...

@@ -1,0 +1,3 @@
+In other words, our network policies start to look like data pipelines.
+
+...

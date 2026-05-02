@@ -1,0 +1,3 @@
+These challenges are primarily rooted in the data dependencies implied by policies which might mutate our request payload.
+
+...

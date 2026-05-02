@@ -1,0 +1,3 @@
+In summary, the complexity of writing policies based on AI protocols has necessitated new primitives in our Gateways themselves. Deeper support for payload processing. More complex pipeline and retry semantics. As well as improved support for egress centric operation.
+
+...

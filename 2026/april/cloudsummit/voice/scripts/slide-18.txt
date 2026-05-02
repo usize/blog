@@ -1,0 +1,5 @@
+Finally, it so happens that while egress gateways exist, most existing gateways default to a posture of managing connections coming IN rather than going OUT.
+
+This isn't AI specific, but recall that AI Gateways are often managing outgoing connections.
+
+...

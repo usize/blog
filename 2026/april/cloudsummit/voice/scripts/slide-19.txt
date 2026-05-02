@@ -1,0 +1,7 @@
+Take TLS for example. For ingress, it's generally safe to assume that SNI (the hostname referenced in our TLS handshake) will match the hostname in our header.
+
+In egress, that's not at all the case.
+
+This can cause frustrating handshake failures.
+
+...

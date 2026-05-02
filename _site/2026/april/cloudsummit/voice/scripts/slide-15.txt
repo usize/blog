@@ -1,0 +1,11 @@
+Then let's imagine semantic routing. Where we choose a model based on the contents of a request.
+
+Sometimes we can't run guardrails until we know a model name.
+
+We certainly shouldn't hit our cache without knowing the model, since it's often an important attribute to key on.
+
+Then finally endpoint picking, where we select a particular inference endpoint based on cost or performance, can't work without it.
+
+Sometimes a misconfiguration here will result in a simple failure. Other times, it might cause reversion to some default, like a default model, which will again poison our view of the world. Causing cache misses. Or incorrect guardrail invocation.
+
+...

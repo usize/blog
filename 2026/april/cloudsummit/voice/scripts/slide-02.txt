@@ -1,0 +1,9 @@
+So, first off. Why are we deleting the 'P' from API Gateway?
+
+We already know how to build gateways to manage application traffic.
+
+It's right to be skeptical of the need for something different just because "AI".
+
+So is this a buzzword or is it solving real problems?
+
+...

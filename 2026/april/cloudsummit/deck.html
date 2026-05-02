@@ -155,7 +155,7 @@
     background: var(--bg);
     padding: var(--pt) var(--px) var(--pb);
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr auto auto;
   }
   .title-slide .big {
     font-family: "IBM Plex Serif", serif;
@@ -333,6 +333,132 @@
   }
   .dot.out { background: transparent; border: 2px solid var(--muted); }
 
+  /* ── Audio controls ──────────────────────────────────────────────────── */
+  .slide-audio-controls {
+    position: absolute;
+    top: 32px;
+    right: 48px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 99;
+  }
+  .slide-audio-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 2px 16px oklch(0.58 0.18 35 / 0.38);
+    transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+  }
+  .slide-audio-btn:hover {
+    transform: scale(1.09);
+    box-shadow: 0 4px 24px oklch(0.58 0.18 35 / 0.52);
+  }
+  .slide-audio-btn:active { transform: scale(0.93); }
+  .slide-audio-btn svg { width: 26px; height: 26px; flex-shrink: 0; }
+
+  .slide-audio-btn-cc {
+    background: transparent;
+    border: 2.5px solid var(--accent);
+    color: var(--accent);
+    box-shadow: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .slide-audio-btn-cc:hover { background: oklch(0.58 0.18 35 / 0.1); box-shadow: none; }
+  .slide-audio-btn-cc[data-active] {
+    background: var(--accent);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 16px oklch(0.58 0.18 35 / 0.38);
+  }
+  .slide-audio-btn-cc[data-active]:hover { box-shadow: 0 4px 24px oklch(0.58 0.18 35 / 0.52); }
+
+  @keyframes audio-pulse {
+    0%   { box-shadow: 0 0 0 0    oklch(0.58 0.18 35 / 0.55), 0 2px 16px oklch(0.58 0.18 35 / 0.38); }
+    65%  { box-shadow: 0 0 0 14px oklch(0.58 0.18 35 / 0),    0 2px 16px oklch(0.58 0.18 35 / 0.38); }
+    100% { box-shadow: 0 0 0 0    oklch(0.58 0.18 35 / 0),    0 2px 16px oklch(0.58 0.18 35 / 0.38); }
+  }
+  .slide-audio-btn[data-playing] { animation: audio-pulse 1.6s ease-out infinite; }
+
+  /* ── Title slide CTA area ─────────────────────────────────────────────── */
+  .title-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0 12px;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+  .cta-hint {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 22px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    margin: 0;
+  }
+  .cta-hint a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+  .slide-autoplay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--fg);
+    color: var(--bg);
+    border: none;
+    border-radius: 4px;
+    padding: 18px 36px;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    transition: background 140ms ease, transform 100ms ease;
+  }
+  .slide-autoplay-btn:hover { background: oklch(0.32 0.01 80); }
+  .slide-autoplay-btn:active { transform: scale(0.97); }
+  .slide-autoplay-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .slide-autoplay-btn[data-autoplaying] { background: var(--accent); color: #fff; }
+  .slide-autoplay-btn[data-autoplaying]:hover { background: oklch(0.5 0.18 35); }
+
+  /* ── CC panel — fixed strip below the scaled canvas ──────────────────── */
+  #cc-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    overflow-y: auto;
+    padding: 20px 60px 24px;
+    background: oklch(0.12 0.008 80);
+    color: #fff;
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    display: none;
+    z-index: 9998;
+  }
+  #cc-panel[data-visible] { display: block; }
+
+  .slide-home-link {
+    position: absolute; top: 32px; left: 48px; z-index: 99;
+    font-family: "IBM Plex Mono", monospace; font-size: 16px;
+    color: var(--muted); text-decoration: none; letter-spacing: 0.03em;
+    transition: color 140ms ease;
+  }
+  .slide-home-link:hover { color: var(--accent); }
+
+  @media print { .slide-audio-controls, #cc-panel { display: none !important; } }
+
 </style>
 </head>
 <body>
@@ -342,13 +468,20 @@
 <!-- 01 Title -->
 <section class="title-slide" data-label="Title">
   <div>
-    <div class="tag">Cloud Summit Vancouver 2026</div>
+    <a class="tag" href="https://usize.github.io/blog" target="_blank" rel="noopener" style="text-decoration:none;">usize.github.io/blog</a>
   </div>
   <h1 class="big">
     The Illustrated Primer<br>
     to <em>GenAI Networking</em>.
     <div class="sub">Why we need AI Gateways when we already had API Gateways.</div>
   </h1>
+  <div class="title-cta">
+    <p class="cta-hint">Narration by <a href="https://huggingface.co/Qwen/Qwen3-TTS-12Hz-1.7B-Base" target="_blank" rel="noopener">Qwen3-TTS&nbsp;1.7B</a> &middot; Click &#9654; in the top right to narrate each slide</p>
+    <button class="slide-autoplay-btn" id="autoplay-btn">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+      Auto-narrate all slides
+    </button>
+  </div>
   <div class="meta">
     <span>Morgan Foster &nbsp;&middot;&nbsp; Co-Chair, WG AI Gateway</span>
     <span>25 min / 24 slides</span>
@@ -1805,6 +1938,280 @@
 </section>
 
 </deck-stage>
+
+<script>
+(function () {
+  const PLAY  = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>`;
+  const PAUSE = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`;
+  const STOP  = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12"/></svg>`;
+  const CC_HEIGHT = 220;
+
+  const stage = document.querySelector('deck-stage');
+  if (!stage) return;
+
+  // ── CC panel ─────────────────────────────────────────────────────────
+  const ccPanel = document.createElement('div');
+  ccPanel.id = 'cc-panel';
+  document.body.appendChild(ccPanel);
+
+  let ccHeight = 0;
+  stage._fit = function () {
+    if (!this._canvas) return;
+    if (this.hasAttribute('noscale')) { this._canvas.style.transform = 'none'; return; }
+    const s = Math.min(window.innerWidth / this.designWidth,
+                       (window.innerHeight - ccHeight) / this.designHeight);
+    this._canvas.style.transform = `scale(${s})`;
+  };
+
+  // ── State ─────────────────────────────────────────────────────────────
+  const audio = new Audio();
+  let activePlayBtn    = null;
+  let ccActive         = false;
+  let autoplaying      = false;
+  let autopilotPaused  = false;
+  let autopilotPostAudio = false;
+  let autopilotLastDur   = 0;
+  let autopilotTimer     = null;
+  let autopilotEndedHandler = null;
+  let currentSlideNum  = 1;
+  const scriptCache = {};
+  const ccBtns  = {};
+  const playBtns = [];
+
+  for (let i = 1; i <= 24; i++) {
+    const pad = String(i).padStart(2, '0');
+    fetch(`voice/scripts/slide-${pad}.txt`)
+      .then(r => r.ok ? r.text() : null)
+      .then(text => {
+        if (text) {
+          scriptCache[i] = text.replace(/\s*\.\.\.\s*$/, '').trim();
+          if (ccActive && currentSlideNum === i) ccPanel.textContent = scriptCache[i];
+        }
+      })
+      .catch(() => {});
+  }
+
+  // ── Audio helpers ─────────────────────────────────────────────────────
+  function resetPlayBtn(btn) {
+    btn.removeAttribute('data-playing');
+    btn.setAttribute('aria-label', 'Play slide audio');
+    btn.innerHTML = PLAY;
+  }
+
+  function stopAudio() {
+    if (!audio.paused) { audio.pause(); audio.currentTime = 0; }
+    if (activePlayBtn) { resetPlayBtn(activePlayBtn); activePlayBtn = null; }
+  }
+
+  function updateAutopilotPlayButtons() {
+    for (const btn of playBtns) {
+      if (autoplaying) {
+        if (autopilotPaused) {
+          btn.removeAttribute('data-playing');
+          btn.setAttribute('aria-label', 'Resume auto-narration');
+          btn.innerHTML = PLAY;
+        } else {
+          btn.setAttribute('data-playing', '');
+          btn.setAttribute('aria-label', 'Pause auto-narration');
+          btn.innerHTML = PAUSE;
+        }
+      } else {
+        if (activePlayBtn !== btn) resetPlayBtn(btn);
+      }
+    }
+  }
+
+  // ── CC ────────────────────────────────────────────────────────────────
+  function openCC() {
+    ccActive = true; ccHeight = CC_HEIGHT;
+    stage.style.bottom = CC_HEIGHT + 'px';
+    stage._fit();
+    ccPanel.textContent = scriptCache[currentSlideNum] ?? '…';
+    ccPanel.scrollTop = 0;
+    ccPanel.setAttribute('data-visible', '');
+    Object.values(ccBtns).forEach(b => b.setAttribute('data-active', ''));
+  }
+
+  function closeCC() {
+    ccActive = false; ccHeight = 0;
+    stage.style.bottom = '';
+    stage._fit();
+    ccPanel.removeAttribute('data-visible');
+    Object.values(ccBtns).forEach(b => b.removeAttribute('data-active'));
+  }
+
+  // ── Autoplay ──────────────────────────────────────────────────────────
+  const autoplayBtn = document.getElementById('autoplay-btn');
+
+  function updateAutoplayBtn() {
+    if (!autoplayBtn) return;
+    if (autoplaying) {
+      autoplayBtn.setAttribute('data-autoplaying', '');
+      autoplayBtn.innerHTML = STOP + ' Stop narration';
+    } else {
+      autoplayBtn.removeAttribute('data-autoplaying');
+      autoplayBtn.innerHTML = PLAY + ' Auto-narrate all slides';
+    }
+  }
+
+  function advanceAutopilot() {
+    autopilotTimer = null; autopilotPostAudio = false;
+    if (!autoplaying) return;
+    const nextIdx = currentSlideNum;
+    if (nextIdx >= stage.length) { stopAutopilot(); return; }
+    stage.goTo(nextIdx);
+  }
+
+  function playForAutopilot() {
+    if (!autoplaying) return;
+    autopilotPostAudio = false;
+    if (autopilotEndedHandler) {
+      audio.removeEventListener('ended', autopilotEndedHandler);
+      autopilotEndedHandler = null;
+    }
+    audio.src = `voice/audio/slide-${String(currentSlideNum).padStart(2, '0')}.wav`;
+    autopilotEndedHandler = function () {
+      autopilotEndedHandler = null;
+      if (!autoplaying || autopilotPaused) return;
+      autopilotLastDur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+      autopilotPostAudio = true;
+      autopilotTimer = setTimeout(advanceAutopilot, Math.max(1500, (5 - autopilotLastDur) * 1000));
+    };
+    audio.addEventListener('ended', autopilotEndedHandler, { once: true });
+    audio.play().catch(() => {
+      if (autopilotEndedHandler) { audio.removeEventListener('ended', autopilotEndedHandler); autopilotEndedHandler = null; }
+      if (autoplaying && !autopilotPaused) {
+        autopilotPostAudio = true; autopilotLastDur = 0;
+        autopilotTimer = setTimeout(advanceAutopilot, 5000);
+      }
+    });
+    updateAutopilotPlayButtons();
+  }
+
+  function pauseAutopilot() {
+    if (!autoplaying || autopilotPaused) return;
+    autopilotPaused = true;
+    if (autopilotTimer) { clearTimeout(autopilotTimer); autopilotTimer = null; }
+    if (!audio.paused) audio.pause();
+    updateAutopilotPlayButtons();
+  }
+
+  function resumeAutopilot() {
+    if (!autoplaying || !autopilotPaused) return;
+    autopilotPaused = false;
+    if (autopilotPostAudio || audio.ended) {
+      autopilotPostAudio = true;
+      autopilotTimer = setTimeout(advanceAutopilot, Math.max(1500, (5 - autopilotLastDur) * 1000));
+    } else {
+      audio.play().catch(() => {
+        autopilotPostAudio = true;
+        autopilotTimer = setTimeout(advanceAutopilot, 1500);
+      });
+    }
+    updateAutopilotPlayButtons();
+  }
+
+  function startAutopilot() {
+    autoplaying = true; autopilotPaused = false;
+    updateAutoplayBtn();
+    playForAutopilot();
+  }
+
+  function stopAutopilot() {
+    autoplaying = false; autopilotPaused = false; autopilotPostAudio = false;
+    if (autopilotEndedHandler) { audio.removeEventListener('ended', autopilotEndedHandler); autopilotEndedHandler = null; }
+    if (autopilotTimer) { clearTimeout(autopilotTimer); autopilotTimer = null; }
+    stopAudio();
+    updateAutoplayBtn();
+    updateAutopilotPlayButtons();
+  }
+
+  // ── Slide change ──────────────────────────────────────────────────────
+  audio.addEventListener('ended', () => {
+    if (activePlayBtn) { resetPlayBtn(activePlayBtn); activePlayBtn = null; }
+  });
+
+  stage.addEventListener('slidechange', (e) => {
+    if (autopilotTimer) { clearTimeout(autopilotTimer); autopilotTimer = null; }
+    stopAudio();
+    currentSlideNum = e.detail.index + 1;
+
+    if (ccActive) { ccPanel.textContent = scriptCache[currentSlideNum] ?? '…'; ccPanel.scrollTop = 0; }
+
+    if (autoplaying) {
+      if (e.detail.reason === 'keyboard' || e.detail.reason === 'tap') {
+        stopAutopilot();
+      } else if (!autopilotPaused) {
+        playForAutopilot();
+      }
+    }
+  });
+
+  // ── Per-slide controls ────────────────────────────────────────────────
+  let n = 0;
+  for (const el of stage.children) {
+    if (el.tagName !== 'SECTION') continue;
+    n++;
+    const slideNum = n;
+
+    const controls = document.createElement('div');
+    controls.className = 'slide-audio-controls';
+
+    const ccBtn = document.createElement('button');
+    ccBtn.className = 'slide-audio-btn slide-audio-btn-cc';
+    ccBtn.setAttribute('aria-label', 'Toggle captions');
+    ccBtn.textContent = 'CC';
+    ccBtn.addEventListener('click', (e) => { e.stopPropagation(); ccActive ? closeCC() : openCC(); });
+    ccBtns[slideNum] = ccBtn;
+
+    const playBtn = document.createElement('button');
+    playBtn.className = 'slide-audio-btn';
+    playBtn.setAttribute('aria-label', 'Play slide audio');
+    playBtn.innerHTML = PLAY;
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (autoplaying) {
+        autopilotPaused ? resumeAutopilot() : pauseAutopilot();
+      } else {
+        if (activePlayBtn === playBtn && !audio.paused) {
+          stopAudio();
+        } else {
+          stopAudio();
+          audio.src = `voice/audio/slide-${String(slideNum).padStart(2, '0')}.wav`;
+          audio.play().catch(() => {});
+          playBtn.setAttribute('data-playing', '');
+          playBtn.setAttribute('aria-label', 'Pause slide audio');
+          playBtn.innerHTML = PAUSE;
+          activePlayBtn = playBtn;
+        }
+      }
+    });
+    playBtns.push(playBtn);
+
+    controls.append(ccBtn, playBtn);
+    el.appendChild(controls);
+
+    const homeLink = document.createElement('a');
+    homeLink.className = 'slide-home-link';
+    homeLink.href = 'https://usize.github.io/blog';
+    homeLink.target = '_blank';
+    homeLink.rel = 'noopener';
+    homeLink.textContent = 'usize.github.io/blog';
+    el.appendChild(homeLink);
+  }
+
+  // ── Autoplay button ───────────────────────────────────────────────────
+  if (autoplayBtn) {
+    autoplayBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      autoplaying ? stopAutopilot() : startAutopilot();
+    });
+  }
+
+  const active = stage.querySelector('[data-deck-active]');
+  if (active) currentSlideNum = parseInt(active.getAttribute('data-deck-slide') || '0', 10) + 1;
+})();
+</script>
 
 </body>
 </html>
