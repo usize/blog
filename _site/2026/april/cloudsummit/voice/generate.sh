@@ -16,6 +16,7 @@ generate_slide() {
     padded=$(printf "%02d" "$slide_num")
     local txt_file="$SCRIPTS_DIR/slide-${padded}.txt"
     local out_file="$AUDIO_DIR/slide-${padded}.wav"
+    local mp3_file="$AUDIO_DIR/slide-${padded}.mp3"
 
     if [ ! -f "$txt_file" ]; then
         echo "ERROR: $txt_file not found" >&2
@@ -76,6 +77,9 @@ print(json.dumps({'profile_id': sys.argv[1], 'text': text, 'language': 'en'}))
     fi
 
     echo "    saved: $out_file"
+
+    ffmpeg -i "$out_file" -codec:a libmp3lame -q:a 4 "$mp3_file" -y 2>/dev/null
+    echo "    saved: $mp3_file"
 }
 
 if [ $# -gt 0 ]; then
