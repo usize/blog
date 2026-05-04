@@ -2,4 +2,4 @@ Hello, this presentation follows a script written by Morgan Foster, in a voice c
 
 In this presentation, we'll be talking more about what an "AI Gateway" is. What sorts of use cases it supports, and touch on some of the challenges involved in enabling those use cases.
 
-...
+<blank>

@@ -2,4 +2,4 @@ Other policies might respond directly. Imagine a guardrails system that, instead
 
 Or a semantic cache, where similar requests result in an immediate return of a stored response to avoid spending resources on inference altogether.
 
-...
+<blank>

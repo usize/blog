@@ -4,4 +4,4 @@ In a real scenario, some of these might be able to run in parallel, but, for now
 
 It's also important to note that when a 'fallback' happens to another provider we may need to jump back into the pipeline or move over to a 'fallback policy chain'. That way we can re-inject credentials for example.
 
-...
+<blank>

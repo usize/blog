@@ -4,4 +4,4 @@ This invalidates any prior decisions about token count.
 
 Over thousands of requests, this drift compounds our cost tracking.
 
-...
+<blank>

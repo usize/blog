@@ -4,4 +4,4 @@ What about a guardrails policy though? It's relatively expensive and the context
 
 With credential injection, are the credentials short lived? We may want to check the TTL before we retry our request again.
 
-...
+<blank>

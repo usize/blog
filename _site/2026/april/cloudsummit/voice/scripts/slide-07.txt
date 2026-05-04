@@ -4,4 +4,4 @@ Let's say we want to detect drift at a global – multi-agent – scale. An upti
 
 The AI Gateway gives us that aggregation free of charge.
 
-...
+<blank>

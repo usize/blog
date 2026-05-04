@@ -2,4 +2,4 @@ To answer that, let's start by looking at an API Gateway and an AI Gateway runni
 
 The first thing to notice is that the API Gateway is handling connections coming IN to our cluster while the AI Gateway is handling traffic going OUT from our workloads to inference providers.
 
-...
+<blank>

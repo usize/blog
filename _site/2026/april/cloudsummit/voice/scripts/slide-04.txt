@@ -6,4 +6,4 @@ Meanwhile, the policy relevant information going out for inference is located in
 
 Consider streaming requests. We have a full view of our headers when the streaming request is initiated, but the body arrives in chunks. So right away, we're facing the problem of accumulating state in order to make policy decisions.  <blank>
 
-...
+<blank>

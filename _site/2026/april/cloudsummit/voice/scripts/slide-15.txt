@@ -8,4 +8,4 @@ Then finally endpoint picking, where we select a particular inference endpoint b
 
 Sometimes a misconfiguration here will result in a simple failure. Other times, it might cause reversion to some default, like a default model, which will again poison our view of the world. Causing cache misses. Or incorrect guardrail invocation.
 
-...
+<blank>

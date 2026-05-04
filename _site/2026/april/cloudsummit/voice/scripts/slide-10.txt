@@ -12,4 +12,4 @@ And finally, it's possible to integrate with a file service so that you can uplo
 
 The possibilities are sort of endless…. Which is a problem in its own way. We'll get to that later.
 
-...
+<blank>

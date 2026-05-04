@@ -10,4 +10,4 @@ Attaching per route increases operational overhead and makes it more likely we'l
 
 Because of this, some egress gateways and some AI Gateways offer a policy scoped per backend.
 
-...
+<blank>

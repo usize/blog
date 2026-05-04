@@ -6,4 +6,4 @@ There are a number of various AI Gateways and they tend to support these sorts o
 
 However, putting these pieces together comes with its own set of challenges.
 
-...
+<blank>
