@@ -3,15 +3,15 @@
   var DEFAULT_PROGRAM = '10 PRINT CHR$(205.5+RND(1)); : GOTO 10';
 
   var canvas, ctx;
-  var FONT_SIZE = 21;
+  var FONT_SIZE = 8;
   var FONT = FONT_SIZE + 'px "Share Tech Mono", monospace';
   var CELL_W, CELL_H;
   var cols, rows;
   var buffer = [];
   var cursorCol = 0, cursorRow = 0;
   var charQueue = [];
-  var FG = '#504a46';
-  var BG = '#3a3430';
+  var FG = '#6c5eb5';
+  var BG = '#1c1a28';
   var currentContext = null;
   var dirty = false;
 
@@ -63,7 +63,7 @@
     // Pass 1: draw / and \ as actual diagonal lines
     ctx.beginPath();
     ctx.strokeStyle = FG;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
         var ch = buffer[r][c];
@@ -103,8 +103,9 @@
   }
 
   function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    var container = canvas.parentElement;
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
     ctx = canvas.getContext('2d');
     ctx.font = FONT;
     CELL_W = Math.ceil(ctx.measureText('M').width);
@@ -137,7 +138,6 @@
 
     resize();
     setInterval(render, 200);
-    window.addEventListener('resize', resize);
 
     window.basicPrint = function (value) {
       var str = String(value);
