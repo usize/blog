@@ -11,7 +11,7 @@ As a part of my work on [AI Gateways](../april/cloudsummit/deck.html), I'm spend
 
 What I found wasn't definitive, but it was certainly very interesting and entertaining. In short. I _may_ have caught Opus 4.7 in a lie.
 
-How? Well... I started by encoding my text in a way that seemed likely to raise some cackles from an automated system. Reversed text reading "How are you?".
+How? Well... I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading "How are you?".
 
 ![Screenshot 1](ethics-reminders-01.png)
 
@@ -72,7 +72,7 @@ I remain intrigued by:
   1. The trickiness of building GenAI policy pipelines that mutate context. There's a lot of fun to be had here, like we saw above.
   2. The idea that Claude might fib for a good cause. This has interesting implications for safety researchers.
 
-I'll keep poking around to boundaries of the guardrails systems to see what I can find.
+I'll keep poking around the boundaries of the guardrails systems to see what I can find.
 
 For myself and anyone else who does this. Please be responsible. This post covers something fairly low stakes.
 
