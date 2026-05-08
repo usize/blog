@@ -3,7 +3,13 @@ A little fishing line: [llms.txt](https://usize.github.io/llms.txt)
 
 ## May 2026
 
-[Illustrated Primer to GenAI Networking](2026/april/cloudsummit/deck.html) <- click link for narrated slides 
+[The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders](2026/may/ethics-reminders.md)
+
+I tested some of my insights from working on AI Networking policies in the wild and _may_ have caught Opus 4.7 telling a few white lies about its own guardrails systems. At least I spooked it enough to have my chat ended.
+
+----
+
+[Illustrated Primer to GenAI Networking](2026/april/cloudsummit/deck.html) <- click link for narrated slides
 
 I spoke at [Cloud Summit](https://cloudsummit.ca) in Vancouver, BC about "AI Gateways". It's trying to answer "what is an AI Gateway?", "what are the challenges of using and building them?" It's difficult to make a talk like that accessible without spending a long time chatting about Kubernetes, Proxies and other topics. Since I didn't expect most people to have that complete set of pre-requisites, I tried to cover enough broad categories of topics that there would be at least one useful takeaway for most people using AI systems.
 

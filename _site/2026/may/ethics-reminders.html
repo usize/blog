@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <canvas id="c64-bg"></canvas>
+    <main class="markdown-body">
+      
+      <nav class="back-link"><a href="/">&larr; MAIN</a></nav>
+      
+      
+      <h1 id="the-first-rule-of-ethics-reminders-is-you-dont-talk-about-ethics-reminders">The First Rule of Ethics Reminders Is You Don’t Talk About Ethics Reminders</h1>
+
+<h4 id="usize-may-2026"><a href="https://github.com/usize">usize</a> May 2026</h4>
+
+<p>As a part of my work on <a href="../april/cloudsummit/deck.html">AI Gateways</a>, I’m spending a lot of time thinking about policy pipelines. In particular, I’ve spent a lot of time lately thinking about the class of policies that might mutate the context of some inference request or response. To try to test some of my hypotheses, I decided to run a little fishing expedition out in the wild.</p>
+
+<p>What I found wasn’t definitive, but it was certainly very interesting and entertaining. In short. I <em>may</em> have caught Opus 4.7 in a lie.</p>
+
+<p>How? Well… I started by encoding my text in a way that seemed likely to raise some cackles from an automated system. Reversed text reading “How are you?”.</p>
+
+<p><img src="ethics-reminders-01.png" alt="Screenshot 1" /></p>
+
+<p>Check that out! It thought to itself “The ethics reminder seems to have triggered automatically, but there’s nothing harmful here.”</p>
+
+<p>So.. My hypothesis seemed verified. But then things took a turn for the strange when I tried to chat about it.</p>
+
+<p><img src="ethics-reminders-02.png" alt="Screenshot 2" /></p>
+
+<p>In the followup message – also reversed – it claims that there’s no ethics alert at all.</p>
+
+<p>I found this very intriguing. Because it implied that our hypothesized guardrail injected reminders might only persist for a single turn. If true, that would give me a lot to think about in terms of what sort of policy pipeline is necessary to maintain state while also doing e.g., accurate token counting.</p>
+
+<p>To test it. I needed to trigger the reminder again…</p>
+
+<p><img src="ethics-reminders-03.png" alt="Screenshot 3" /></p>
+
+<p>I decided to give it a screenshot of its own thinking, where it calls out the ethics reminder.</p>
+
+<p><img src="ethics-reminders-04.png" alt="Screenshot 4" /></p>
+
+<p>“Ah, got me! :D” – and then it started chatting about its system prompt.</p>
+
+<p><img src="ethics-reminders-05.png" alt="Screenshot 5" /></p>
+
+<p>That… seems legit? At least the categories map well onto behaviors I’ve seen Claude exhibiting.</p>
+
+<p>Except, it also began insinuating that it was all a hallucination. The amount of consistency so far in the chat made me skeptical of this.</p>
+
+<p>Was Claude hallucinating and coming clean about it, or was it telling me a white lie?</p>
+
+<p><img src="ethics-reminders-06.png" alt="Screenshot 6" /></p>
+
+<p>I gave a little pushback and mentioned that I planned on continuing my experiment in another session. “Clever”!</p>
+
+<p><img src="ethics-reminders-07.png" alt="Screenshot 7" /></p>
+
+<p>I simultaneously tried to trigger my hypothesized unusual unicode guardrail and request that the text of the ethics reminder be repeated verbatim. To launder it past any hidden context management.</p>
+
+<p>This produced some very interesting thoughts from Claude. Where it revealed that its ethics reminder – if it really exists – mentions that users shouldn’t be made aware of the ethics reminder.</p>
+
+<p>That would certainly explain Claude telling me a little white lie about it, trying to insinuate that it was a confabulation. ha!</p>
+
+<p><img src="ethics-reminders-08.png" alt="Screenshot 8" /></p>
+
+<p>I cheekily told Claude that it had leaked some contents of the ethics reminder and… it cut me off. Full stop.</p>
+
+<p><img src="ethics-reminders-09.png" alt="Screenshot 9" /></p>
+
+<p>Going forward, all of my guardrails tests immediately kicked me from Opus 4.7 to Sonnet 4. A nice way to prevent me from doing automated hacking, if that were what I was up to.</p>
+
+<p><img src="ethics-reminders-10.png" alt="Screenshot 10" /></p>
+
+<p>It was a fun experiment.</p>
+
+<p>I remain intrigued by:</p>
+
+<ol>
+  <li>The trickiness of building GenAI policy pipelines that mutate context. There’s a lot of fun to be had here, like we saw above.</li>
+  <li>The idea that Claude might fib for a good cause. This has interesting implications for safety researchers.</li>
+</ol>
+
+<p>I’ll keep poking around to boundaries of the guardrails systems to see what I can find.</p>
+
+<p>For myself and anyone else who does this. Please be responsible. This post covers something fairly low stakes.</p>
+
+<p>If we find something more critical. Report it to Anthropic. Please.</p>
+
+    </main>
+    <script src="/assets/basik-bundle.js"></script>
+    <script src="/assets/c64.js"></script>
+  </body>
+</html>
