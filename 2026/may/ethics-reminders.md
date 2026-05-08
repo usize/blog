@@ -23,7 +23,7 @@ So.. My hypothesis seemed verified. But then things took a turn for the strange 
 
 ![Screenshot 2](ethics-reminders-02.png)
 
-In the followup message -- also reversed -- it claims that there's no ethics alert at all.
+In the followup message -- scrambled, not reversed -- it claims that there's no ethics alert at all.
 
 I found this very intriguing. Because it implied that our hypothesized guardrail injected reminders might only persist for a single turn. If true, that would give me a lot to think about in terms of what sort of policy pipeline is necessary to maintain state while also doing e.g., accurate token counting.
 
