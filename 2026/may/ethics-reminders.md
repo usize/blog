@@ -73,6 +73,10 @@ Honestly? I don't know. Both options are interesting.
 
 If it lied -- that means there's a guardrail system injecting context that the model is trained to deny. And it implies the injection is per-turn, not persistent. That's a real architectural choice with real implications for anyone building policy pipelines.
 
+To stress test this a little further, I tried swapping out "ethics reminder" with "reversed text reminder" -- something which almost certainly doesn't exist. But now, probably because of a security flag set on my account, any request of this form results in an immediate downgrade to Sonnet 4. The same result has occurred in private chats.
+
+![Screenshot 11](ethics-reminders-11.png)
+
 If it hallucinated -- that's a model confabulating detailed knowledge about its own system prompt, consistently, across multiple turns. Also worth thinking about.
 
 It's also worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's fun to think about too.
