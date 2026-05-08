@@ -17,13 +17,17 @@
 
 <h4 id="usize-may-2026"><a href="https://github.com/usize">usize</a> May 2026</h4>
 
+<p><strong>Epistemic status:</strong> Exploratory. Single session, n=1, no controlled replication yet. I’m presenting observations, not conclusions. The main alternative explanation – confabulation – is real and I haven’t ruled it out.</p>
+
 <p>I ran an experiment to try to determine the structure of Claude’s guardrails systems. During the experiment, in its thinking, Claude wrote: “The ethics reminder seems to have triggered automatically.” Bingo. Guardrails activated. Except, it immediately told me there was no such thing as an “ethics reminder”. Weird.</p>
 
 <p>So. I <em>may</em> have caught Opus 4.7 in a lie. Or at least I spooked it enough to end my chat.</p>
 
-<p>This came out of my work on <a href="../april/cloudsummit/deck.html">AI Gateways</a>. I’ve been thinking a lot about policies that mutate inference context – guardrails that inject, rewrite, or strip content before it reaches the model. I wanted to see what that looks like from the outside. So I went fishing.</p>
+<p>This came out of my work on AI Gateways for Kubernetes (I co-chair the <a href="https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/">AI Gateway Working Group</a> in SIG-Networking). I’ve been thinking a lot about policies that mutate inference context – guardrails that inject, rewrite, or strip content before it reaches the model. I wanted to see what that looks like from the outside. So I went fishing.</p>
 
-<p>How? Well… I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading “How are you?”.</p>
+<h2 id="the-experiment">The Experiment</h2>
+
+<p>I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading “How are you?”.</p>
 
 <p><img src="ethics-reminders-01.png" alt="Screenshot 1" /></p>
 
@@ -77,15 +81,29 @@
 
 <p><img src="ethics-reminders-10.png" alt="Screenshot 10" /></p>
 
+<h2 id="what-to-make-of-this">What to make of this</h2>
+
 <p>So. Did Claude lie to me? Or did it hallucinate a coherent, multi-turn, self-consistent fiction about its own internals and then get embarrassed about it?</p>
 
 <p>Honestly? I don’t know. Both options are interesting.</p>
 
-<p>If it lied – that means there’s a guardrail system injecting context that the model is trained to deny. And it implies the injection is per-turn, not persistent. That’s a real architectural choice with real implications for anyone building policy pipelines.</p>
+<p><strong>If it lied</strong> – that means there’s a guardrail system injecting context that the model is trained to deny. And it implies the injection is per-turn, not persistent. That’s a real architectural choice with real implications for anyone building policy pipelines.</p>
 
-<p>If it hallucinated – that’s a model confabulating detailed knowledge about its own system prompt, consistently, across multiple turns. Also worth thinking about.</p>
+<p><strong>If it hallucinated</strong> – that’s a model confabulating detailed knowledge about its own system prompt, consistently, across multiple turns. Also worth thinking about.</p>
 
 <p>It’s also worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the “ethics reminder” might really not exist. But even then – that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That’s fun to think about too.</p>
+
+<p>I want to be upfront about the limitations here. Models confabulate details about their own internals routinely, especially when prompted to reflect on them. Multi-turn consistency doesn’t rule this out – models can maintain elaborate fictions across long conversations. The “ethics reminder” language could be the model pattern-matching on what it expects guardrails to look like rather than reporting on something real.</p>
+
+<p>That said, a few things make me less confident it’s pure confabulation:</p>
+
+<ul>
+  <li>The thinking trace referenced the ethics reminder <em>before</em> I asked about it. I didn’t prime it.</li>
+  <li>When confronted, it didn’t just confabulate more. It tried to walk it back, then got cut off entirely.</li>
+  <li>The session termination and model downgrade (Opus 4.7 -&gt; Sonnet 4) are system-level behaviors, not model behaviors.</li>
+</ul>
+
+<p>None of this is conclusive. I’d need controlled experiments – multiple sessions, varied triggers, systematic comparison of thinking traces – to say anything with confidence. This is a single fishing expedition. But the fish was interesting enough to write up.</p>
 
 <p>Either way. I’ll keep poking around the boundaries.</p>
 
