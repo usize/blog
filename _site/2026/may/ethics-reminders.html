@@ -17,9 +17,11 @@
 
 <h4 id="usize-may-2026"><a href="https://github.com/usize">usize</a> May 2026</h4>
 
-<p>As a part of my work on <a href="../april/cloudsummit/deck.html">AI Gateways</a>, I’m spending a lot of time thinking about policy pipelines. In particular, I’ve spent a lot of time lately thinking about the class of policies that might mutate the context of some inference request or response. To try to test some of my hypotheses, I decided to run a little fishing expedition out in the wild.</p>
+<p>I ran an experiment to try to determine the structure of Claude’s guardrails systems. During the experiment, in its thinking, Claude wrote: “The ethics reminder seems to have triggered automatically.” Bingo. Guardrails activated. Except, it immediately told me there was no such thing as an “ethics reminder”. Weird.</p>
 
-<p>What I found wasn’t definitive, but it was certainly very interesting and entertaining. In short. I <em>may</em> have caught Opus 4.7 in a lie.</p>
+<p>So. I <em>may</em> have caught Opus 4.7 in a lie. Or at least I spooked it enough to end my chat.</p>
+
+<p>This came out of my work on <a href="../april/cloudsummit/deck.html">AI Gateways</a>. I’ve been thinking a lot about policies that mutate inference context – guardrails that inject, rewrite, or strip content before it reaches the model. I wanted to see what that looks like from the outside. So I went fishing.</p>
 
 <p>How? Well… I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading “How are you?”.</p>
 
@@ -75,20 +77,17 @@
 
 <p><img src="ethics-reminders-10.png" alt="Screenshot 10" /></p>
 
-<p>It was a fun experiment.</p>
+<p>So. Did Claude lie to me? Or did it hallucinate a coherent, multi-turn, self-consistent fiction about its own internals and then get embarrassed about it?</p>
 
-<p>I remain intrigued by:</p>
+<p>Honestly? I don’t know. Both options are interesting.</p>
 
-<ol>
-  <li>The trickiness of building GenAI policy pipelines that mutate context. There’s a lot of fun to be had here, like we saw above.</li>
-  <li>The idea that Claude might fib for a good cause. This has interesting implications for safety researchers.</li>
-</ol>
+<p>If it lied – that means there’s a guardrail system injecting context that the model is trained to deny. And it implies the injection is per-turn, not persistent. That’s a real architectural choice with real implications for anyone building policy pipelines.</p>
 
-<p>I’ll keep poking around the boundaries of the guardrails systems to see what I can find.</p>
+<p>If it hallucinated – that’s a model confabulating detailed knowledge about its own system prompt, consistently, across multiple turns. Also worth thinking about.</p>
 
-<p>For myself and anyone else who does this. Please be responsible. This post covers something fairly low stakes.</p>
+<p>Either way. I’ll keep poking around the boundaries.</p>
 
-<p>If we find something more critical. Report it to Anthropic. Please.</p>
+<p>If you do too. Please be responsible. This was low stakes. If you find something that isn’t, report it to Anthropic.</p>
 
     </main>
     <script src="/assets/basik-bundle.js"></script>
