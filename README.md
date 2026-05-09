@@ -1,6 +1,3 @@
-## llms.txt
-A little fishing line: [llms.txt](https://usize.github.io/llms.txt)
-
 ## May 2026
 
 [The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders](2026/may/ethics-reminders.md)
@@ -137,3 +134,6 @@ Abandoned approach: [PR Instead](https://github.com/kubernetes-sigs/wg-ai-gatewa
 Disclaimer: This is my *personal* blog. The opinions here do not represent my employer. 
 
 [main profile](https://github.com/usize)
+
+#### [llms.txt](https://usize.github.io/llms.txt)
+
