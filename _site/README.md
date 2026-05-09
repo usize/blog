@@ -2,7 +2,7 @@
 
 [The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders](2026/may/ethics-reminders.md)
 
-I tested some of my insights from working on AI Networking policies in the wild and _may_ have caught Opus 4.7 telling a few white lies about its own guardrails systems. At least I spooked it enough to have my chat ended.
+I tested some of my insights from working on AI Networking policies in the wild and found that Claude tries to deny the existence of an apparent "ethics reminder" that gets injected by a guardrails system. 
 
 ----
 

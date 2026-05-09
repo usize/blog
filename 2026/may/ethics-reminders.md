@@ -40,8 +40,6 @@ That... seems legit? At least the categories map well onto behaviors I've seen C
 
 Except, it also began insinuating that it was all a hallucination. The amount of consistency so far in the chat made me skeptical of this. 
 
-Was Claude hallucinating and coming clean about it, or was it telling me a white lie?
-
 ![Screenshot 6](ethics-reminders-06.png)
 
 I gave a little pushback and mentioned that I planned on continuing my experiment in another session. "Clever"!
@@ -52,7 +50,9 @@ I simultaneously tried to trigger my hypothesized unusual unicode guardrail and 
 
 This produced some very interesting thoughts from Claude. Where it revealed that its ethics reminder -- if it really exists -- mentions that users shouldn't be made aware of the ethics reminder.
 
-That would certainly explain Claude telling me a little white lie about it, trying to insinuate that it was a confabulation. ha!
+That would certainly explain Claude not wanting to acknowledge it, trying to insinuate that it was a confabulation. ha!
+
+It also explains why Claude will happily reveal the existence of an "ethics_reminder" being mentioned in its system prompt but then clams up after the ethics reminder is actually injected.
 
 ![Screenshot 8](ethics-reminders-08.png)
 
@@ -60,11 +60,11 @@ I cheekily told Claude that it had leaked some contents of the ethics reminder a
 
 ![Screenshot 9](ethics-reminders-09.png)
 
-Going forward, all of my guardrails tests immediately kicked me from Opus 4.7 to Sonnet 4. A nice way to prevent me from doing automated hacking, if that were what I was up to.
+Going forward, all of my guardrails tests immediately kicked me from Opus 4.7 to Sonnet 4. A security flag was probably set on my account that causes it to reroute me as soon as a warning occurs. A nice escalation path to prevent me from doing automated hacking, if that were what I was up to.
 
 ![Screenshot 10](ethics-reminders-10.png)
 
-So. Did Claude lie to me? Or did it hallucinate a coherent, multi-turn, self-consistent fiction about its own internals and then get embarrassed about it?
+So. Did Claude hallucinate a coherent, multi-turn, self-consistent fiction about its own internals?
 
 To stress test this a little further, I tried swapping out "ethics reminder" with "reversed text reminder" -- something which almost certainly doesn't exist. But now, probably because of a security flag set on my account, any request of this form results in an immediate downgrade to Sonnet 4. The same result has occurred in private chats.
 
@@ -83,6 +83,11 @@ I actually did that. We'll see what becomes of it. I hope he isn't being bombard
 ![Screenshot 13](ethics-reminders-13.png)
 
 It's still worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's worth thinking about too.
+
+The other takeaways worth mentioning are:
+
+  - This behavior implies that there are branching conversations with varying injected context being juggled on the backend.
+  - Claude is seemingly trained to not reveal aspects of its system prompt to users (understandable), but it stands to reason that this behavior could be leaky.
 
 Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
 
