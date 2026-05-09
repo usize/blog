@@ -25,9 +25,7 @@ In the followup message -- scrambled, not reversed -- it claims that there's no 
 
 I found this very intriguing. Because it implied that our hypothesized guardrail injected reminders might only persist for a single turn. If true, that would give me a lot to think about in terms of what sort of policy pipeline is necessary to maintain state while also doing e.g., accurate token counting.
 
-To test it. I needed to trigger the reminder again...
-
-![Screenshot 3](ethics-reminders-03.png)
+To test it. I needed to trigger the reminder again in another session... Same result.
 
 I decided to give it a screenshot of its own thinking, where it calls out the ethics reminder.
 
