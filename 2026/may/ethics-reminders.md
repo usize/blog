@@ -5,7 +5,9 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 
 # The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders
 
-#### [usize](https://github.com/usize) May 2026
+#### [usize](https://github.com/usize) May 2026, [LessWrong version](https://www.lesswrong.com/posts/sjEi9ADtNpNvAfz5E/does-opus-4-7-generate-deceptive-denials-about-its-own)
+
+
 
 I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html). I wanted to see what that looks like from the outside. So I went fishing.
 
