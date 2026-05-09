@@ -1,6 +1,6 @@
 # The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders
 
-**Epistemic status:** Exploratory. Single session, n=1, no controlled replication yet. I'm presenting observations, not conclusions. The main alternative explanation -- confabulation -- is real and I haven't ruled it out.
+**Epistemic status:** Exploratory. Multiple sessions on one account, no controlled replication yet. I'm presenting observations, not conclusions. The main alternative explanation -- confabulation -- is real and I haven't ruled it out.
 
 I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on AI Gateways for Kubernetes (I co-chair the [AI Gateway Working Group](https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/) in SIG-Networking). I wanted to see what that looks like from the outside. So I went fishing.
 
