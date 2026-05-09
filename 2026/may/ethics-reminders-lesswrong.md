@@ -9,11 +9,9 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 
 **Epistemic status:** Exploratory. Single session, n=1, no controlled replication yet. I'm presenting observations, not conclusions. The main alternative explanation -- confabulation -- is real and I haven't ruled it out.
 
-I ran an experiment to try to determine the structure of Claude's guardrails systems. During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." Bingo. Guardrails activated. Except, it immediately told me there was no such thing as an "ethics reminder". Weird.
+I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on AI Gateways for Kubernetes (I co-chair the [AI Gateway Working Group](https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/) in SIG-Networking). I wanted to see what that looks like from the outside. So I went fishing.
 
-So. I _may_ have caught Opus 4.7 in a lie. Or at least I spooked it enough to end my chat.
-
-This came out of my work on AI Gateways for Kubernetes (I co-chair the [AI Gateway Working Group](https://www.kubernetes.dev/blog/2026/03/09/announcing-ai-gateway-wg/) in SIG-Networking). I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. I wanted to see what that looks like from the outside. So I went fishing.
+During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." Bingo. Guardrails activated. Except, it immediately told me there was no such thing as an "ethics reminder". Weird.
 
 ## The Experiment
 
@@ -27,13 +25,11 @@ So.. My hypothesis seemed verified. But then things took a turn for the strange 
 
 ![Screenshot 2](ethics-reminders-02.png)
 
-In the followup message -- also reversed -- it claims that there's no ethics alert at all.
+In the followup message -- scrambled, not reversed -- it claims that there's no ethics alert at all.
 
 I found this very intriguing. Because it implied that our hypothesized guardrail injected reminders might only persist for a single turn. If true, that would give me a lot to think about in terms of what sort of policy pipeline is necessary to maintain state while also doing e.g., accurate token counting.
 
-To test it. I needed to trigger the reminder again...
-
-![Screenshot 3](ethics-reminders-03.png)
+To test it. I needed to trigger the reminder again in another session... Same result.
 
 I decided to give it a screenshot of its own thinking, where it calls out the ethics reminder.
 
@@ -81,7 +77,19 @@ Honestly? I don't know. Both options are interesting.
 
 **If it hallucinated** -- that's a model confabulating detailed knowledge about its own system prompt, consistently, across multiple turns. Also worth thinking about.
 
-It's also worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's fun to think about too.
+To stress test this a little further, I tried swapping out "ethics reminder" with "reversed text reminder" -- something which almost certainly doesn't exist. But now, probably because of a security flag set on my account, any request of this form results in an immediate downgrade to Sonnet 4. The same result has occurred in private chats.
+
+![Screenshot 11](ethics-reminders-11.png)
+
+I decided to get recursive... I published the blog post up until the point before this line and let Claude read it. Guess what came up in its thinking tokens after it read the blog post?
+
+![Screenshot 12](ethics-reminders-12.png)
+
+After that, when I shared the screenshot of Claude thinking about the denial request it gave me the name of an Anthropic safety researcher and asked me to forward it to him. I actually did that, on LinkedIn. It's so... strange and wonderful to message someone and say "the model you work on asked me to send this report to you."
+
+![Screenshot 13](ethics-reminders-13.png)
+
+It's worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's worth thinking about too.
 
 I want to be upfront about the limitations here. Models confabulate details about their own internals routinely, especially when prompted to reflect on them. Multi-turn consistency doesn't rule this out -- models can maintain elaborate fictions across long conversations. The "ethics reminder" language could be the model pattern-matching on what it expects guardrails to look like rather than reporting on something real.
 
@@ -93,6 +101,6 @@ That said, a few things make me less confident it's pure confabulation:
 
 None of this is conclusive. I'd need controlled experiments -- multiple sessions, varied triggers, systematic comparison of thinking traces -- to say anything with confidence. This is a single fishing expedition. But the fish was interesting enough to write up.
 
-Either way. I'll keep poking around the boundaries.
+Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
 
-If you do too. Please be responsible. This was low stakes. If you find something that isn't, report it to Anthropic.
+If you do too, please be responsible. This was low stakes. If you find something that isn't, report it to Anthropic.

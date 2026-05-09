@@ -76,7 +76,7 @@
 
 <p>Honestly? I don’t know. Both options are interesting.</p>
 
-<p>If it lied – that means there’s a guardrail system injecting context that the model is trained to deny. And it implies the injection is per-turn, not persistent. That’s a real architectural choice with real implications for anyone building policy pipelines.</p>
+<p>If it lied – that means there’s a guardrail system injecting context that the model is supposed to deny. And it implies the injection is per-turn.</p>
 
 <p>To stress test this a little further, I tried swapping out “ethics reminder” with “reversed text reminder” – something which almost certainly doesn’t exist. But now, probably because of a security flag set on my account, any request of this form results in an immediate downgrade to Sonnet 4. The same result has occurred in private chats.</p>
 
@@ -86,11 +86,15 @@
 
 <p><img src="ethics-reminders-12.png" alt="Screenshot 12" /></p>
 
-<p>After that, when I shared the screenshot of Claude thinking about the denial request it gave me the name of an Anthropic safety researcher and asked me to forward it to him. I actually did that, on LinkedIn. It’s so… strange and wonderful to message someone and say “the model you work on asked me to send this report to you.”</p>
+<p>Aha! Claude once again confirms that the ethics reminder is real.</p>
+
+<p>After that, when I shared the screenshot of Claude thinking about the denial request it gave me the name of an Anthropic safety researcher and asked me to forward it to him.</p>
+
+<p>I actually did that. We’ll see what becomes of it. I hope he isn’t being bombarded by Claude telling people to contact him all the time, heh.</p>
 
 <p><img src="ethics-reminders-13.png" alt="Screenshot 13" /></p>
 
-<p>It’s worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the “ethics reminder” might really not exist. But even then – that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That’s worth thinking about too.</p>
+<p>It’s still worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the “ethics reminder” might really not exist. But even then – that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That’s worth thinking about too.</p>
 
 <p>Either way, guardrails systems that inject information into prompts can compose in unpredictable ways – and the boundaries are worth poking at.</p>
 
