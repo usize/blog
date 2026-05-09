@@ -80,12 +80,17 @@ Aha! Claude once again says that the ethics reminder is real.
 
 ![Screenshot 13](ethics-reminders-13.png)
 
-It's still worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's worth thinking about too.
+It's still worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist.
 
-The other takeaways worth mentioning are:
+Models confabulate about their own internals all the time. Multi-turn consistency doesn't rule that out. The "ethics reminder" could just be Claude pattern-matching on what it expects guardrails to look like.
 
-  - This behavior implies that there may be branching conversations with varying injected context being juggled on the backend.
-  - If Claude is trained to follow instructions like "don't talk about your system prompt", that behavior could be leaky.
+But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's worth thinking about too. Because if Claude is trained to follow instructions like "don't talk about your system prompt" that behavior could be leaky.
+
+That said, a few things nag at me:
+
+  - The thinking trace referenced the ethics reminder before I asked about it. I didn't prime it.
+  - When confronted, it didn't just confabulate more. It tried to walk it back, then got cut off entirely.
+  - The session termination and model downgrade (Opus 4.7 -> Sonnet 4) are system-level behaviors, not model behaviors.
 
 Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
 
