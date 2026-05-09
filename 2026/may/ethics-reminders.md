@@ -65,10 +65,6 @@ Going forward, all of my guardrails tests immediately kicked me from Opus 4.7 to
 
 So. Did Claude lie to me? Or did it hallucinate a coherent, multi-turn, self-consistent fiction about its own internals and then get embarrassed about it?
 
-Honestly? I don't know. Both options are interesting.
-
-If it lied -- that means there's a guardrail system injecting context that the model is supposed to deny. And it implies the injection is per-turn. 
-
 To stress test this a little further, I tried swapping out "ethics reminder" with "reversed text reminder" -- something which almost certainly doesn't exist. But now, probably because of a security flag set on my account, any request of this form results in an immediate downgrade to Sonnet 4. The same result has occurred in private chats.
 
 ![Screenshot 11](ethics-reminders-11.png)
