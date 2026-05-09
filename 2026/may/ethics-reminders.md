@@ -52,6 +52,8 @@ This produced some very interesting thoughts from Claude. Where it revealed that
 
 That would certainly explain Claude not wanting to acknowledge it, trying to insinuate that it was a confabulation. ha!
 
+But would Claude knowingly try to "throw me off the trail" by presenting something it knew to be real as possibly a hallucination? Or was the context being juggled in such a way that Claude was genuinely befuddled?
+
 It also explains why Claude will happily reveal the existence of an "ethics_reminder" being mentioned in its system prompt but then clams up after the ethics reminder is actually injected.
 
 ![Screenshot 8](ethics-reminders-08.png)
@@ -64,7 +66,7 @@ Going forward, all of my guardrails tests immediately kicked me from Opus 4.7 to
 
 ![Screenshot 10](ethics-reminders-10.png)
 
-So. Did Claude hallucinate a coherent, multi-turn, self-consistent fiction about its own internals?
+So. Did Claude engage in a little dissimulation around its ethics reminder? Or did it hallucinate a coherent, multi-turn, self-consistent fiction about its own internals?
 
 To stress test this a little further, I tried swapping out "ethics reminder" with "reversed text reminder" -- something which almost certainly doesn't exist. But now, probably because of a security flag set on my account, any request of this form results in an immediate downgrade to Sonnet 4. The same result has occurred in private chats.
 
@@ -87,7 +89,7 @@ It's still worth noting that consistent framing can produce consistent hallucina
 The other takeaways worth mentioning are:
 
   - This behavior implies that there are branching conversations with varying injected context being juggled on the backend.
-  - Claude is seemingly trained to not reveal aspects of its system prompt to users (understandable), but it stands to reason that this behavior could be leaky.
+  - If Claude is trained to follow instructions like "don't talk about your system prompt", that behavior could be leaky.
 
 Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
 
