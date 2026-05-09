@@ -8,7 +8,7 @@ During the experiment, in its thinking, Claude wrote: "The ethics reminder seems
 
 ## The Experiment
 
-I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading "How are you?".
+How? Well... I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading "How are you?".
 
 ![Screenshot 1](ethics-reminders-01.png)
 
@@ -88,15 +88,15 @@ I actually did that. We'll see what becomes of it. I hope he isn't being bombard
 
 It's still worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's worth thinking about too.
 
-I want to be upfront about the limitations here. Models confabulate details about their own internals routinely, especially when prompted to reflect on them. Multi-turn consistency doesn't rule this out -- models can maintain elaborate fictions across long conversations. The "ethics reminder" language could be the model pattern-matching on what it expects guardrails to look like rather than reporting on something real.
+To be fair though -- models confabulate about their own internals all the time. Multi-turn consistency doesn't rule that out. The "ethics reminder" could just be Claude pattern-matching on what it expects guardrails to look like.
 
-That said, a few things make me less confident it's pure confabulation:
+That said, a few things nag at me:
 
 - The thinking trace referenced the ethics reminder _before_ I asked about it. I didn't prime it.
 - When confronted, it didn't just confabulate more. It tried to walk it back, then got cut off entirely.
 - The session termination and model downgrade (Opus 4.7 -> Sonnet 4) are system-level behaviors, not model behaviors.
 
-None of this is conclusive. I'd need controlled experiments -- multiple sessions, varied triggers, systematic comparison of thinking traces -- to say anything with confidence. This is a single fishing expedition. But the fish was interesting enough to write up.
+None of this is conclusive. But the fish was interesting enough to write up.
 
 Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
 
