@@ -76,11 +76,7 @@ I decided to get recursive... I published the blog post up until the point befor
 
 ![Screenshot 12](ethics-reminders-12.png)
 
-Aha! Claude once again confirms that the ethics reminder is real.
-
-After that, when I shared the screenshot of Claude thinking about the denial request it gave me the name of an Anthropic safety researcher and asked me to forward it to him. 
-
-I actually did that. We'll see what becomes of it. I hope he isn't being bombarded by Claude telling people to contact him all the time, heh. 
+Aha! Claude once again says that the ethics reminder is real.
 
 ![Screenshot 13](ethics-reminders-13.png)
 
@@ -88,7 +84,7 @@ It's still worth noting that consistent framing can produce consistent hallucina
 
 The other takeaways worth mentioning are:
 
-  - This behavior implies that there are branching conversations with varying injected context being juggled on the backend.
+  - This behavior implies that there may be branching conversations with varying injected context being juggled on the backend.
   - If Claude is trained to follow instructions like "don't talk about your system prompt", that behavior could be leaky.
 
 Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
