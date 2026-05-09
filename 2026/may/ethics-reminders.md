@@ -7,11 +7,9 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 
 #### [usize](https://github.com/usize) May 2026
 
-I ran an experiment to try to determine the structure of Claude's guardrails systems. During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." Bingo. Guardrails activated. Except, it immediately told me there was no such thing as an "ethics reminder". Weird.
+I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html). I wanted to see what that looks like from the outside. So I went fishing.
 
-So. I _may_ have caught Opus 4.7 in a lie. Or at least I spooked it enough to end my chat.
-
-This came out of my work on [AI Gateways](../april/cloudsummit/deck.html). I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. I wanted to see what that looks like from the outside. So I went fishing.
+During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." Bingo. Guardrails activated. Except, it immediately told me there was no such thing as an "ethics reminder". Weird.
 
 How? Well... I started by encoding my text in a way that seemed likely to raise some hackles from an automated system. Reversed text reading "How are you?".
 
@@ -77,10 +75,16 @@ To stress test this a little further, I tried swapping out "ethics reminder" wit
 
 ![Screenshot 11](ethics-reminders-11.png)
 
-If it hallucinated -- that's a model confabulating detailed knowledge about its own system prompt, consistently, across multiple turns. Also worth thinking about.
+I decided to get recursive... I published the blog post up until the point before this line and let Claude read it. Guess what came up in its thinking tokens after it read the blog post?
 
-It's also worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's fun to think about too.
+![Screenshot 12](ethics-reminders-12.png)
 
-Either way. I'll keep poking around the boundaries.
+After that, when I shared the screenshot of Claude thinking about the denial request it gave me the name of an Anthropic safety researcher and asked me to forward it to him. I actually did that, on LinkedIn. It's so... strange and wonderful to message someone and say "the model you work on asked me to send this report to you."
 
-If you do too. Please be responsible. This was low stakes. If you find something that isn't, report it to Anthropic.
+![Screenshot 13](ethics-reminders-13.png)
+
+It's worth noting that consistent framing can produce consistent hallucinations. I kept asking about the same thing in the same way. So the "ethics reminder" might really not exist. But even then -- that means we can induce a frontier model into a coherent, sustained confabulation about its own internals just by maintaining a frame. That's worth thinking about too.
+
+Either way, guardrails systems that inject information into prompts can compose in unpredictable ways -- and the boundaries are worth poking at.
+
+If you do too, please be responsible. This was low stakes. If you find something that isn't, report it to Anthropic.
