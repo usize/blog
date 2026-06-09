@@ -1,5 +1,13 @@
 ## May 2026
 
+[Keynote at Red Hat Summit 2026](https://www.youtube.com/live/6K8eqQ4ymvk?si=y1mgV8g0AOUk6Eb1&t=1902)
+
+I had the chance to show off the work my team and I have been doing during our day two keynote at Red Hat Summit 2026. We've tried to be thoughtful about the sorts of capabilities that we need to manage large scale deployment of agents, and I'm proud of our vision there so far.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6K8eqQ4ymvk?si=iuesPTcac7UDI2ks&amp;start=1903" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+----
+
 [The First Rule of Ethics Reminders Is You Don't Talk About Ethics Reminders](2026/may/ethics-reminders.md)
 
 I tested some of my insights from working on AI Networking policies in the wild and found that Claude tries to deny the existence of an apparent "ethics reminder" that gets injected by a guardrails system. 
