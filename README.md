@@ -2,7 +2,7 @@
 
 [Pen and Paper Programming (2016)](mrrrgn/site/21)
 
-Recently I was connecting with an old friend and mentor for a reference letter. As we dug through our time working together, I checked one of my old domains on the wayback machine. Happily, some of the old posts were backed up. So I copied them here so that they could have a second life on the live web.
+Recently I was connecting with an old friend and mentor for a reference letter. As we dug through our time working together, I checked one of my old domains on the wayback machine. Happily, some of the old posts were backed up and I copied them here so that they could have a second life on the live web.
 
 This one is about using a notebook to track my way through the very tricky SpiderMonkey JS Engine's source using a notebook. Like the way you'd build up a map while playing a pen and paper game.
 
