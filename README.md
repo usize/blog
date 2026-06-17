@@ -10,8 +10,7 @@ I spent weeks eating fancy Pimento cheese sandwiches and drinking iced lattes at
 
 It's interesting to think that those days are now definitively over thanks to LLMs. People will still work on compilers. People will still debug code. But the value of stepping through it by hand for weeks, unassisted, is too inefficient when an LLM can build a diagram for you and spell each component out complete with source code citations.
 
-I feel lucky to have lived through a time where it was economically viable for me to work that way. Maybe I'm romanticizing it too much. :]
-
+I feel lucky to have lived through a time where it was economically viable for me to work that way.
 ## May 2026
 
 [Keynote at Red Hat Summit 2026](https://www.youtube.com/live/6K8eqQ4ymvk?si=y1mgV8g0AOUk6Eb1&t=1902)
