@@ -1,3 +1,13 @@
+## June 2026
+
+[Pen and Paper Programming (2016)](mrrrgn/site/22)
+
+Recently, I was connecting with an old friend and mentor and it caused me to look through one of my old domains on the wayback machine. Luckily, some of the old posts were recorded. 
+
+This one is about using a notebook to track my way through the very tricky SpiderMonkey Interpreter source using a notebook. Like the way you'd build up a map while playing a pen and paper game.
+
+It's been long enough that I can look back at this with nostalgia instead of cringing. I also still have that notebook tucked away in my keepsake bin.
+
 ## May 2026
 
 [Keynote at Red Hat Summit 2026](https://www.youtube.com/live/6K8eqQ4ymvk?si=y1mgV8g0AOUk6Eb1&t=1902)
