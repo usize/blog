@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"/>
+<link href="../assets/logo_tiny.jpg" rel="shortcut icon"/>
+<style>
+        html {
+          height: 100%;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        a {
+          text-decoration: none;
+          color: #222;
+        }
+
+        a:hover {
+          cursor: pointer;
+        }
+
+        .post-frame a {
+          text-decoration: underline;
+        }
+
+        ul.top-nav {
+          border-top: solid 1px #444;
+          border-bottom: solid 1px #444;
+          list-style-type: none;
+          margin: auto;
+        }
+
+        ul.top-nav li {
+          display: inline;
+        }
+
+        .primary-frame {
+          margin-top: 20px;
+          margin-bottom: 0px;
+          font-weight: normal;
+          color: #333;
+          width: 640px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        .headline {
+          font-size: 52px;
+        }
+
+        .sub-headline {
+          font-size: 30px;
+          color: #444;
+        }
+
+        .tag-frame {
+          color: #555;
+          float: left;
+          font-size: 14px;
+          text-align: left;
+          margin-top: 5px;
+        }
+
+        .prev-next-frame {
+          float: right;
+        }
+
+        .post-frame {
+          width: 640px;
+          margin-top: 20px;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        .post-title {
+          color: #333;
+          font-size: 24px;
+          text-align: center;
+        }
+
+        .sub-title {
+          font-size: 22px;
+          text-align: center;
+        }
+
+        .post-body {
+          color: #444;
+          font-size: 18px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+          text-align: left;
+        }
+
+        .first {
+          font-size: 24px;
+        }
+
+        .timestamp {
+          font-size: 12px;
+          color: #555;
+        }
+
+        .twitter {
+          color: #4099ff;
+        }
+
+        #first {
+            font-size: 28px;
+        }
+    </style>
+<title>
+         Free Will In a Clockwork Universe ?: Morgan (Reece) Phillips @mrrrgn
+    </title>
+</head>
+<body>
+<a href="http://radio.mrrrgn.com/" style="float:right; color: #aaa;">|[●▪▪●]|</a>
+<div class="primary-frame">
+<!-- BUILDING OUR HEADING -->
+<span class="headline"> <a href="../"> Mrrrgn's Mumbles</a></span>
+<!-- NAVBAR -->
+<ul class="sub-headline top-nav">
+<li>/<a href="../1/"> whoami? </a>/</li>
+<li>
+<a href="../sections/"> sections </a>/
+        </li>
+<li>
+<a class="twitter" href="https://usize.github.io/blog">
+<img src="../assets/twitterbird.svg" width="25px"/>
+</a>
+</li>
+</ul>
+<!-- UPPER LEFT NAV BAR -->
+<div class="tag-frame">
+        {tags: <span id="tagframe">  unscientific gloop </span>  }
+      </div>
+<!-- UPPER RIGHT NAV BAR -->
+<div class="prev-next-frame">
+<span class="prev-post">
+<a href="../21/">
+<b>prev</b>
+</a>
+</span>
+         | 
+        <span class="next-post">
+<a href="../24/">
+<b>next</b>
+</a>
+</span>
+</div>
+<!-- POST CONTENTS -->
+<br/>
+<div class="post-frame" id="postframe">
+<span class="post-title">  Free Will In a Clockwork Universe ?  </span>
+<div class="post-body">
+         I recently stumbled on this fun talk by Daniel Dennett, an awesome pop-philosopher, where he argues that it's possible to construct agents acting in free will from completely deterministic components. The idea is undeniably cool, and <i>seems</i> plausible enough. After all, aren't we all familiar with situations where a whole is greater than the sum of its parts? However, much as I like many of his ideas, I found this talk wanting for clarification.<br/><br/><iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/jrCZYDm5D8M" width="655"></iframe><br/><br/>Dennett illustrates his theory by invoking "Conway's Game of Life" (seen below). He begins by noting how the game, while being governed by only four simple rules, manages to evolve very interesting behaviors including the potential for something he calls "evitability" or avoidability. <br/><br/>He continues by proposing a hypothetical situation where some Game of Life pattern, that world's equivalent of a multi-cellular organism, evolves the ability gobble up other live tiles. Then, through an evolutionary arms race, other patterns become capable of dodging such attacks -- demonstrating evitability. This type of evasion is then used as a basic unit of "will."<br/><br/><center><button onclick="LYFE.randomize(SEED++)"><code><div id="lyfe"></div></code></button><br/><sup>[ My own game of life, the source is at the bottom. Click the board to generate a new world. ]</sup></center><br/>To the obvious counterpoint: "if the pattern contains some evasion mechanism, how is it choosing to evade any more than a clock hand chooses to tick away the seconds?" Dennett responds, as far as I currently understand it, by arguing that once an evasion mechanism reaches a critical level of sophistication -- perhaps where it becomes impractical for an outside observer to compute? -- the actions it produces become equivalent to willful choice.<br/><br/>This is a bold argument, and I believe it's due a more technical discussion. The good news is, because we're using a computable world as our model we may be able to make some progress by way of computability theory.<br/><br/>Starting from that position, our first order of business should be to throw out the entire class of arguments which rely on free will being non-computable.<sup>[1]</sup> My stab at it goes something like: <ul><li>For a problem to be computable it must be <i>decidable</i> in finite time.</li><br/><li>We can break the game of life into <i>N</i> decision problems where <i>N</i> is the number of tiles and the decision is: "alive or dead [true or false]?"</li><br/><li>Deciding this for any <i>N</i> just means applying the four rules of the game.</li> <br/><li>Because the rules only rely on information about the tile's eight neighbors the problem is trivially decidable in finite time for every possible board, even if the board is infinite!</li></ul>That seems to leave no place for non-computability to hide.<sup>[+]</sup><br/><br/>Now everything hinges on how we define free will, and, perhaps, on the frame of reference we are considering.<br/><br/><b>// What is "Free Will?"</b><br/><br/><iframe allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/OnxkfLe4G74" width="655"></iframe><br/><br/>Free will is notoriously difficult to pin down. Probably the most succinct, but rigorous, definition can be found <a href="http://plato.stanford.edu/entries/freewill/">here</a>, which itself states:<ul>"If there is such a thing as free will, it has many dimensions. In what follows, I will sketch the freedom-conferring characteristics that have attracted most of the attention. The reader is warned, however, that while many philosophers emphasize a single such characteristic, perhaps in response to the views of their immediate audience, it is probable that most would recognize the significance of many of the other features discussed here."</ul> In the talk above Dr. Dennett uses Huntington's Disease to illustrate his own concept of free will. He emphasizes choices made which avoid some otherwise inevitable outcome -- like choosing to treat a completely fatal genetic condition.<sup><a href="https://youtu.be/jrCZYDm5D8M">[2]</a></sup> Unfortunately, again, this begs the question: "if your choice making mechanism is deterministic how are you choosing to treat the disease any more than a toaster chooses when to stop toasting bread slices?" <br/><br/>It's all a bit unsatisfying. Yet, I'm glad I watched the talk because it got me thinking about whether or not he was implying that free will really hinges on making a choice that confounds the predictions of some outside observer.<br/><br/>What I mean is, a doctor can read your DNA and predict with 100% certainty that you will die, however, it's likely <i>computationally unfeasible</i> for him to predict whether or not you will choose to take treatment. In that circumstance you have <i>de facto</i> free will. That is, to any other observer within your own universe/frame of reference you will always appear to be a free agent. Maybe that's good enough.<br/><br/>Moving back to the Game of Life world, imagine a pattern attempting to predict the changes within another pattern. To do so, they'll need to reach out and "touch" the boundaries of that other pattern, but by the time they'd made a single reading the world would have ticked and the state would have changed. Further, their own interactions with other patterns will modify the state of the board so that, for large patterns, they won't be able to reliably predict the state of its inner tiles based on some incomplete perimeter data. <br/><br/>From within the game board, with no way for a pattern to always predict the behavior of other patterns, free will seems to exist. Sure, to an observer outside of their frame of reference [us] each pattern is a totally predictable automaton; but to a "scientist" pattern [on the board] that should make no difference. To them, if something isn't provable it's not worth worrying about. Given that, if de facto free will exists, I am willing to convert from fatalism to compatibilism.<sup>[-]</sup><br/><br/>If you're interested in reading some more thoughtful opinions on the subject I recommend the blog of my good friend <a href="http://jorendorff.blogspot.com/2015/05/determinism.html">Jason Orendorff</a> and the <a href="http://plato.stanford.edu/entries/compatibilism/">Stanford Encyclopedia of Philosophy</a><br/><br/>----<br/><br/>[+.] Likewise we could imagine our world as being described by <i>N</i> decision problems where <i>N</i> is the number of particles in the universe and the problems concern basic physical quantities like momentum. Unfortunately, thanks to the uncertainty principle, our responses are limited to probability distributions rather than absolute values. <br/><br/>[-.] To further this debate it would be interesting to try constructing a formal proof that a pattern exists in the Game of Life who's state could never be predicated by another pattern.<br/><br/>[1.] <a href="https://books.google.com/books?id=gDbOAK89tmcC&amp;pg=PA145&amp;dq=Shadows+of+Mind+free+will+non-computability&amp;hl=fr&amp;sa=X&amp;ved=0ahUKEwjyxae5jKrLAhVV72MKHcb5DRQQ6AEIIDAA#v=onepage&amp;q=Shadows%20of%20Mind%20free%20will%20non-computability&amp;f=false">"Shadows of the Mind: A Search for the Missing Science of Consciousness", Roger Penrose</a><br/><br/>[2.] The Huntington's Disease bit starts around <a href="https://youtu.be/jrCZYDm5D8M">55:32</a>.<br/><br/><script src="https://gist.github.com/mrrrgn/88a5932786938876e436.js"></script><br/><script>function Lyfe(width, height) {    var self = this;    self.width = width;    self.height = height;    self.board = new Array(width);    for (var i = 0; i < height; i++)        self.board[i] = new Array(width);    self.randomize = function(seed) {        for (var i = 0; i < self.height; i++) {            for (var j = 0; j < self.width; j++) {                seed ^= seed >> 12;                seed ^= seed << 25;                seed ^= seed >> 27;                if (seed % 255 < 50) {                    self.board[i][j] = true;                } else {                    self.board[i][j] = false;                }            }        }        return self;    };    self.tick = function() {        var dead = [];        var live = [];        for (var y = 0; y < self.height; y++) {            for (var x = 0; x < self.width; x++) {                var count = 0;                if (y > 0) {                    count = x > 0 && self.board[y - 1][x - 1] ? count + 1 : count;                    count = self.board[y - 1][x] ? count + 1 : count;                    count = x < self.width + 1 && self.board[y - 1][x + 1] ? count + 1 : count;                }                count = x > 0 && self.board[y][x - 1] ? count + 1 : count;                count = x < self.width + 1 && self.board[y][x + 1] ? count + 1 : count;                if (y < self.height - 1) {                    count = x > 0 && self.board[y + 1][x - 1] ? count + 1 : count;                    count = self.board[y + 1][x] ? count + 1 : count;                    count = x < self.width + 1 && self.board[y + 1][x + 1] ? count + 1 : count;                }                if (count < 2 || count > 3)                    dead.push([y, x]);                if (count == 3)                    live.push([y, x]);            }        }        for (var i in dead)            self.board[dead[i][0]][dead[i][1]] = false;        for (var i in live)            self.board[live[i][0]][live[i][1]] = true;    };    self.drawToConsole = function() {        for (var i = 0; i < self.height; i++) {            console.log(self.board[i].map(function (v) { return v ? '#' : '.'; }).join(''));        }    };    self.draw = function(e) {        e.innerHTML = '';        for (var i = 0; i < self.height; i++) {            e.innerHTML += self.board[i].map(function (v) { return v ? '#' : '.'; }).join('');            e.innerHTML += '<br/>';        }    };    self.run = function(rate, e) {        try {            (Window);            setInterval(function() { self.tick(); self.draw(e); }, rate || 250);        } catch (_) {            setInterval(function() { self.tick(); self.drawToConsole(); }, rate || 250);        }    }}try {    (module);    module.exports = Lyfe;} catch(e) {};;var SEED = 22; var LYFE = (new Lyfe(90, 40)).randomize(SEED); LYFE.run(200, document.getElementById("lyfe"));</script>
+</div>
+<span class="timestamp">  03-20-2016 ,
+            <a href="../rss/">rss feed</a>
+<a href="../license/">license</a>
+</span>
+</div>
+</div>
+<!-- GOOGLE ANALYTICS -->
+
+</body>
+</html>

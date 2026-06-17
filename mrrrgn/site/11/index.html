@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"/>
+<link href="../assets/logo_tiny.jpg" rel="shortcut icon"/>
+<style>
+        html {
+          height: 100%;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        a {
+          text-decoration: none;
+          color: #222;
+        }
+
+        a:hover {
+          cursor: pointer;
+        }
+
+        .post-frame a {
+          text-decoration: underline;
+        }
+
+        ul.top-nav {
+          border-top: solid 1px #444;
+          border-bottom: solid 1px #444;
+          list-style-type: none;
+          margin: auto;
+        }
+
+        ul.top-nav li {
+          display: inline;
+        }
+
+        .primary-frame {
+          margin-top: 20px;
+          margin-bottom: 0px;
+          font-weight: normal;
+          color: #333;
+          width: 640px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        .headline {
+          font-size: 52px;
+        }
+
+        .sub-headline {
+          font-size: 30px;
+          color: #444;
+        }
+
+        .tag-frame {
+          color: #555;
+          float: left;
+          font-size: 14px;
+          text-align: left;
+          margin-top: 5px;
+        }
+
+        .prev-next-frame {
+          float: right;
+        }
+
+        .post-frame {
+          width: 640px;
+          margin-top: 20px;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        .post-title {
+          color: #333;
+          font-size: 24px;
+          text-align: center;
+        }
+
+        .sub-title {
+          font-size: 22px;
+          text-align: center;
+        }
+
+        .post-body {
+          color: #444;
+          font-size: 18px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+          text-align: left;
+        }
+
+        .first {
+          font-size: 24px;
+        }
+
+        .timestamp {
+          font-size: 12px;
+          color: #555;
+        }
+
+        .twitter {
+          color: #4099ff;
+        }
+
+        #first {
+            font-size: 28px;
+        }
+    </style>
+<title>
+         A Tweetable Turing Machine: Morgan (Reece) Phillips @mrrrgn
+    </title>
+</head>
+<body>
+<a href="http://radio.mrrrgn.com/" style="float:right; color: #aaa;">|[●▪▪●]|</a>
+<div class="primary-frame">
+<!-- BUILDING OUR HEADING -->
+<span class="headline"> <a href="../"> Mrrrgn's Mumbles</a></span>
+<!-- NAVBAR -->
+<ul class="sub-headline top-nav">
+<li>/<a href="../1/"> whoami? </a>/</li>
+<li>
+<a href="../sections/"> sections </a>/
+        </li>
+<li>
+<a class="twitter" href="https://usize.github.io/blog">
+<img src="../assets/twitterbird.svg" width="25px"/>
+</a>
+</li>
+</ul>
+<!-- UPPER LEFT NAV BAR -->
+<div class="tag-frame">
+        {tags: <span id="tagframe">  c0de </span>  }
+      </div>
+<!-- UPPER RIGHT NAV BAR -->
+<div class="prev-next-frame">
+<span class="prev-post">
+<a href="../10/">
+<b>prev</b>
+</a>
+</span>
+         | 
+        <span class="next-post">
+<a href="../14/">
+<b>next</b>
+</a>
+</span>
+</div>
+<!-- POST CONTENTS -->
+<br/>
+<div class="post-frame" id="postframe">
+<span class="post-title">  A Tweetable Turing Machine  </span>
+<div class="post-body">
+         I woke up a few weekends ago, after a night of working homework problems, and realized that I could probably fit a Turing machine into a tweet.... Sure enough, it works! <br/><br/>Here's a gist with an example program and many improvements:<br/><a href="https://gist.github.com/mrrrgn/3200044be3fd31f4c3b5">https://gist.github.com/mrrrgn/3200044be3fd31f4c3b5</a><br/><br/><center><blockquote class="twitter-tweet" lang="en"><p dir="ltr" lang="en">t=(c,k)=&gt;{i=0;s='q0';while(true){p=c[s+k[i]];if(p[0]=='t'||p[0]=='f'){return p[0]};;k[i]=p[0];if(p[1]=='R'){i++}else{i--};s=p[2]+p[3];}};</p>— Morgan Phillips (@mrrrgn) <a href="https://usize.github.io/blog">August 9, 2015</a></blockquote><br/><script async="" charset="utf-8" src="//web.archive.org/web/20160707145612js_/http://platform.twitter.com/widgets.js"></script><img src="../assets/turingtweet.gif" width="600px"/></center>
+</div>
+<span class="timestamp">  09-16-2015 ,
+            <a href="../rss/">rss feed</a>
+<a href="../license/">license</a>
+</span>
+</div>
+</div>
+<!-- GOOGLE ANALYTICS -->
+
+</body>
+</html>

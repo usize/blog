@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"/>
+<link href="../assets/logo_tiny.jpg" rel="shortcut icon"/>
+<style>
+        html {
+          height: 100%;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        a {
+          text-decoration: none;
+          color: #222;
+        }
+
+        a:hover {
+          cursor: pointer;
+        }
+
+        .post-frame a {
+          text-decoration: underline;
+        }
+
+        ul.top-nav {
+          border-top: solid 1px #444;
+          border-bottom: solid 1px #444;
+          list-style-type: none;
+          margin: auto;
+        }
+
+        ul.top-nav li {
+          display: inline;
+        }
+
+        .primary-frame {
+          margin-top: 20px;
+          margin-bottom: 0px;
+          font-weight: normal;
+          color: #333;
+          width: 640px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        .headline {
+          font-size: 52px;
+        }
+
+        .sub-headline {
+          font-size: 30px;
+          color: #444;
+        }
+
+        .tag-frame {
+          color: #555;
+          float: left;
+          font-size: 14px;
+          text-align: left;
+          margin-top: 5px;
+        }
+
+        .prev-next-frame {
+          float: right;
+        }
+
+        .post-frame {
+          width: 640px;
+          margin-top: 20px;
+          font-family: "Big Caslon", "Book Antiqua", "Palatino Linotype", Georgia, serif;
+        }
+
+        .post-title {
+          color: #333;
+          font-size: 24px;
+          text-align: center;
+        }
+
+        .sub-title {
+          font-size: 22px;
+          text-align: center;
+        }
+
+        .post-body {
+          color: #444;
+          font-size: 18px;
+          margin-top: 15px;
+          margin-bottom: 15px;
+          text-align: left;
+        }
+
+        .first {
+          font-size: 24px;
+        }
+
+        .timestamp {
+          font-size: 12px;
+          color: #555;
+        }
+
+        .twitter {
+          color: #4099ff;
+        }
+
+        #first {
+            font-size: 28px;
+        }
+    </style>
+<title>
+         Pen and Paper Programming: Morgan (Reece) Phillips @mrrrgn
+    </title>
+</head>
+<body>
+<div class="primary-frame">
+<!-- BUILDING OUR HEADING -->
+<span class="headline"> <a href="../"> Mrrrgn's Mumbles</a></span>
+<!-- NAVBAR -->
+<ul class="sub-headline top-nav">
+<li>/<a href="../1/"> whoami? </a>/</li>
+<li>
+<a href="../sections/"> sections </a>/
+        </li>
+<li>
+<a class="twitter" href="https://usize.github.io/blog">
+<img src="../assets/twitterbird.svg" width="25px"/>
+</a>
+</li>
+</ul>
+<!-- UPPER LEFT NAV BAR -->
+<div class="tag-frame">
+        {tags: <span id="tagframe">  c0de </span>  }
+      </div>
+<!-- UPPER RIGHT NAV BAR -->
+<div class="prev-next-frame">
+<span class="prev-post">
+<a href="../20/">
+<b>prev</b>
+</a>
+</span>
+         | 
+        <span class="next-post">
+<a href="../22/">
+<b>next</b>
+</a>
+</span>
+</div>
+<!-- POST CONTENTS -->
+<br/>
+<div class="post-frame" id="postframe">
+<span class="post-title">  Pen and Paper Programming  </span>
+<div class="post-body">
+         For the third time in my short(ish) career I'm in the process of becoming productive within a code base of considerable enough size and complexity that it's unlikely (or impossible) for one programmer to understand it completely. I've experimented with many strategies for navigating these circuitous labyrinths, and learned a lot from each attempt; the most useful lesson being that sometimes, if not often, a good composite notebook is the best tool for gaining a foothold in a foreign repository. <ul><sup><code><b>WEST OF <a href="https://dxr.mozilla.org/mozilla-central/source/js/src/frontend/Parser.cpp#9140">Parser.cpp</a></b><br/>This is an open field west of a lexer, with a boarded front door. There is a small mailbox here.  A rubber mat saying 'Welcome to SpiderMonkey!' lies by the door.<br/><br/><blink>▓</blink> <a href="http://www.web-adventures.org/cgi-bin/webfrotz?s=ZorkDungeon">look</a></code></sup></ul>In text-based adventure games, players explore by typing cardinal directions into a prompt then receiving a description of their new surroundings. Unlike in multi-dimensional environments, where we can always see where we've just been, in single-dimensional text-streams we must remember all of our previous moves to maintain our bearings. Needless to say, it's incredibly easy to become lost.<br/><br/>The complex call-graphs of a massive project put us in a similar situation. When navigating source, whether because some functions are imported from many separate files, or a class is defined at line 50 then first instantiated at line 5000, grasping a section of code can become very taxing on our short-term memory. I mitigate this somewhat by using screen splitting and high-resolution monitors, but this can only take me so far.<br/><br/><center><img src="../assets/screen.png"/><br/><sup>[ My most recent terminal session. ]</sup></center><br/>Any veteran text-based gamer can tell you that the key to mastering a one dimensional universe is to translate it into two [dimensions]. To do that, simply sketch out the results of your moves on a piece of paper. By the end of a game you should have constructed a fairly detailed map. Navigating the world becomes easy.<br/><br/>Likewise, when, after some time of plugging away at manageable SpiderMonkey patches, I tackled a bug large enough to best tmux, vim, and my short-term memory. I went straight for my notebook.<br/><br/><center><img src="../assets/composite.jpg" width="600px"/></center><br/><br/><b> // Code Cartography </b><br/><br/>My quest: "<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=932080">Bug 932080</a> - Support default values in destructuring" was to put the finishing touches on a longstanding es6 feature. Namely to allow for syntax like: <code><br/><br/>// default object values in function arguments<br/>function f({x=1, y=2}) { return x + y; }; <br/>f({}) == 3; <br/>f({x: 12}) === 14;<br/><br/>// standalone<br/>({x=1, y=2} = {y=99}); <br/>y === 99, <br/>x === 1;<br/></code><br/>Among other things, this modest feature is going to obsolesce the millions of KLOCs spent setting default arguments using objects (a common pattern). How exciting!<br/><br/>The change is quite subtle when compared to something like <code>| function f({x: x=1}){} |</code>, which we already support. So why has it been painful to implement? Well, the <code>| {foo=bar} |</code> syntax is a special case (called a "Cover Grammar"), and this one is <i>only</i> valid during destructuring. This complicates life because sometimes we don't even know if we are destructuring until <i>after</i> we've completely parsed an expression.<br/><br/>Take <code>| ({foo=bar}) =&gt; foo; |</code> for example. <code>| ({foo=bar}) |</code> is first parsed as an object literal and is therefor a SyntaxError, however, upon encountering <code>| =&gt; |</code> we <a href="https://dxr.mozilla.org/mozilla-central/source/js/src/frontend/Parser.cpp?from=assignExpr#7784">rewind the parser</a> and reparse the expression as function arguments. Conceptually this may seem simple, but we had no good mechanism for ignoring the false error in the parser. This increased the bug's scope substantially.<br/><br/>What we needed was some way to defer errors and potentially void them. The most important task then became locating the places where one of these deferred errors could be either thrown out or acted upon. In other words, to draw a border around some chunk of the parser, where any incoming call must pass in an "error-stashing" object. Inside of the boundary errors are stashed and un-stashed [via the object] catch-as-catch-can, and upon subsequent border crossings any errors are acted upon.<code> <br/><br/>/* Here we cross the "possible-error" boundary, expr will call many other functions, passing &amp;possibleError to each one. When an error is seen, possibleError is set  to pending. When something happens to reverse the error (like realizing we're in an arrow function) we unset it. At the end we report any still-pending error. */<br/><br/>PossibleError possibleError;<br/>expr(..., &amp;possibleError);<br/>possibleError.maybeReport();<br/></code><br/>A long-time JS Engine hacker would probably have an intuitive grasp of where this boundary lies, but I had literally no clue. To save time I decided to interrogate the engine directly by setting a breakpoint against every parser method with the word "destructuring" in it and generate some backtraces.<br/><br/><center><img src="../assets/bt.png" width="600px"/></center><br/>At this point, I exited the debugger and began working my way bottom-up through the backtrace -- taking notes about everything happening in plain English.<br/><br/><center><img src="../assets/notebook.jpg" width="600px"/></center><br/>From that initial backtrace (with the aid of ctags for quick navigation) I was able to create a sort of playbook which covered not just the initial case, but also every other code path related to destructuring. Writing it in plain English was especially useful for increasing my high level understanding of the source. By the end of the exercise it read like the sort of explanation I've often seen coming from veteran hackers on IRC. <br/><br/>Finally, by putting it all together, I had a map of the boundary. Win!<br/><br/><center><img src="../assets/boundary.jpg" width="600px"/></center><br/>With that information I was able to create <a href="https://bug932080.bmoattachments.org/attachment.cgi?id=8720874">this WIP</a>, and bring us [hopefully] not far from never needing to write boilerplate like <code>| arg = obj.prop || "default value"; |</code> again. :)<br/><br/>Could I have done the same without writing it out by hand? Yes, but experience tells me it would have gone more slowly. Longhand is simple to edit, draw diagrams on, and helps jog my brain. That said, any external notes are better than nothing! Without them, I'd need to rely on building up the same structured information in my long term memory (likely by reading and re-reading the same sections of code many times over). Nobody has time for that.<br/><script>function blink() {var blinks = document.getElementsByTagName('blink');for (var i = blinks.length - 1; i >= 0; i--) {var s = blinks[i];s.style.visibility = (s.style.visibility === 'visible') ? 'hidden' : 'visible';}window.setTimeout(blink, 1000);}if (document.addEventListener) document.addEventListener("DOMContentLoaded", blink, false);else if (window.addEventListener) window.addEventListener("load", blink, false);else if (window.attachEvent) window.attachEvent("onload", blink);else window.onload = blink;</script><br/><br/>
+</div>
+<span class="timestamp">  02-22-2016 ,
+            <a href="../rss/">rss feed</a>
+<a href="../license/">license</a>
+</span>
+</div>
+</div>
+<!-- GOOGLE ANALYTICS -->
+
+</body>
+</html>
