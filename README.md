@@ -2,13 +2,15 @@
 
 [Pen and Paper Programming (2016)](mrrrgn/site/21)
 
-Recently I was connecting with an old friend and mentor and it caused me to look through one of my old domains on the wayback machine. Happily, some of the old posts were backed up. 
+Recently I was connecting with an old friend and mentor for a reference letter. As we dug through our time working together, I checked one of my old domains on the wayback machine. Happily, some of the old posts were backed up. So I copied them here so that they could have a second life on the live web.
 
-This one is about using a notebook to track my way through the very tricky SpiderMonkey Interpreter source using a notebook. Like the way you'd build up a map while playing a pen and paper game.
+This one is about using a notebook to track my way through the very tricky SpiderMonkey JS Engine's source using a notebook. Like the way you'd build up a map while playing a pen and paper game.
 
-I spent weeks eating fancy pimento cheese sandwiches at the "Frothy Monkey" cafe on 12th south in Nashville, TN filling up that notebook. Getting paid well, to just... sit all day and think hard about how to improve a compiler.
+I spent weeks eating fancy Pimento cheese sandwiches and drinking iced lattes at the "Frothy Monkey" cafe on 12th south in Nashville, TN filling up that notebook. Getting paid well to just... sit all day and think hard about how to improve a compiler.
 
-It's interesting to think that those days are now definitely over thanks to LLMs. I feel lucky to have lived through a time where it was possible for that to be my job.
+It's interesting to think that those days are now definitively over thanks to LLMs. People will still work on compilers. People will still debug code. But the value of stepping through it by hand, unassisted, is too inefficient when an LLM can build a diagram for you and spell each component out complete with source code citations. 
+
+I feel lucky to have lived through a time where it was possible for my job to be so.. methodical. Maybe I'm romanticizing it too much. :]
 
 ## May 2026
 
