@@ -1,6 +1,6 @@
 ## June 2026
 
-[Pen and Paper Programming (2016)](mrrrgn/site/22)
+[Pen and Paper Programming (2016)](mrrrgn/site/21)
 
 Recently, I was connecting with an old friend and mentor and it caused me to look through one of my old domains on the wayback machine. Luckily, some of the old posts were recorded. 
 
