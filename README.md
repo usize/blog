@@ -2,15 +2,16 @@
 
 [Pen and Paper Programming (2016)](mrrrgn/site/21)
 
-Recently I was connecting with an old friend and mentor for a reference letter. As we dug through our time working together, I checked one of my old domains on the wayback machine. Happily, some of the old posts were backed up and I copied them here so that they could have a second life on the live web.
+Recently I was connecting with an old friend and mentor. As we dug through our time working together, I checked one of my old domains on the wayback machine. 
 
-This one is about using a notebook to track my way through the very tricky SpiderMonkey JS Engine's source using a notebook. Like the way you'd build up a map while playing a pen and paper game.
+Happily, some of the old posts were backed up.
 
-I spent weeks eating fancy Pimento cheese sandwiches and drinking iced lattes at the "Frothy Monkey" cafe on 12th south in Nashville, TN filling up that notebook. Getting paid well to just... sit all day and think hard about how to improve a compiler.
+This one came after I'd spent weeks eating fancy Pimento cheese sandwiches and drinking iced lattes at the Frothy Monkey cafe on 12th South in Nashville, getting paid well to just... sit all day and think hard about how to implement a new feature in a compiler.
 
-It's interesting to think that those days are now definitively over thanks to LLMs. People will still work on compilers. People will still debug code. But the value of stepping through it by hand for weeks, unassisted, is too inefficient when an LLM can build a diagram for you and spell each component out complete with source code citations.
+Those days are now definitively over thanks to LLMs. People will still work on compilers. People will still debug code. But stepping through it by hand for weeks, unassisted, is too inefficient when an LLM can spell it all out.
 
-I feel lucky to have lived through a time where it was economically viable for me to work that way.
+I have optimism about the future of technology, but I also feel lucky to have lived through a time where it was economically viable for me to work that way.. 
+
 ## May 2026
 
 [Keynote at Red Hat Summit 2026](https://www.youtube.com/live/6K8eqQ4ymvk?si=y1mgV8g0AOUk6Eb1&t=1902)
