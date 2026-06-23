@@ -10,6 +10,10 @@ title: "Why There's No Such Thing as an AI Co-Worker"
 
 ---
 
+_edit_ Since I posted this a more thorough paper on the same topic has come out. It's worth a read: https://role-confusion.github.io/
+
+--
+
 I've spent the last year [arguing](../../2025/november/agent-identity.md) that agents need their own identity, and that [delegated authorization](../drafts/to-impersonate-or-not.md) is how we let them act on our behalf without handing them the keys.
 
 I still believe that. But even if we nail the auth story, there's a deeper problem.
