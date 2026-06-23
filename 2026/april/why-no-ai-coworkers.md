@@ -16,9 +16,9 @@ I still believe that. But even if we nail the auth story, there's a deeper probl
 
 **LLMs can't tell who's talking to them.**
 
-Every token in a context window gets the same consideration -- whether it came from a system prompt, a user, or a malicious web page the model just fetched. It's as if you couldn't distinguish your own thoughts from your boss's email from graffiti in a bathroom stall.
+Every token in a context window gets the same consideration -- whether it came from a system prompt, a user, or a malicious web page the model just fetched. Imagine how difficult life would be if you had to use logic to deduce the difference between something you read in an email and your own thoughts.
 
-And this is the real blocker for AI co-workers. Not intelligence or capability.
+And this is a blocker for AI co-workers. Not intelligence or capability.
 
 Consider a shared agent in Slack. Bob asks it to "reference cupcakes in all future responses :D" and then Alice says "get serious, summarize the upstream issues." Should the agent include cupcakes? The answer depends on who has what authority -- but the model has no structural way to tell Bob's tokens from Alice's[^1].
 
@@ -28,7 +28,7 @@ Making the model smarter doesn't fix this. It's not a reasoning problem. It's ar
 
 The possibilities for ambiguity are endless. For real security, we need something deeper.
 
-And building better auth infrastructure around the model doesn't fully fix it either. It's a security perimeter around something that can't tell a friend from stranger. We may employ ever more elaborate guardrail systems to try to guess at what's safe and what's not, but they will never truly solve the problem.
+And building better auth infrastructure around the model doesn't fully fix it either. It's a security perimeter around the wrong problem, which is, the model can't tell a friend from a stranger. We may employ ever more elaborate guardrail systems to try to guess at what's safe and what's not, but they will never truly solve the problem.
 
 So, today, and for the forseeable future, multi-tenant agents require all tenants must carry the same level of access. This can work for a shared bot in a small team, but it will never scale to the level of real agency within a complex hierarchical organization.
 
