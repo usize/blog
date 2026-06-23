@@ -10,7 +10,13 @@ title: "Why There's No Such Thing as an AI Co-Worker"
 
 ---
 
-_edit_ Since I posted this a much more thorough post and paper on the same topic has come out. It's worth a read: [here](https://role-confusion.github.io/)
+_edit_ Since I posted this a thorough post and paper on the same topic has come out. It's worth a read: [here](https://role-confusion.github.io/)
+
+Here's the abstract from the paper:
+
+> LLMs see the world as a single stream of text, partitioned into roles like <user> or <tool>. We trace prompt injection to role confusion: models perceive the source of text from how it sounds, not its labeled role. A command hidden in a webpage hijacks an agent simply because it sounds like <user> text, despite its <tool> label. We design role probes to measure how LLMs internally perceive "who is speaking," and find that injected text occupies the same representational space as the trusted role it imitates. We demonstrate this with CoT Forgery, a zero-shot attack that injects fabricated reasoning into user prompts and tool outputs. Models mistake the forgery for their own thoughts, yielding 60% attack success against frontier models with near-zero baselines. Strikingly, the degree of role confusion predicts attack success before a single token is generated. This mechanism generalizes beyond CoT Forgery to standard agent prompt injections, revealing prompt injection as a measurable consequence of role perception. To the model, sounding like a role is indistinguishable from being one.
+
+What I wrote below is a sketch for what a solution might look like.
 
 ----
 
