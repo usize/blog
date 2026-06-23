@@ -14,7 +14,7 @@ _edit_ Since I posted this a much more thorough post and paper on the same topic
 
 Though I still think there's value in thinking about how identity awareness could be injected on a per token basis, and later joined with external auth systems as is implied below.
 
---
+----
 
 I've spent the last year [arguing](../../2025/november/agent-identity.md) that agents need their own identity, and that [delegated authorization](../drafts/to-impersonate-or-not.md) is how we let them act on our behalf without handing them the keys.
 
