@@ -10,7 +10,9 @@ title: "Why There's No Such Thing as an AI Co-Worker"
 
 ---
 
-_edit_ Since I posted this a more thorough paper on the same topic has come out. It's worth a read: https://role-confusion.github.io/
+_edit_ Since I posted this a much more thorough post and paper on the same topic has come out. It's worth a read: https://role-confusion.github.io/
+
+Though I still think there's value in thinking about how identity awareness could be injected on a per token basis, and later joined with external auth systems as is implied below.
 
 --
 
