@@ -8,25 +8,17 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 #### [usize](https://github.com/usize) May 2026
 
 
-I've been thinking a lot about policies that mutate inference context -- like guardrails that inject, rewrite, or strip content before it reaches the model. 
+I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html), where, in particular I'd been curious about how to juggle context mutations only visible from the proxy--like PII redaction via guardrail--without accidentally breaking a prefix, thus invalidating the session's cache. 
 
-This came out of my work on [AI Gateways](../april/cloudsummit/deck.html) where I have to reason about the downstream implications of e.g., injecting hidden context into a conversation from the proxy. For example, if I inject something in the middle of a conversation I'll need to keep track of it. Carefully injecting it back into the correct location each turn, so as not to break prefix matching (causing expensive cache misses).
+It made me curious to see what behaviors battle-tested guardrails were exhibiting. In particular, it made me curious about all of the bugs that might pop up when context is juggled in this way. For example, if some context is modified by a guardrail system, and then I fork my conversation starting from the message where the modification took place, can I cause the old data to leak into the fork? If so, it would confuse the model and waste tokens--the model would need to reason around the disjoint data.
 
-This strikes me as the sort of finagling that might cause bugs for edge cases, like where we're tracking a change in context that's hidden from our user, and then our user edits a previous message, forking the conversation history. Is it possible to leak stale injected context into a conversation that way, making it so that the model becomes confused?
+Figuring it out meant going fishing... so I did. And I got a bite.
 
-I was curious to know!
+During the experiment, in its thinking trace, Claude wrote: "The ethics reminder seems to have triggered automatically." Meaning that guardrails were activated, and that they seemingly injected some new context into our conversation. Except when I asked about the reminder, Claude immediately told me there was no such thing as an "ethics reminder". Hmm...
 
-And so, I hunting for possible bugs by typing some fishy looking stuff and seeing if it might trigger some of the behaviors I'd been hypothesizing. 
+I spent the rest of the evening trying to suss out whether the ethics reminder existed, and, in doing so, had my access downgraded and a chat killed outright.
 
-It seemingly worked when, during the experiment, Claude thought: "The ethics reminder seems to have triggered automatically." -- suggesting a guardrail had indeed modified the context of our conversation.. Except, it also immediately told me there was no such thing as an "ethics reminder" when I asked about it. 
-
-I found that odd. Was this a hallucination? Or had I encountered a genuine guardrails policy that mutates context? 
-
-That question kept me poking around until my account was seemingly flagged which caused all of my subsequent actions to downgrade to a weak model immediately.
-
-It made for a little adventure.
-
-The full record of my deeper investigation into that is below.
+I kept a record of all of my poking down below. 
 
 ## The Experiment
 
