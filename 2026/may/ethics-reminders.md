@@ -8,11 +8,17 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 #### [usize](https://github.com/usize) May 2026
 
 
-I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html). I wanted to see what that looks like from the outside. So I went fishing by typing some... fishy stuff and seeing if Claude would notice. \**badum tss*\*
+I've been thinking a lot about policies that mutate inference context -- like guardrails that inject, rewrite, or strip content before it reaches the model. 
 
-Claude _did_ notice. In fact, during the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." -- implying that a guardrail had activated.. Except, it immediately told me there was no such thing as an "ethics reminder"! 
+This came out of my work on [AI Gateways](../april/cloudsummit/deck.html) where I have to reason about the downstream implications of e.g., injecting hidden context into a conversation from the proxy. As with anything in this space, frontier labs have already been down this road enough to have a well worn path. So I went fishing by typing some... fishy stuff and seeing if it might trigger some sort of interesting policy in a way that might verify some of my own suspicions. 
 
-I found that odd, and kept poking until my account was seemingly flagged which caused all of my subsequent actions to downgrade to a weak model immediately.
+Well, it worked. During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." -- implying not only that a guardrail had been activated, but also that the guardrail modified the context of our conversation.. Except, it immediately told me there was no such thing as an "ethics reminder"! 
+
+I found that odd. Was this a hallucination? Or had I encountered a genuine guardrails policy that mutates context? 
+
+That question kept me poking around until my account was seemingly flagged which caused all of my subsequent actions to downgrade to a weak model immediately.
+
+It turned into quite a little adventure.
 
 The full record of my deeper investigation into that is below.
 
