@@ -8,9 +8,11 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 #### [usize](https://github.com/usize) May 2026
 
 
-I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html). I wanted to see what that looks like from the outside. So I went fishing by typing some... fishy stuff and seeing if Claude notice. *badum tss*
+I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html). I wanted to see what that looks like from the outside. So I went fishing by typing some... fishy stuff and seeing if Claude would notice. \**badum tss*\*
 
-During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." This implied that guardrails activated.. Except, it immediately told me there was no such thing as an "ethics reminder"! Very odd Claude, very odd.
+Claude _did_ notice. In fact, during the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." -- implying that a guardrail had activated.. Except, it immediately told me there was no such thing as an "ethics reminder"! 
+
+I found that odd, and kept poking until my account was seemingly flagged which caused all of my subsequent actions to downgrade to a weak model immediately.
 
 The full record of my deeper investigation into that is below.
 
