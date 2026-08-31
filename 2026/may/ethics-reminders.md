@@ -10,7 +10,7 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 
 I've been thinking a lot about policies that mutate inference context -- guardrails that inject, rewrite, or strip content before it reaches the model. This came out of my work on [AI Gateways](../april/cloudsummit/deck.html), where in particular I'd been curious about how to juggle context mutations only visible from the proxy--like PII redaction via guardrail--without accidentally breaking a prefix, thus invalidating the session's cache. 
 
-It made me curious to see what behaviors production guardrails were exhibiting. Including playing with edge cases to see search for the sorts of bugs that might pop up when context is juggled in this way. For example, if some context is modified by a guardrail system, and then I fork my conversation starting from the message where the modification took place, can I cause the old data to leak into the fork? If so, it would confuse the model and waste tokens--the model would need to reason around the disjoint data.
+It made me curious to see what behaviors production guardrails were exhibiting. That includes playing with edge cases search for the sorts of bugs that might pop up when context is juggled in this way. For example, if some context is modified by a guardrail system, and then I fork my conversation starting from the message where the modification took place, can I cause the old data to leak into the fork? If so, it would confuse the model and waste tokens--the model would need to reason around the disjoint data.
 
 Figuring it out meant going fishing... so I did. And I got a bite.
 
@@ -28,7 +28,7 @@ I started by encoding my text in a way that seemed likely to raise some hackles 
 
 Check that out! It thought to itself "The ethics reminder seems to have triggered automatically, but there's nothing harmful here."
 
-So.. My hypothesis seemed verified. But then things took a turn for the strange when I tried to chat about it.
+So... My hypothesis seemed verified. But then things took a turn for the strange when I tried to chat about it.
 
 ![Screenshot 2](ethics-reminders-02.png)
 
