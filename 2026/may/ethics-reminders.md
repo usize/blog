@@ -10,15 +10,21 @@ title: "The First Rule of Ethics Reminders Is You Don't Talk About Ethics Remind
 
 I've been thinking a lot about policies that mutate inference context -- like guardrails that inject, rewrite, or strip content before it reaches the model. 
 
-This came out of my work on [AI Gateways](../april/cloudsummit/deck.html) where I have to reason about the downstream implications of e.g., injecting hidden context into a conversation from the proxy. As with anything in this space, frontier labs have already been down this road enough to have a well worn path. So I went fishing by typing some... fishy stuff and seeing if it might trigger some sort of interesting policy in a way that might verify some of my own suspicions. 
+This came out of my work on [AI Gateways](../april/cloudsummit/deck.html) where I have to reason about the downstream implications of e.g., injecting hidden context into a conversation from the proxy. For example, if I inject something in the middle of a conversation I'll need to keep track of it. Carefully injecting it back into the correct location each turn, so as not to break prefix matching (causing expensive cache misses).
 
-Well, it worked. During the experiment, in its thinking, Claude wrote: "The ethics reminder seems to have triggered automatically." -- implying not only that a guardrail had been activated, but also that the guardrail modified the context of our conversation.. Except, it immediately told me there was no such thing as an "ethics reminder"! 
+This strikes me as the sort of finagling that might cause bugs for edge cases, like where we're tracking a change in context that's hidden from our user, and then our user edits a previous message, forking the conversation history. Is it possible to leak stale injected context into a conversation that way, making it so that the model becomes confused?
+
+I was curious to know!
+
+And so, I hunting for possible bugs by typing some fishy looking stuff and seeing if it might trigger some of the behaviors I'd been hypothesizing. 
+
+It seemingly worked when, during the experiment, Claude thought: "The ethics reminder seems to have triggered automatically." -- suggesting a guardrail had indeed modified the context of our conversation.. Except, it also immediately told me there was no such thing as an "ethics reminder" when I asked about it. 
 
 I found that odd. Was this a hallucination? Or had I encountered a genuine guardrails policy that mutates context? 
 
 That question kept me poking around until my account was seemingly flagged which caused all of my subsequent actions to downgrade to a weak model immediately.
 
-It turned into quite a little adventure.
+It made for a little adventure.
 
 The full record of my deeper investigation into that is below.
 
