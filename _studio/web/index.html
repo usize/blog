@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog Studio</title>
+<style>
+  :root {
+    --bg: #fafafa; --panel: #fff; --side: #f3f3f2; --text: #2a2a2a; --muted: #80807c;
+    --border: #e1e1de; --accent: #1a6fb5; --accent-fg: #fff; --hover: #e9e9e6; --ok: #2c8a4b; --err: #c43d3d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #17181a; --panel: #1e1f22; --side: #1a1b1d; --text: #dcdcd8; --muted: #8d8d88;
+      --border: #303236; --accent: #5aa5e6; --accent-fg: #0d1319; --hover: #2a2c30; --ok: #5cc07f; --err: #e8716f; }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; cursor: pointer; }
+  button:hover { background: var(--hover); }
+  button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 600; }
+  button.primary:hover { filter: brightness(1.08); }
+  button:disabled { opacity: .5; cursor: default; }
+  input[type=text], select, textarea.field { width: 100%; background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; }
+
+  aside { width: 270px; flex: none; background: var(--side); border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+  aside header { padding: 12px; display: flex; gap: 8px; flex-direction: column; }
+  aside h1 { font-size: 13px; margin: 0; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  #list { overflow-y: auto; flex: 1; padding: 0 6px 12px; }
+  .group { margin: 12px 8px 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .item { padding: 6px 8px; border-radius: 6px; cursor: pointer; display: flex; gap: 6px; align-items: baseline; }
+  .item:hover { background: var(--hover); }
+  .item.active { background: var(--accent); color: var(--accent-fg); }
+  .item .t { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tag { font-size: 10px; border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; opacity: .65; }
+  #foot { padding: 8px 12px; border-top: 1px solid var(--border); color: var(--muted); font-size: 12px; }
+
+  main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  #bar { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid var(--border); background: var(--panel); }
+  #bar .path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+  #state { font-size: 12px; color: var(--muted); min-width: 60px; text-align: right; }
+  #state.err { color: var(--err); }
+  #panes { flex: 1; display: flex; min-height: 0; }
+  #panes.edit-only #pv, #panes.view-only #ed { display: none; }
+  #ed, #pv { flex: 1; min-width: 0; border: 0; }
+  #ed { resize: none; padding: 20px 24px; background: var(--panel); outline: none; border-right: 1px solid var(--border);
+        font: 14px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; tab-size: 2; }
+  #ed.drop { box-shadow: inset 0 0 0 3px var(--accent); }
+  #pv { background: #fafafa; }
+  #empty { margin: auto; color: var(--muted); text-align: center; }
+  .seg button { border-radius: 0; margin-left: -1px; padding: 5px 10px; }
+  .seg button:first-child { border-radius: 6px 0 0 6px; margin-left: 0; }
+  .seg button:last-child { border-radius: 0 6px 6px 0; }
+  .seg button.on { background: var(--hover); font-weight: 600; }
+
+  dialog { border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--text); width: 440px; padding: 20px; }
+  dialog::backdrop { background: rgba(0,0,0,.4); }
+  dialog h2 { margin: 0 0 12px; font-size: 16px; }
+  dialog label { display: block; margin: 10px 0 3px; font-size: 12px; color: var(--muted); }
+  dialog .row { display: flex; gap: 8px; }
+  dialog .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+  dialog .check { display: flex; align-items: center; gap: 6px; margin-top: 12px; color: var(--text); font-size: 14px; }
+  pre.log { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-size: 12px; max-height: 160px; overflow: auto; white-space: pre-wrap; margin: 12px 0 0; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
+</style>
+</head>
+<body>
+<aside>
+  <header>
+    <h1>Blog Studio</h1>
+    <button class="primary" id="newBtn">New post</button>
+    <input type="text" id="filter" placeholder="Filter posts…">
+  </header>
+  <div id="list"></div>
+  <div id="foot"></div>
+</aside>
+
+<main>
+  <div id="bar" hidden>
+    <span class="path" id="path"></span>
+    <span id="state"></span>
+    <span class="seg">
+      <button data-mode="edit-only">Write</button><button data-mode="split" class="on">Split</button><button data-mode="view-only">Preview</button>
+    </span>
+    <button id="pubBtn" class="primary">Publish…</button>
+  </div>
+  <div id="panes">
+    <div id="empty">Pick a post, or start a new one.</div>
+    <textarea id="ed" spellcheck="true" hidden></textarea>
+    <iframe id="pv" hidden></iframe>
+  </div>
+</main>
+
+<dialog id="newDlg">
+  <h2>New post</h2>
+  <label>Title</label><input type="text" id="nTitle">
+  <label>File name</label><input type="text" id="nSlug" placeholder="from title">
+  <label class="check"><input type="checkbox" id="nDraft"> Start as a draft (goes in <span id="nDraftDir"></span>)</label>
+  <div class="hint" id="nWhere"></div>
+  <div class="actions"><button data-close>Cancel</button><button class="primary" id="nGo">Create</button></div>
+</dialog>
+
+<dialog id="pubDlg">
+  <h2>Publish</h2>
+  <div class="row">
+    <div style="flex:1"><label>Month</label><select id="pMonth"></select></div>
+    <div style="width:90px"><label>Year</label><input type="text" id="pYear"></div>
+  </div>
+  <label>README summary (shown under the link on the home page)</label>
+  <textarea class="field" id="pSum" rows="4"></textarea>
+  <label>Commit message</label><input type="text" id="pMsg">
+  <label class="check"><input type="checkbox" id="pPush" checked> Push to origin after committing</label>
+  <div class="hint" id="pHint"></div>
+  <pre class="log" id="pLog" hidden></pre>
+  <div class="actions"><button data-close id="pCancel">Close</button><button class="primary" id="pGo">Publish</button></div>
+</dialog>
+
+<script>
+const $ = s => document.querySelector(s);
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const api = async (method, url, body, raw) => {
+  const r = await fetch(url, { method, headers: { "X-Studio": "1" }, body: raw ?? (body ? JSON.stringify(body) : undefined) });
+  if (!r.ok) throw new Error((await r.text()).trim());
+  const ct = r.headers.get("content-type") || "";
+  return ct.includes("json") ? r.json() : r.text();
+};
+
+let info, posts = [], cur = null, dirty = false, saveTimer, prevTimer, saving = Promise.resolve();
+
+function setState(msg, err) { const s = $("#state"); s.textContent = msg; s.className = err ? "err" : ""; }
+
+async function loadPosts() {
+  posts = await api("GET", "/api/posts");
+  renderList();
+  const st = await api("GET", "/api/status");
+  const n = st.status ? st.status.split("\n").length : 0;
+  $("#foot").textContent = `${info.branch} · ${n ? n + " uncommitted change" + (n > 1 ? "s" : "") : "clean"}`;
+}
+
+function renderList() {
+  const q = $("#filter").value.toLowerCase();
+  const groups = new Map();
+  for (const p of posts) {
+    if (q && !(p.title + p.path).toLowerCase().includes(q)) continue;
+    const parts = p.path.split("/");
+    const g = p.draft ? "Drafts" : `${parts[1][0].toUpperCase() + parts[1].slice(1)} ${parts[0]}`;
+    if (!groups.has(g)) groups.set(g, []);
+    groups.get(g).push(p);
+  }
+  const order = [...groups.keys()].sort((a, b) => {
+    if (a === "Drafts") return -1; if (b === "Drafts") return 1;
+    const key = g => { const [m, y] = g.split(" "); return +y * 12 + MONTHS.indexOf(m); };
+    return key(b) - key(a);
+  });
+  const list = $("#list"); list.textContent = "";
+  for (const g of order) {
+    const h = document.createElement("div"); h.className = "group"; h.textContent = g; list.append(h);
+    for (const p of groups.get(g)) {
+      const d = document.createElement("div");
+      d.className = "item" + (cur && cur.path === p.path ? " active" : "");
+      d.innerHTML = `<span class="t"></span>`;
+      d.firstChild.textContent = p.title;
+      if (!p.draft && !p.listed) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "unlisted"; d.append(t); }
+      d.onclick = () => openPost(p.path);
+      list.append(d);
+    }
+  }
+}
+
+async function openPost(path) {
+  if (cur) await flush();
+  const text = await api("GET", "/api/post?path=" + encodeURIComponent(path));
+  cur = posts.find(p => p.path === path) || { path };
+  $("#ed").value = text; dirty = false;
+  $("#empty").hidden = true; $("#ed").hidden = false; $("#pv").hidden = false; $("#bar").hidden = false;
+  $("#path").textContent = path; setState("");
+  history.replaceState(null, "", "#" + path);
+  renderList(); preview(); $("#ed").focus();
+}
+
+function flush() {
+  clearTimeout(saveTimer);
+  if (!cur || !dirty) return saving;
+  const path = cur.path, content = $("#ed").value;
+  dirty = false; setState("Saving…");
+  saving = api("PUT", "/api/post", { path, content })
+    .then(() => { if (!dirty) setState("Saved"); })
+    .catch(e => { dirty = true; setState("Save failed: " + e.message, true); });
+  return saving;
+}
+
+async function preview() {
+  if (!cur) return;
+  try {
+    const html = await api("POST", "/api/preview", { path: cur.path, content: $("#ed").value });
+    const f = $("#pv"), y = f.contentWindow ? f.contentWindow.scrollY : 0;
+    f.srcdoc = html;
+    f.onload = () => f.contentWindow.scrollTo(0, y);
+  } catch (e) { setState(e.message, true); }
+}
+
+$("#ed").addEventListener("input", () => {
+  dirty = true; setState("Editing…");
+  clearTimeout(saveTimer); saveTimer = setTimeout(flush, 1200);
+  clearTimeout(prevTimer); prevTimer = setTimeout(preview, 350);
+});
+
+// Formatting shortcuts and tab handling.
+function wrap(before, after, ph) {
+  const t = $("#ed"), a = t.selectionStart, b = t.selectionEnd, sel = t.value.slice(a, b) || ph;
+  t.setRangeText(before + sel + after, a, b, "select");
+  t.setSelectionRange(a + before.length, a + before.length + sel.length);
+  t.dispatchEvent(new Event("input"));
+}
+$("#ed").addEventListener("keydown", e => {
+  const mod = e.metaKey || e.ctrlKey;
+  if (mod && e.key === "s") { e.preventDefault(); flush(); }
+  else if (mod && e.key === "b") { e.preventDefault(); wrap("**", "**", "bold"); }
+  else if (mod && e.key === "i") { e.preventDefault(); wrap("_", "_", "italic"); }
+  else if (mod && e.key === "k") { e.preventDefault(); wrap("[", "](https://)", "link text"); }
+  else if (e.key === "Tab") { e.preventDefault(); document.execCommand("insertText", false, "  "); }
+});
+
+// Paste or drop images: saved beside the post, linked relatively.
+async function addFiles(files) {
+  for (const f of files) {
+    if (!f.type.startsWith("image/") && !f.type.startsWith("video/")) continue;
+    const name = f.name && f.name !== "image.png" ? f.name : `image-${Date.now()}.png`;
+    try {
+      await flush();
+      const r = await api("POST", `/api/upload?path=${encodeURIComponent(cur.path)}&name=${encodeURIComponent(name)}`, null, f);
+      const alt = r.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
+      const t = $("#ed"); t.setRangeText(`![${alt}](${r.name})\n`, t.selectionStart, t.selectionEnd, "end");
+      t.dispatchEvent(new Event("input"));
+    } catch (e) { setState(e.message, true); }
+  }
+}
+$("#ed").addEventListener("paste", e => {
+  const fs = [...e.clipboardData.files]; if (fs.length) { e.preventDefault(); addFiles(fs); }
+});
+$("#ed").addEventListener("dragover", e => { e.preventDefault(); $("#ed").classList.add("drop"); });
+$("#ed").addEventListener("dragleave", () => $("#ed").classList.remove("drop"));
+$("#ed").addEventListener("drop", e => { e.preventDefault(); $("#ed").classList.remove("drop"); addFiles([...e.dataTransfer.files]); });
+
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
+  document.querySelectorAll(".seg button").forEach(x => x.classList.toggle("on", x === b));
+  $("#panes").className = b.dataset.mode === "split" ? "" : b.dataset.mode;
+});
+document.querySelectorAll("[data-close]").forEach(b => b.onclick = () => b.closest("dialog").close());
+$("#filter").oninput = renderList;
+window.addEventListener("beforeunload", e => { if (dirty) { flush(); e.preventDefault(); } });
+
+// New post
+const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function newWhere() {
+  const slug = slugify($("#nSlug").value) || slugify($("#nTitle").value) || "…";
+  const dir = $("#nDraft").checked ? "drafts" : MONTHS[info.month - 1].toLowerCase();
+  $("#nWhere").textContent = `${info.year}/${dir}/${slug}.md`;
+}
+$("#nDraftDir").textContent = "drafts/";
+["#nTitle", "#nSlug", "#nDraft"].forEach(s => $(s).addEventListener("input", newWhere));
+$("#newBtn").onclick = () => { $("#nTitle").value = $("#nSlug").value = ""; $("#nDraft").checked = false; newWhere(); $("#newDlg").showModal(); $("#nTitle").focus(); };
+$("#newDlg").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.tagName === "INPUT" && e.target.type === "text") $("#nGo").click(); });
+$("#nGo").onclick = async () => {
+  try {
+    const r = await api("POST", "/api/new", { title: $("#nTitle").value, slug: $("#nSlug").value, draft: $("#nDraft").checked });
+    $("#newDlg").close(); await loadPosts(); await openPost(r.path);
+    const t = $("#ed"); t.setSelectionRange(t.value.length, t.value.length);
+  } catch (e) { alert(e.message); }
+};
+
+// Publish
+$("#pubBtn").onclick = async () => {
+  await flush();
+  const sel = $("#pMonth"); sel.textContent = "";
+  MONTHS.forEach((m, i) => sel.append(new Option(m, i + 1)));
+  sel.value = info.month; $("#pYear").value = info.year;
+  const m = (await api("GET", "/api/post?path=" + encodeURIComponent(cur.path))).match(/^title:\s*"?(.*?)"?\s*$/m);
+  $("#pMsg").value = "Publish: " + (m ? m[1] : cur.path);
+  $("#pSum").value = ""; $("#pLog").hidden = true; $("#pGo").disabled = false; $("#pCancel").textContent = "Cancel";
+  $("#pHint").textContent = cur.path.includes("/drafts/")
+    ? "This is a draft: it will be moved into the month's folder along with the images it uses."
+    : (cur.listed ? "Already in the README: its entry will be moved to the chosen month and its summary kept if you leave this blank." : "");
+  $("#pubDlg").showModal();
+};
+$("#pGo").onclick = async () => {
+  $("#pGo").disabled = true; $("#pLog").hidden = false; $("#pLog").textContent = "Working…";
+  try {
+    const r = await api("POST", "/api/publish", {
+      path: cur.path, year: +$("#pYear").value, month: +$("#pMonth").value,
+      summary: $("#pSum").value, message: $("#pMsg").value, push: $("#pPush").checked,
+    });
+    $("#pLog").textContent = r.log + (r.pushed ? "\n\nPushed." : $("#pPush").checked ? "\n\nCommitted, but the push failed. Run `git push` yourself." : "\n\nCommitted locally.");
+    $("#pCancel").textContent = "Done";
+    const old = cur.path;
+    await loadPosts();
+    if (r.path !== old) { cur = null; dirty = false; await openPost(r.path); }
+  } catch (e) { $("#pLog").textContent = e.message; $("#pGo").disabled = false; }
+};
+
+(async () => {
+  info = await api("GET", "/api/info");
+  await loadPosts();
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h && posts.some(p => p.path === h)) openPost(h);
+})();
+</script>
+</body>
+</html>
