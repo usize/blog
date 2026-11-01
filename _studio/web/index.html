@@ -46,6 +46,9 @@
   #ed, #pv { flex: 1; min-width: 0; border: 0; }
   #ed { resize: none; padding: 20px 24px; background: var(--panel); outline: none; border-right: 1px solid var(--border);
         font: 14px/1.6 ui-monospace, "SF Mono", Menlo, Consolas, monospace; tab-size: 2; }
+  #tools { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding: 5px 14px; border-bottom: 1px solid var(--border); background: var(--panel); }
+  #tools button { padding: 2px 9px; min-width: 30px; }
+  #tools .sep { width: 1px; align-self: stretch; background: var(--border); margin: 2px 4px; }
   #ed.drop { box-shadow: inset 0 0 0 3px var(--accent); }
   #pv { background: #fafafa; }
   #empty { margin: auto; color: var(--muted); text-align: center; }
@@ -84,6 +87,24 @@
       <button data-mode="edit-only">Write</button><button data-mode="split" class="on">Split</button><button data-mode="view-only">Preview</button>
     </span>
     <button id="pubBtn" class="primary">Publish…</button>
+  </div>
+  <div id="tools" hidden>
+    <button data-fmt="bold" title="Bold (Cmd/Ctrl-B)"><b>B</b></button>
+    <button data-fmt="italic" title="Italic (Cmd/Ctrl-I)"><i>I</i></button>
+    <button data-fmt="strike" title="Strikethrough"><s>S</s></button>
+    <button data-fmt="code" title="Inline code">&lt;/&gt;</button>
+    <span class="sep"></span>
+    <button data-fmt="h2" title="Heading 2">H2</button>
+    <button data-fmt="h3" title="Heading 3">H3</button>
+    <button data-fmt="ul" title="Bulleted list">• List</button>
+    <button data-fmt="ol" title="Numbered list">1. List</button>
+    <button data-fmt="quote" title="Quote">“ Quote</button>
+    <button data-fmt="codeblock" title="Code block">{ }</button>
+    <button data-fmt="hr" title="Divider">―</button>
+    <span class="sep"></span>
+    <button data-fmt="link" title="Link (Cmd/Ctrl-K)">Link</button>
+    <button id="upBtn" title="Upload image or video (or paste / drop one)">Image / video…</button>
+    <input type="file" id="upFile" accept="image/*,video/*" multiple hidden>
   </div>
   <div id="panes">
     <div id="empty">Pick a post, or start a new one.</div>
@@ -173,7 +194,7 @@ async function openPost(path) {
   const text = await api("GET", "/api/post?path=" + encodeURIComponent(path));
   cur = posts.find(p => p.path === path) || { path };
   $("#ed").value = text; dirty = false;
-  $("#empty").hidden = true; $("#ed").hidden = false; $("#pv").hidden = false; $("#bar").hidden = false;
+  $("#empty").hidden = true; $("#ed").hidden = false; $("#pv").hidden = false; $("#bar").hidden = false; $("#tools").hidden = false;
   $("#path").textContent = path; setState("");
   history.replaceState(null, "", "#" + path);
   renderList(); preview(); $("#ed").focus();
@@ -206,36 +227,76 @@ $("#ed").addEventListener("input", () => {
   clearTimeout(prevTimer); prevTimer = setTimeout(preview, 350);
 });
 
-// Formatting shortcuts and tab handling.
-function wrap(before, after, ph) {
-  const t = $("#ed"), a = t.selectionStart, b = t.selectionEnd, sel = t.value.slice(a, b) || ph;
-  t.setRangeText(before + sel + after, a, b, "select");
-  t.setSelectionRange(a + before.length, a + before.length + sel.length);
+// Formatting: toolbar buttons and shortcuts.
+function edit(fn) {
+  const t = $("#ed"); t.focus(); fn(t);
   t.dispatchEvent(new Event("input"));
 }
+function wrap(before, after, ph) {
+  edit(t => {
+    const a = t.selectionStart, b = t.selectionEnd, sel = t.value.slice(a, b) || ph;
+    t.setRangeText(before + sel + after, a, b, "select");
+    t.setSelectionRange(a + before.length, a + before.length + sel.length);
+  });
+}
+// Prefix every selected line; numbered lists count up.
+function prefixLines(prefix) {
+  edit(t => {
+    const a = t.value.lastIndexOf("\n", t.selectionStart - 1) + 1;
+    let b = t.value.indexOf("\n", t.selectionEnd); if (b < 0) b = t.value.length;
+    const lines = t.value.slice(a, b).split("\n").map((l, i) =>
+      (typeof prefix === "function" ? prefix(i) : prefix) + l.replace(/^(#{1,6}|[-*>]|\d+\.)\s+/, ""));
+    t.setRangeText(lines.join("\n"), a, b, "select");
+  });
+}
+function insertBlock(text) {
+  edit(t => {
+    const a = t.selectionStart, pre = a === 0 || t.value[a - 1] === "\n" ? "" : "\n\n";
+    t.setRangeText(pre + text + "\n\n", a, t.selectionEnd, "end");
+  });
+}
+const FORMATS = {
+  bold: () => wrap("**", "**", "bold"),
+  italic: () => wrap("_", "_", "italic"),
+  strike: () => wrap("~~", "~~", "text"),
+  code: () => wrap("`", "`", "code"),
+  link: () => wrap("[", "](https://)", "link text"),
+  h2: () => prefixLines("## "),
+  h3: () => prefixLines("### "),
+  ul: () => prefixLines("- "),
+  ol: () => prefixLines(i => (i + 1) + ". "),
+  quote: () => prefixLines("> "),
+  codeblock: () => wrap("```\n", "\n```", "code"),
+  hr: () => insertBlock("----"),
+};
+document.querySelectorAll("[data-fmt]").forEach(b => b.onclick = () => FORMATS[b.dataset.fmt]());
 $("#ed").addEventListener("keydown", e => {
   const mod = e.metaKey || e.ctrlKey;
   if (mod && e.key === "s") { e.preventDefault(); flush(); }
-  else if (mod && e.key === "b") { e.preventDefault(); wrap("**", "**", "bold"); }
-  else if (mod && e.key === "i") { e.preventDefault(); wrap("_", "_", "italic"); }
-  else if (mod && e.key === "k") { e.preventDefault(); wrap("[", "](https://)", "link text"); }
+  else if (mod && e.key === "b") { e.preventDefault(); FORMATS.bold(); }
+  else if (mod && e.key === "i") { e.preventDefault(); FORMATS.italic(); }
+  else if (mod && e.key === "k") { e.preventDefault(); FORMATS.link(); }
   else if (e.key === "Tab") { e.preventDefault(); document.execCommand("insertText", false, "  "); }
 });
 
-// Paste or drop images: saved beside the post, linked relatively.
+// Upload images and video: saved beside the post and linked relatively.
 async function addFiles(files) {
   for (const f of files) {
-    if (!f.type.startsWith("image/") && !f.type.startsWith("video/")) continue;
+    const video = f.type.startsWith("video/");
+    if (!video && !f.type.startsWith("image/")) continue;
     const name = f.name && f.name !== "image.png" ? f.name : `image-${Date.now()}.png`;
     try {
       await flush();
+      setState(`Uploading ${name}…`);
       const r = await api("POST", `/api/upload?path=${encodeURIComponent(cur.path)}&name=${encodeURIComponent(name)}`, null, f);
       const alt = r.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ");
-      const t = $("#ed"); t.setRangeText(`![${alt}](${r.name})\n`, t.selectionStart, t.selectionEnd, "end");
-      t.dispatchEvent(new Event("input"));
+      insertBlock(video ? `<video controls src="${r.name}" style="max-width:100%"></video>` : `![${alt}](${r.name})`);
+      setState("");
     } catch (e) { setState(e.message, true); }
   }
 }
+$("#upBtn").onclick = () => $("#upFile").click();
+$("#upFile").onchange = e => { addFiles([...e.target.files]); e.target.value = ""; };
 $("#ed").addEventListener("paste", e => {
   const fs = [...e.clipboardData.files]; if (fs.length) { e.preventDefault(); addFiles(fs); }
 });
@@ -259,8 +320,12 @@ function newWhere() {
   $("#nWhere").textContent = `${info.year}/${dir}/${slug}.md`;
 }
 $("#nDraftDir").textContent = "drafts/";
+// The file name follows the title until it is edited by hand.
+let slugTouched = false;
+$("#nTitle").addEventListener("input", () => { if (!slugTouched) $("#nSlug").value = slugify($("#nTitle").value); });
+$("#nSlug").addEventListener("input", () => { slugTouched = $("#nSlug").value !== ""; });
 ["#nTitle", "#nSlug", "#nDraft"].forEach(s => $(s).addEventListener("input", newWhere));
-$("#newBtn").onclick = () => { $("#nTitle").value = $("#nSlug").value = ""; $("#nDraft").checked = false; newWhere(); $("#newDlg").showModal(); $("#nTitle").focus(); };
+$("#newBtn").onclick = () => { slugTouched = false; $("#nTitle").value = $("#nSlug").value = ""; $("#nDraft").checked = false; newWhere(); $("#newDlg").showModal(); $("#nTitle").focus(); };
 $("#newDlg").addEventListener("keydown", e => { if (e.key === "Enter" && e.target.tagName === "INPUT" && e.target.type === "text") $("#nGo").click(); });
 $("#nGo").onclick = async () => {
   try {

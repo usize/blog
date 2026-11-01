@@ -10,7 +10,7 @@ Flags: `-dir <path>`, `-addr host:port`, `-no-open`.
 
 - **New post** creates `YYYY/month/slug.md` (or `YYYY/drafts/`) with front matter, heading and byline.
 - Edit with a live preview rendered in the site's own `assets/style.css`. Autosaves; Cmd/Ctrl-S, -B, -I, -K work.
-- Paste or drag images into the editor: they're saved beside the post and linked relatively.
+- Toolbar for common formatting. Paste, drag or pick images and videos: they are saved beside the post and linked relatively (videos as `<video>`).
 - **Publish** moves drafts into the month folder (with referenced images), adds or updates the entry in `README.md`
   under `## Month YYYY`, then commits (`git commit` of just those paths) and optionally pushes.
 

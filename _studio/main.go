@@ -202,7 +202,7 @@ func (s *Server) newPost(w http.ResponseWriter, r *http.Request) {
 
 var unsafeName = regexp.MustCompile(`[^A-Za-z0-9._-]+`)
 
-// upload stores a pasted/dropped image next to the post and returns its name.
+// upload stores a pasted/dropped image or video next to the post and returns its name.
 func (s *Server) upload(w http.ResponseWriter, r *http.Request) {
 	abs, err := s.repo.ResolvePost(r.URL.Query().Get("path"))
 	if err != nil {
@@ -211,7 +211,8 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request) {
 	}
 	name := unsafeName.ReplaceAllString(filepath.Base(r.URL.Query().Get("name")), "-")
 	ext := strings.ToLower(filepath.Ext(name))
-	if !map[string]bool{".png": true, ".jpg": true, ".jpeg": true, ".gif": true, ".webp": true, ".svg": true, ".mp4": true}[ext] {
+	if !map[string]bool{".png": true, ".jpg": true, ".jpeg": true, ".gif": true, ".webp": true, ".avif": true, ".svg": true,
+		".mp4": true, ".m4v": true, ".webm": true, ".mov": true}[ext] {
 		fail(w, 400, errors.New("unsupported file type"))
 		return
 	}
@@ -223,7 +224,7 @@ func (s *Server) upload(w http.ResponseWriter, r *http.Request) {
 		}
 		name = fmt.Sprintf("%s-%d%s", base, i, ext)
 	}
-	data, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 64<<20))
+	data, err := io.ReadAll(http.MaxBytesReader(w, r.Body, 512<<20))
 	if err != nil {
 		fail(w, 400, err)
 		return
