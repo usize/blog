@@ -16,3 +16,22 @@ func TestParseReview(t *testing.T) {
 		t.Fatal("expected raw fallback")
 	}
 }
+
+func TestTargetDiff(t *testing.T) {
+	post := "I thinked about teh web alot. Then I thinked about it again."
+	q, s := targetDiff(post, "I thinked about teh web alot.", "I thought about the web a lot.")
+	if q != "thinked about teh web alot." || s != "thought about the web a lot." {
+		t.Fatalf("got %q -> %q", q, s)
+	}
+	// Unchanged edges are trimmed; "thinked" appears twice so context is added until the quote is unique.
+	q, s = targetDiff(post, "Then I thinked about it", "Then I thought about it")
+	if q != " I thinked about " || s != " I thought about " {
+		t.Fatalf("got %q -> %q", q, s)
+	}
+	if _, s = targetDiff(post, "web", "web"); s != "" {
+		t.Fatal("no-op should drop suggestion")
+	}
+	if _, s = targetDiff(post, "again", "once more"); s != "once more" {
+		t.Fatal("unique single word")
+	}
+}

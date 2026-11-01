@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -78,8 +79,10 @@ const reviewPrompt = `You are an editor reviewing a blog post draft. Read it and
 
 Do not use tools or touch any files. Reply with ONLY a JSON object, no markdown fences, in this shape:
 {"summary": "2-3 sentence overall take",
- "comments": [{"quote": "exact text copied from the post (a short, unique span)", "comment": "what's wrong or could be better", "suggestion": "optional replacement for the quoted text"}]}
-"quote" must be copied verbatim so it can be found in the post. Omit "suggestion" for comments that aren't a concrete rewrite. Prefer 5-12 comments, most important first.
+ "comments": [{"quote": "exact text copied from the post", "comment": "what's wrong or could be better", "suggestion": "optional replacement for the quoted text"}]}
+"quote" must be copied verbatim so it can be found in the post. Prefer 5-12 comments, most important first.
+
+Suggestions must be targeted diffs. The user will review each as a before/after diff, so change only the words that need changing: quote just that span (plus at most a few neighbouring words if needed to make it unique) and make "suggestion" that same span with the minimal edit. Fix typos, grammar, wrong words and unclear phrasing locally. Never rewrite a whole sentence or paragraph for style, and never merge several fixes into one suggestion. If a problem can't be fixed with a small local edit (structure, argument, missing content), give a comment with no "suggestion".
 
 THE POST (markdown, with front matter):
 -----
@@ -140,6 +143,9 @@ func parseReview(reply, content string) *Review {
 						c.Suggestion = "" // can't be applied safely
 						c.Quote = ""
 					}
+					if c.Suggestion != "" {
+						c.Quote, c.Suggestion = targetDiff(content, c.Quote, c.Suggestion)
+					}
 					kept = append(kept, c)
 				}
 			}
@@ -153,4 +159,40 @@ func parseReview(reply, content string) *Review {
 		start += 1 + next
 	}
 	return &Review{Raw: reply}
+}
+
+var wordTok = regexp.MustCompile(`\s+|\S+`)
+
+const maxDiffSpan = 300 // runes; longer than this isn't a targeted edit
+
+// targetDiff shrinks quote->suggestion to the words that actually change,
+// then adds neighbouring words back only until the quote is unique in content
+// (so it applies in exactly one place). It returns an empty suggestion when
+// the edit is a no-op, can't be made unique, or is too large to be targeted.
+func targetDiff(content, quote, suggestion string) (string, string) {
+	q, s := wordTok.FindAllString(quote, -1), wordTok.FindAllString(suggestion, -1)
+	pre := 0
+	for pre < len(q) && pre < len(s) && q[pre] == s[pre] {
+		pre++
+	}
+	if pre == len(q) && pre == len(s) {
+		return quote, ""
+	}
+	suf := 0
+	for suf < len(q)-pre && suf < len(s)-pre && q[len(q)-1-suf] == s[len(s)-1-suf] {
+		suf++
+	}
+	// Add unchanged neighbouring words back, nearest first, until unique.
+	for k := 0; k <= max(pre, suf); k++ {
+		b, a := min(k, pre), min(k, suf)
+		qq := strings.Join(q[pre-b:len(q)-suf+a], "")
+		ss := strings.Join(s[pre-b:len(s)-suf+a], "")
+		if qq != "" && strings.Count(content, qq) == 1 {
+			if len([]rune(qq)) > maxDiffSpan || len([]rune(ss)) > maxDiffSpan {
+				break
+			}
+			return qq, ss
+		}
+	}
+	return quote, ""
 }

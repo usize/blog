@@ -11,8 +11,11 @@ Flags: `-dir <path>`, `-addr host:port`, `-no-open`.
 - **New post** creates `YYYY/month/slug.md` (or `YYYY/drafts/`) with front matter, heading and byline.
 - Edit with a live preview rendered in the site's own `assets/style.css`. Autosaves; Cmd/Ctrl-S, -B, -I, -K work.
 - Toolbar for common formatting. Paste, drag or pick images and videos: they are saved beside the post and linked relatively (videos as `<video>`).
-- **Review** sends the post to a CLI agent and lists its comments in a side panel (click a quote to jump to it;
-  **Apply** swaps in a suggested rewrite, **Dismiss** removes it). The agent only sees the text in its prompt, runs in an
+- **Review** sends the post to a CLI agent and lists its comments in a side panel (click a quote to jump to it).
+  Suggestions are targeted diffs, shown as word-level before/after: tick the ones you want and **Apply selected**, or
+  **Apply** one at a time. Studio enforces this on whatever the agent returns: unchanged words are trimmed off, context
+  is added back only until the quote matches exactly one place in the post, and no-op, ambiguous or oversized (>300
+  chars) edits keep their comment but lose the suggestion. The agent only sees the text in its prompt, runs in an
   empty temp directory with no tools (claude) or the read-only `plan` agent (opencode), and never writes to the repo.
   Built in: `claude`, `opencode`. Add more in `.studio/agents.json` (same name overrides a built-in):
 
