@@ -19,6 +19,7 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/yuin/goldmark"
@@ -68,7 +69,16 @@ func openBrowser(url string) {
 	exec.Command(cmd, url).Start()
 }
 
-type Server struct{ repo *Repo }
+type modelCache struct {
+	at   time.Time
+	list []string
+}
+
+type Server struct {
+	repo   *Repo
+	mu     sync.Mutex
+	models map[string]modelCache
+}
 
 func (s *Server) routes() http.Handler {
 	mux := http.NewServeMux()
@@ -83,6 +93,7 @@ func (s *Server) routes() http.Handler {
 	mux.HandleFunc("POST /api/preview", s.preview)
 	mux.HandleFunc("POST /api/publish", s.publish)
 	mux.HandleFunc("GET /api/agents", s.agents)
+	mux.HandleFunc("GET /api/agent-models", s.agentModels)
 	mux.HandleFunc("POST /api/review", s.review)
 	mux.HandleFunc("GET /api/status", s.status)
 	mux.HandleFunc("GET /files/", s.files)
@@ -285,13 +296,20 @@ func (s *Server) files(w http.ResponseWriter, r *http.Request) {
 func (s *Server) agents(w http.ResponseWriter, r *http.Request) {
 	agents, err := s.repo.Agents()
 	type item struct {
-		Name      string `json:"name"`
-		Available bool   `json:"available"`
+		Name      string   `json:"name"`
+		Available bool     `json:"available"`
+		Model     bool     `json:"model"`
+		Models    []string `json:"models"`
+		Efforts   []string `json:"efforts"`
 	}
 	items := []item{}
 	for _, a := range agents {
 		_, lookErr := exec.LookPath(a.Command[0])
-		items = append(items, item{a.Name, lookErr == nil})
+		it := item{Name: a.Name, Available: lookErr == nil, Model: len(a.ModelArgs) > 0, Models: a.Models}
+		if len(a.EffortArgs) > 0 {
+			it.Efforts = a.Efforts
+		}
+		items = append(items, it)
 	}
 	resp := map[string]any{"agents": items}
 	if err != nil {
@@ -300,10 +318,37 @@ func (s *Server) agents(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, resp)
 }
 
+// agentModels lists the models an agent offers (it may shell out, so the UI
+// asks only when an agent is selected; results are cached for a few minutes).
+func (s *Server) agentModels(w http.ResponseWriter, r *http.Request) {
+	name := r.URL.Query().Get("agent")
+	s.mu.Lock()
+	c, ok := s.models[name]
+	s.mu.Unlock()
+	if !ok || time.Since(c.at) > 5*time.Minute {
+		agents, _ := s.repo.Agents()
+		for _, a := range agents {
+			if a.Name == name {
+				c = modelCache{time.Now(), a.ListModels(r.Context())}
+				s.mu.Lock()
+				if s.models == nil {
+					s.models = map[string]modelCache{}
+				}
+				s.models[name] = c
+				s.mu.Unlock()
+			}
+		}
+	}
+	if c.list == nil {
+		c.list = []string{}
+	}
+	writeJSON(w, c.list)
+}
+
 // review hands the current text to a reviewer agent and returns its comments.
 // It runs until the agent finishes or the browser gives up on the request.
 func (s *Server) review(w http.ResponseWriter, r *http.Request) {
-	var req struct{ Agent, Path, Content string }
+	var req struct{ Agent, Path, Content, Model, Effort string }
 	if err := decode(r, &req); err != nil {
 		fail(w, 400, err)
 		return
@@ -315,7 +360,7 @@ func (s *Server) review(w http.ResponseWriter, r *http.Request) {
 	agents, _ := s.repo.Agents()
 	for _, a := range agents {
 		if a.Name == req.Agent {
-			rv, err := a.Run(r.Context(), req.Content)
+			rv, err := a.Run(r.Context(), req.Content, strings.TrimSpace(req.Model), req.Effort)
 			if err != nil {
 				fail(w, 502, err)
 				return

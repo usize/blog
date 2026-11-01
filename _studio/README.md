@@ -22,6 +22,10 @@ Flags: `-dir <path>`, `-addr host:port`, `-no-open`.
       [{"name": "local", "command": ["opencode", "run", "-m", "ollama/qwen3", "--agent", "plan", "{prompt}"]},
        {"name": "other", "command": ["my-agent", "--print"], "stdin": true}]
 
+  The bar also has a model box (type anything; suggestions come from the agent) and a thinking-effort picker. Both
+  are remembered per agent in the browser and become the defaults; blank means the agent's own default. Agents opt in
+  with `modelArgs` (e.g. `["--model","{model}"]`), `models` or `modelsCommand` (prints one model per line), `effortArgs`
+  (e.g. `["--effort","{effort}"]`) and `efforts`. The flags are placed before `{prompt}`, or last when it's on stdin.
   `{prompt}` in `command` is replaced with the prompt; with `"stdin": true` it's piped in instead. The agent is asked
   to reply with a JSON object (`summary`, `comments[{quote, comment, suggestion}]`); if a model can't manage that,
   its raw reply is shown instead.

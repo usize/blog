@@ -24,11 +24,26 @@ type Agent struct {
 	// Stdin sends the prompt on stdin; otherwise "{prompt}" in Command is
 	// replaced with it.
 	Stdin bool `json:"stdin,omitempty"`
+
+	// Optional model and effort selection. The *Args templates (containing
+	// "{model}" / "{effort}") are added to Command when a value is chosen; an
+	// agent without them doesn't offer that control. Models is a fixed list of
+	// suggestions; ModelsCommand prints one model per line. Any model name
+	// can still be typed.
+	ModelArgs     []string `json:"modelArgs,omitempty"`
+	Models        []string `json:"models,omitempty"`
+	ModelsCommand []string `json:"modelsCommand,omitempty"`
+	EffortArgs    []string `json:"effortArgs,omitempty"`
+	Efforts       []string `json:"efforts,omitempty"`
 }
 
 var builtinAgents = []Agent{
-	{Name: "claude", Command: []string{"claude", "-p", "--tools", "", "--no-session-persistence"}, Stdin: true},
-	{Name: "opencode", Command: []string{"opencode", "run", "--agent", "plan", "{prompt}"}},
+	{Name: "claude", Command: []string{"claude", "-p", "--tools", "", "--no-session-persistence"}, Stdin: true,
+		ModelArgs: []string{"--model", "{model}"}, Models: []string{"fable", "opus", "sonnet", "haiku"},
+		EffortArgs: []string{"--effort", "{effort}"}, Efforts: []string{"low", "medium", "high", "xhigh", "max"}},
+	{Name: "opencode", Command: []string{"opencode", "run", "--agent", "plan", "{prompt}"},
+		ModelArgs: []string{"-m", "{model}"}, ModelsCommand: []string{"opencode", "models"},
+		EffortArgs: []string{"--variant", "{effort}"}, Efforts: []string{"minimal", "low", "medium", "high", "max"}},
 }
 
 // Agents returns the built-ins plus those in <root>/.studio/agents.json
@@ -90,17 +105,81 @@ THE POST (markdown, with front matter):
 -----
 `
 
-func (a Agent) Run(ctx context.Context, content string) (*Review, error) {
+// Options returns the extra arguments for the chosen model and effort ("" =
+// the agent's own default). Values are checked so they can't be read as flags
+// or fall outside a configured effort list.
+func (a Agent) Options(model, effort string) ([]string, error) {
+	var extra []string
+	fill := func(tmpl []string, key, val string) {
+		for _, t := range tmpl {
+			extra = append(extra, strings.ReplaceAll(t, key, val))
+		}
+	}
+	if model != "" {
+		if len(a.ModelArgs) == 0 {
+			return nil, fmt.Errorf("%s does not take a model", a.Name)
+		}
+		if strings.HasPrefix(model, "-") || strings.ContainsAny(model, "\x00\n") {
+			return nil, errors.New("bad model name")
+		}
+		fill(a.ModelArgs, "{model}", model)
+	}
+	if effort != "" {
+		if len(a.EffortArgs) == 0 {
+			return nil, fmt.Errorf("%s does not take an effort level", a.Name)
+		}
+		ok := false
+		for _, e := range a.Efforts {
+			ok = ok || e == effort
+		}
+		if !ok {
+			return nil, errors.New("unknown effort level")
+		}
+		fill(a.EffortArgs, "{effort}", effort)
+	}
+	return extra, nil
+}
+
+// ListModels runs ModelsCommand (if any) and returns the static Models plus
+// whatever it prints.
+func (a Agent) ListModels(ctx context.Context) []string {
+	models := append([]string{}, a.Models...)
+	if len(a.ModelsCommand) == 0 {
+		return models
+	}
+	ctx, cancel := context.WithTimeout(ctx, 20*time.Second)
+	defer cancel()
+	out, err := exec.CommandContext(ctx, a.ModelsCommand[0], a.ModelsCommand[1:]...).Output()
+	if err != nil {
+		return models
+	}
+	for _, l := range strings.Split(string(out), "\n") {
+		if l = strings.TrimSpace(l); l != "" && !strings.ContainsAny(l, " \t") {
+			models = append(models, l)
+		}
+	}
+	return models
+}
+
+func (a Agent) Run(ctx context.Context, content, model, effort string) (*Review, error) {
+	extra, err := a.Options(model, effort)
+	if err != nil {
+		return nil, err
+	}
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Minute)
 	defer cancel()
 	prompt := fmt.Sprintf(reviewPrompt, content)
 
+	// Extra flags go before the prompt argument if it's positional, else last.
 	args := append([]string{}, a.Command[1:]...)
-	if !a.Stdin {
-		for i := range args {
-			args[i] = strings.ReplaceAll(args[i], "{prompt}", prompt)
+	at := len(args)
+	for i, x := range args {
+		if strings.Contains(x, "{prompt}") {
+			at = i
+			args[i] = strings.ReplaceAll(x, "{prompt}", prompt)
 		}
 	}
+	args = append(args[:at], append(extra, args[at:]...)...)
 	bin, err := exec.LookPath(a.Command[0])
 	if err != nil {
 		return nil, fmt.Errorf("%s is not installed", a.Command[0])

@@ -38,6 +38,9 @@
 
   main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
   #bar { display: flex; align-items: center; gap: 10px; padding: 8px 14px; border-bottom: 1px solid var(--border); background: var(--panel); }
+  #bar { flex-wrap: wrap; }
+  .rvctl { display: flex; gap: 4px; }
+  .rvctl select, .rvctl input { width: auto; padding: 4px 6px; } #modelIn { width: 190px !important; }
   #bar .path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
   #state { font-size: 12px; color: var(--muted); min-width: 60px; text-align: right; }
   #state.err { color: var(--err); }
@@ -100,7 +103,9 @@
     <span class="seg">
       <button data-mode="edit-only">Write</button><button data-mode="split" class="on">Split</button><button data-mode="view-only">Preview</button>
     </span>
-    <span class="seg"><select id="agentSel" title="Reviewer"></select><button id="rvBtn">Review</button></span>
+    <span class="rvctl"><select id="agentSel" title="Reviewer"></select>
+      <input type="text" id="modelIn" list="modelList" placeholder="model (default)" title="Model" hidden><datalist id="modelList"></datalist>
+      <select id="effortSel" title="Thinking effort" hidden></select><button id="rvBtn">Review</button></span>
     <button id="pubBtn" class="primary">Publish…</button>
   </div>
   <div id="tools" hidden>
@@ -330,11 +335,42 @@ window.addEventListener("beforeunload", e => { if (dirty) { flush(); e.preventDe
 
 // Agent review: the post goes to a CLI agent (see _studio/README.md); it
 // returns comments, and suggestions are applied here, never by the agent.
+// Model and effort are remembered per agent in this browser and become the
+// defaults next time; the last agent used is remembered too.
+let agentList = [], prefs = { last: "", by: {} };
+try { Object.assign(prefs, JSON.parse(localStorage.getItem("studio.agentPrefs") || "{}")); } catch {}
+const savePrefs = () => { try { localStorage.setItem("studio.agentPrefs", JSON.stringify(prefs)); } catch {} };
+async function pickAgent() {
+  const a = agentList.find(x => x.name === $("#agentSel").value); if (!a) return;
+  prefs.last = a.name; savePrefs();
+  const want = prefs.by[a.name] || {};
+  $("#modelIn").hidden = !a.model;
+  $("#modelIn").value = a.model ? want.model || "" : "";
+  const ef = $("#effortSel"); ef.textContent = ""; ef.hidden = !(a.efforts && a.efforts.length);
+  if (!ef.hidden) {
+    ef.append(new Option("effort (default)", ""));
+    for (const e of a.efforts) ef.append(new Option(e, e));
+    ef.value = a.efforts.includes(want.effort) ? want.effort : "";
+  }
+  const dl = $("#modelList"); dl.textContent = "";
+  if (a.model) {
+    const fill = ms => { dl.textContent = ""; for (const m of ms) dl.append(new Option(m)); };
+    fill(a.models || []);
+    api("GET", "/api/agent-models?agent=" + encodeURIComponent(a.name)).then(ms => { if ($("#agentSel").value === a.name) fill(ms); }).catch(() => {});
+  }
+}
+function rememberChoice() {
+  const n = $("#agentSel").value; if (!n) return;
+  prefs.by[n] = { model: $("#modelIn").value.trim(), effort: $("#effortSel").value }; savePrefs();
+}
+$("#agentSel").onchange = pickAgent;
+$("#modelIn").onchange = $("#effortSel").onchange = rememberChoice;
 (async () => {
   const r = await api("GET", "/api/agents"), sel = $("#agentSel");
+  agentList = r.agents;
   for (const a of r.agents) { const o = new Option(a.name + (a.available ? "" : " (not installed)"), a.name); o.disabled = !a.available; sel.append(o); }
-  const first = r.agents.find(a => a.available);
-  if (first) sel.value = first.name; else $("#rvBtn").disabled = true;
+  const first = r.agents.find(a => a.name === prefs.last && a.available) || r.agents.find(a => a.available);
+  if (first) { sel.value = first.name; pickAgent(); } else $("#rvBtn").disabled = true;
   if (r.error) console.warn(r.error);
 })();
 let rvCtl;
@@ -375,6 +411,7 @@ function locate(q) {
 $("#rvBtn").onclick = async () => {
   if (!cur) return;
   const agent = $("#agentSel").value;
+  rememberChoice();
   await flush();
   if (rvCtl) rvCtl.abort();
   const ctl = rvCtl = new AbortController();
@@ -383,7 +420,7 @@ $("#rvBtn").onclick = async () => {
   $("#rvBtn").disabled = true;
   try {
     const r = await fetch("/api/review", { method: "POST", headers: { "X-Studio": "1" }, signal: ctl.signal,
-      body: JSON.stringify({ agent, path: cur.path, content: $("#ed").value }) });
+      body: JSON.stringify({ agent, path: cur.path, content: $("#ed").value, model: $("#modelIn").value, effort: $("#effortSel").value }) });
     if (!r.ok) throw new Error((await r.text()).trim());
     const rv = await r.json();
     p.firstChild.firstChild.textContent = "Review · " + agent;

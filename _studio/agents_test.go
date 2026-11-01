@@ -35,3 +35,23 @@ func TestTargetDiff(t *testing.T) {
 		t.Fatal("unique single word")
 	}
 }
+
+func TestAgentOptions(t *testing.T) {
+	a := builtinAgents[0]
+	got, err := a.Options("sonnet", "high")
+	if err != nil || len(got) != 4 || got[0] != "--model" || got[1] != "sonnet" || got[2] != "--effort" || got[3] != "high" {
+		t.Fatalf("got %v %v", got, err)
+	}
+	if got, _ := a.Options("", ""); len(got) != 0 {
+		t.Fatalf("defaults should add nothing, got %v", got)
+	}
+	if _, err := a.Options("--dangerous", ""); err == nil {
+		t.Fatal("flag-like model accepted")
+	}
+	if _, err := a.Options("", "turbo"); err == nil {
+		t.Fatal("unknown effort accepted")
+	}
+	if _, err := (Agent{Name: "x"}).Options("m", ""); err == nil {
+		t.Fatal("agent without modelArgs accepted a model")
+	}
+}
