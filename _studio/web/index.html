@@ -49,6 +49,16 @@
   #tools { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; padding: 5px 14px; border-bottom: 1px solid var(--border); background: var(--panel); }
   #tools button { padding: 2px 9px; min-width: 30px; }
   #tools .sep { width: 1px; align-self: stretch; background: var(--border); margin: 2px 4px; }
+  #rv { width: 340px; flex: none; overflow-y: auto; background: var(--side); border-left: 1px solid var(--border); padding: 12px; }
+  #rv h3 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  #rv .sum { margin-bottom: 12px; }
+  #rv .raw { white-space: pre-wrap; }
+  .cm { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; margin-bottom: 10px; }
+  .cm.done { opacity: .5; }
+  .cm .q { border-left: 3px solid var(--accent); padding-left: 8px; color: var(--muted); font-size: 12px; cursor: pointer; margin-bottom: 6px; }
+  .cm .sg { background: var(--bg); border-radius: 4px; padding: 4px 6px; margin-top: 6px; font-size: 13px; }
+  .cm .acts { margin-top: 6px; display: flex; gap: 6px; }
+  .cm button { padding: 1px 8px; font-size: 12px; }
   #ed.drop { box-shadow: inset 0 0 0 3px var(--accent); }
   #pv { background: #fafafa; }
   #empty { margin: auto; color: var(--muted); text-align: center; }
@@ -86,6 +96,7 @@
     <span class="seg">
       <button data-mode="edit-only">Write</button><button data-mode="split" class="on">Split</button><button data-mode="view-only">Preview</button>
     </span>
+    <span class="seg"><select id="agentSel" title="Reviewer"></select><button id="rvBtn">Review</button></span>
     <button id="pubBtn" class="primary">Publish…</button>
   </div>
   <div id="tools" hidden>
@@ -110,6 +121,7 @@
     <div id="empty">Pick a post, or start a new one.</div>
     <textarea id="ed" spellcheck="true" hidden></textarea>
     <iframe id="pv" hidden></iframe>
+    <div id="rv" hidden></div>
   </div>
 </main>
 
@@ -311,6 +323,72 @@ document.querySelectorAll(".seg button").forEach(b => b.onclick = () => {
 document.querySelectorAll("[data-close]").forEach(b => b.onclick = () => b.closest("dialog").close());
 $("#filter").oninput = renderList;
 window.addEventListener("beforeunload", e => { if (dirty) { flush(); e.preventDefault(); } });
+
+// Agent review: the post goes to a CLI agent (see _studio/README.md); it
+// returns comments, and suggestions are applied here, never by the agent.
+(async () => {
+  const r = await api("GET", "/api/agents"), sel = $("#agentSel");
+  for (const a of r.agents) { const o = new Option(a.name + (a.available ? "" : " (not installed)"), a.name); o.disabled = !a.available; sel.append(o); }
+  const first = r.agents.find(a => a.available);
+  if (first) sel.value = first.name; else $("#rvBtn").disabled = true;
+  if (r.error) console.warn(r.error);
+})();
+let rvCtl;
+function rvPanel(title) {
+  const p = $("#rv"); p.hidden = false; p.textContent = "";
+  const h = document.createElement("h3"), t = document.createElement("span"), x = document.createElement("button");
+  t.textContent = title; x.textContent = "×"; x.onclick = () => { if (rvCtl) rvCtl.abort(); p.hidden = true; };
+  h.append(t, x); p.append(h); return p;
+}
+function para(cls, text) { const d = document.createElement("div"); d.className = cls; d.textContent = text; return d; }
+function locate(q) {
+  const t = $("#ed"), i = q ? t.value.indexOf(q) : -1;
+  if (i < 0) return false;
+  t.focus(); t.setSelectionRange(i, i + q.length);
+  t.scrollTop = Math.max(0, (t.value.slice(0, i).split("\n").length - 3) * 22);
+  return true;
+}
+$("#rvBtn").onclick = async () => {
+  if (!cur) return;
+  const agent = $("#agentSel").value;
+  await flush();
+  if (rvCtl) rvCtl.abort();
+  const ctl = rvCtl = new AbortController();
+  const p = rvPanel(agent + " is reading…");
+  p.append(para("sum", "This can take a minute. You can keep writing; suggestions are matched against the text as it is when you apply them."));
+  $("#rvBtn").disabled = true;
+  try {
+    const r = await fetch("/api/review", { method: "POST", headers: { "X-Studio": "1" }, signal: ctl.signal,
+      body: JSON.stringify({ agent, path: cur.path, content: $("#ed").value }) });
+    if (!r.ok) throw new Error((await r.text()).trim());
+    const rv = await r.json();
+    p.firstChild.firstChild.textContent = "Review · " + agent;
+    p.lastChild.remove();
+    if (rv.raw) { p.append(para("sum", "Couldn't read this as structured comments; here is the raw reply:"), para("sum raw", rv.raw)); return; }
+    p.append(para("sum", rv.summary || ""));
+    for (const c of rv.comments || []) {
+      const d = document.createElement("div"); d.className = "cm";
+      if (c.quote) { const q = para("q", c.quote.length > 140 ? c.quote.slice(0, 140) + "…" : c.quote); q.onclick = () => locate(c.quote); d.append(q); }
+      d.append(para("", c.comment));
+      const acts = document.createElement("div"); acts.className = "acts";
+      if (c.suggestion) {
+        d.append(para("sg", c.suggestion));
+        const ap = document.createElement("button"); ap.textContent = "Apply";
+        ap.onclick = () => {
+          if (!locate(c.quote)) { setState("That text has changed; can't apply.", true); return; }
+          edit(t => t.setRangeText(c.suggestion, t.selectionStart, t.selectionEnd, "end"));
+          d.classList.add("done"); ap.disabled = true;
+        };
+        acts.append(ap);
+      }
+      const dis = document.createElement("button"); dis.textContent = "Dismiss"; dis.onclick = () => d.remove();
+      acts.append(dis); d.append(acts); p.append(d);
+    }
+    if (!(rv.comments || []).length) p.append(para("sum", "No comments."));
+  } catch (e) {
+    if (e.name !== "AbortError") { p.firstChild.firstChild.textContent = "Review failed"; p.lastChild.remove(); p.append(para("sum raw", e.message)); }
+  } finally { if (rvCtl === ctl) $("#rvBtn").disabled = false; }
+};
 
 // New post
 const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");

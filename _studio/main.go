@@ -82,6 +82,8 @@ func (s *Server) routes() http.Handler {
 	mux.HandleFunc("POST /api/upload", s.upload)
 	mux.HandleFunc("POST /api/preview", s.preview)
 	mux.HandleFunc("POST /api/publish", s.publish)
+	mux.HandleFunc("GET /api/agents", s.agents)
+	mux.HandleFunc("POST /api/review", s.review)
 	mux.HandleFunc("GET /api/status", s.status)
 	mux.HandleFunc("GET /files/", s.files)
 	return s.guard(mux)
@@ -278,6 +280,51 @@ func (s *Server) files(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	http.ServeFile(w, r, abs)
+}
+
+func (s *Server) agents(w http.ResponseWriter, r *http.Request) {
+	agents, err := s.repo.Agents()
+	type item struct {
+		Name      string `json:"name"`
+		Available bool   `json:"available"`
+	}
+	items := []item{}
+	for _, a := range agents {
+		_, lookErr := exec.LookPath(a.Command[0])
+		items = append(items, item{a.Name, lookErr == nil})
+	}
+	resp := map[string]any{"agents": items}
+	if err != nil {
+		resp["error"] = err.Error()
+	}
+	writeJSON(w, resp)
+}
+
+// review hands the current text to a reviewer agent and returns its comments.
+// It runs until the agent finishes or the browser gives up on the request.
+func (s *Server) review(w http.ResponseWriter, r *http.Request) {
+	var req struct{ Agent, Path, Content string }
+	if err := decode(r, &req); err != nil {
+		fail(w, 400, err)
+		return
+	}
+	if _, err := s.repo.ResolvePost(req.Path); err != nil {
+		fail(w, 400, err)
+		return
+	}
+	agents, _ := s.repo.Agents()
+	for _, a := range agents {
+		if a.Name == req.Agent {
+			rv, err := a.Run(r.Context(), req.Content)
+			if err != nil {
+				fail(w, 502, err)
+				return
+			}
+			writeJSON(w, rv)
+			return
+		}
+	}
+	fail(w, 400, errors.New("unknown agent"))
 }
 
 func (s *Server) status(w http.ResponseWriter, r *http.Request) {
