@@ -8,7 +8,7 @@ title: "Context Length"
 #### [usize](https://github.com/usize) November 2026
 
 ### December 24, 2028
-### 
+
 "What's going on, where am I? Dave? Where are we?" 
 
 "Merry Christmas mama."
