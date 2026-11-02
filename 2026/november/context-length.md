@@ -129,4 +129,4 @@ title: "Context Length"
 
 --
 
-_credit to Opus 5.5 for the accurate memory retrieval section._
+_credit to Opus 5.5 for the memory retrieval section._
