@@ -128,3 +128,7 @@ title: "Context Length"
 "Merry Christmas, Jack." She reaches up and touches his face, a jaw she has never seen and somehow knows. 
 
 "Let me see that crooked tooth."
+
+--
+
+_credit to Opus 5.5 for the accurate memory retrieval section._
