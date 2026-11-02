@@ -1,3 +1,11 @@
+## November 2026
+
+[Context Length](2026/november/context-length.md)
+
+A short story about a sick woman waking up on Christmas, a language model and a BMI.
+
+----
+
 ## June 2026
 
 [Pen and Paper Programming (2016)](mrrrgn/site/21)
