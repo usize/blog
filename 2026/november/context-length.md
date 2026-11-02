@@ -77,9 +77,8 @@ title: "Context Length"
 >
 > `profile.md`
 >
-> - [stated] "I'm Margaret. I got sick in 2028. My body ran out of vitamin B1."
-> - [stated] "It took the new days, not the old ones."
-> - [stated] "There's a device now. It keeps the days for me. I said yes. More than once."
+> - [stated] "I'm Margaret. I got sick in 2028. My body ran out of vitamin B1 and it damaged the part of my brain that forms new memories.
+> - [stated] "I have an implant that helps me remember facts but it can only hold a few pages at a time. It keeps track of things for me."
 >
 > `memory_listing`
 >
@@ -93,7 +92,6 @@ title: "Context Length"
 > `reading /people/dave.md`
 >
 > - [stated] "He stayed."
-> - [stated] "He cries sometimes when I know him. It's the good kind now."
 >
 > `reading /people/jack.md`
 >
